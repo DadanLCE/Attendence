@@ -1,13 +1,10 @@
 package com.attend.dream.controller;
 
 import com.attend.dream.domain.User;
-import com.attend.dream.mapper.UserMapper;
 import com.attend.dream.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Map;
@@ -44,7 +41,12 @@ public class UserController {
         }
 
     }
-
+//
+//    @RequestMapping(value = "logout",method = RequestMethod.GET)
+//    public String logout(HttpSession session){
+//        session.invalidate();
+//        return "logout";
+//    }
 
 
 }

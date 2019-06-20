@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html  xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
 	<title>管理员登录-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
@@ -8,10 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="/css/font.css" >
-	<link rel="stylesheet" href="/css/weadmin.css">
-    <script src="/lib/layui/layui.js" charset="utf-8"></script>
-
+    <link rel="stylesheet" href="/css/font.css" th:href="@{/css/font.css}">
+	<link rel="stylesheet" href="/css/weadmin.css " th:href="@{/css/font.css}">
+    <script src="/lib/layui/layui.js" charset="utf-8" th:href="@{/css/font.css}"></script>
 </head>
 <body class="login-bg">
     
