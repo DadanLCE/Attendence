@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Controller
-public class UserController {
+public class LoginController {
 
     @Autowired
     UserService userService;
@@ -33,10 +33,15 @@ public class UserController {
                                      @RequestParam(value = "password") String password,
                                      Map<String,Object> map, HttpSession session
                                      ) {
-
+        //System.out.println(username+"adfads");
         User user = userService.findUserByUsername(username);
+        if (user == null) {
+            map.put("warning","请输入正确的用户名和密码");
+            return "login";
+        }
         String pwd = user.getPassword();
         if ( pwd.equals(password)) {
+            session.setAttribute("usersHadLogin", username);
             return "redirect:/index.html";
         } else {
             map.put("warning","密码错误");
