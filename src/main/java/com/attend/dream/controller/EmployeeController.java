@@ -8,44 +8,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sun.plugin2.message.Message;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
 public class EmployeeController {
-
     @Autowired
     EmployeeService employeeService;
 
-//    @RequestMapping("/query")
-//    @ResponseBody
-//    public List<Employee> getEmployees(){
-//        return employeeService.getEmployees();
-//    }
-//
-//    @RequestMapping("/hat")
-//    public String Show(Model model){
-//        model.addAttribute("")
-//    }
+    @GetMapping("/emps")
+    public String list(Model model){
+        Collection<Employee> employees=employeeService.getEmployees();
+        System.out.println(employees);
+        model.addAttribute("emps",employees);
 
-    @ResponseBody
-    @RequestMapping("/empList")
-    public List<Employee> empList(){
-        List<Employee> list = new ArrayList<>();
-        list = employeeService.getEmployees();
-        return list;
+        return "/employee_list";
     }
-//    @ResponseBody
-//    @RequestMapping("/list")
-//    public List<Employee> list(@RequestBody Message message) throws IOException{
-//        List<Employee> list = new ArrayList<>();
-//
-//    }
+
 }

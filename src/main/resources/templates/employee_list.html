@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <html  xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
 		<title>员工-考勤系统</title>
@@ -11,32 +12,32 @@
 		<link rel="stylesheet" href="../static/css/weadmin.css" th:href="@{/css/weadmin}">
 	</head>
 	<script type="text/javascript">
-		$(function(){
-			refurbishIndex();
-		})
-
-		function refurbishIndex(){
-			var queryData = {
-				empId:$('#empId').val()
-			}
-			$.ajax({
-				type:"post",
-				url:"/empList",
-				data:JSON.stringify(queryData),
-				contentType:"application/json",
-				success:function (data) {
-					var str ="";
-					for(i in data){
-						str+="<tr>"+
-								"<td>"+"<input type='checkbox' />"+"</td>"+
-								"<td align='center'>"+data[i].empId+"</td>"+
-								"</tr>";
-					}
-					document.getElementById("tbodydata").innerHTML = str;
-
-				}
-			})
-		}
+		// $(function(){
+		// 	refurbishIndex();
+		// })
+		//
+		// function refurbishIndex(){
+		// 	var queryData = {
+		// 		empId:$('#empId').val()
+		// 	}
+		// 	$.ajax({
+		// 		type:"post",
+		// 		url:"/easyuiIndexTable",
+		// 		data:JSON.stringify(queryData),
+		// 		contentType:"application/json",
+		// 		success:function (data) {
+		// 			var str ="";
+		// 			for(i in data){
+		// 				str+="<tr>"+
+		// 						"<td>"+"<input type='checkbox' />"+"</td>"+
+		// 						"<td align='center'>"+data[i].empId+"</td>"+
+		// 						"</tr>";
+		// 			}
+		// 			document.getElementById("tbodydata").innerHTML = str;
+		//
+		// 		}
+		// 	})
+		// }
 	</script>
 	<body>
 		<div class="weadmin-nav">
@@ -46,7 +47,7 @@
         <a>
           <cite>员工</cite></a>
       </span>
-			<a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" onclick="refurbishIndex" title="刷新">
+			<a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
 				<i class="layui-icon" style="line-height:30px">&#x1002;</i></a>
 		</div>
 		<div class="weadmin-body">
@@ -72,6 +73,7 @@
 			<table class="layui-table" id="memberList">
 				<thead>
 					<tr>
+
 						<th>
 							<div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
 						</th>
@@ -85,8 +87,27 @@
 						<th>操作</th>
 					</tr>
 				</thead>
-				<tbody id="tbodydata">
+				<tbody >
+					<tr th:each="emp:${emps}">
+						<div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="1"><i class="layui-icon">&#xe605;</i></div>
+						<td th:text="${emp.empId}"></td>
+						<td th:text="${emp.empCode}"></td>
+						<td th:text="${emp.empName}"></td>
+						<td th:text="${emp.empSex}"></td>
+						<td th:text="${emp.empAge}"></td>
+						<td th:text="${emp.empNation}"></td>
+						<td th:text="${emp.empIdCard}"></td>
+						<td th:text="${emp.empJobId}"></td>
+						<td class="td-manage">
+							<a title="编辑" onclick="WeAdminEdit('编辑','./edit.html', 1, 600, 400)" href="javascript:;">
+								<i class="layui-icon">&#xe642;</i>
+							</a>
+							<a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
+								<i class="layui-icon">&#xe640;</i>
+							</a>
+						</td>
 
+					</tr>
 <!--					<tr data-id="1">-->
 <!--						<td>-->
 <!--							<div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="1"><i class="layui-icon">&#xe605;</i></div>-->
@@ -99,14 +120,7 @@
 <!--						<td>20</td>-->
 <!--						<td>汉</td>-->
 <!--						<td>CEO</td>-->
-<!--						<td class="td-manage">-->
-<!--							<a title="编辑" onclick="WeAdminEdit('编辑','./edit.html', 1, 600, 400)" href="javascript:;">-->
-<!--								<i class="layui-icon">&#xe642;</i>-->
-<!--							</a>-->
-<!--							<a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">-->
-<!--								<i class="layui-icon">&#xe640;</i>-->
-<!--							</a>-->
-<!--						</td>-->
+
 <!--					</tr>-->
 				</tbody>
 			</table>
