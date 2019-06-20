@@ -1,5 +1,6 @@
 package com.attend.dream.domain;
 
+
 import lombok.Data;
 
 @Data

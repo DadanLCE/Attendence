@@ -30,11 +30,15 @@ public class UserController {
                                      @RequestParam(value = "password") String password,
                                      Map<String,Object> map, HttpSession session
                                      ) {
-
+        //System.out.println(username+"adfads");
         User user = userService.findUserByUsername(username);
+        if (user == null) {
+            map.put("warning","请输入正确的用户名和密码");
+            return "login";
+        }
         String pwd = user.getPassword();
         if ( pwd.equals(password)) {
-            return "redirect:/index.html";
+            return "index";
         } else {
             map.put("warning","密码错误");
             return "login";
