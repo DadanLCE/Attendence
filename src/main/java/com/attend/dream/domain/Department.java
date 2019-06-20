@@ -13,7 +13,7 @@ public class Department {
 
     private String depName;
 
-    private String depBoss;
+    private String depBossCode;
 
     private String TopId;
 }
