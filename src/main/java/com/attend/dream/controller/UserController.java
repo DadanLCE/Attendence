@@ -29,28 +29,22 @@ public class UserController {
     }
 
     @PostMapping("/user/login")
-    public String findUserByUsername(@RequestParam(value = "username" ,required = false) String username,
-                                     @RequestParam(value = "password",required = false) String password,
+    public String findUserByUsername(@RequestParam(value = "username") String username,
+                                     @RequestParam(value = "password") String password,
                                      Map<String,Object> map, HttpSession session
-    ) {
-        System.out.println("yonhum"+username);
-        if (username == null || password == null) {
-            map.put("warning", "用户名或密码不能为空");
+                                     ) {
+        //System.out.println(username+"adfads");
+        User user = userService.findUserByUsername(username);
+        if (user == null) {
+            map.put("warning","请输入正确的用户名和密码");
             return "login";
-        } else{
-            User user = userService.findUserByUsername(username);
-            String pwd = user.getPassword();
-            //直接判断有没有输入用户名或者密码,提示错误消息
-//            if (username == null || password == null) {
-//                map.put("warning", "用户名或密码不能为空");
-//                return "login";
-//            }
-            if (pwd.equals(password)) {
-                return "redirect:/index.html";
-            } else {
-                map.put("warning", "密码错误");
-                return "login";
-            }
+        }
+        String pwd = user.getPassword();
+        if ( pwd.equals(password)) {
+            return "index";
+        } else {
+            map.put("warning","密码错误");
+            return "login";
         }
 
     }
