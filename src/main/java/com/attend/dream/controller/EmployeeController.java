@@ -6,6 +6,7 @@ import com.attend.dream.service.EmployeeService;
 import com.attend.dream.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@RestController
+@Controller
 public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
