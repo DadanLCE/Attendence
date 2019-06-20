@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Controller
-public class UserController {
+public class LoginController {
 
     @Autowired
     UserService userService;
@@ -38,7 +38,8 @@ public class UserController {
         }
         String pwd = user.getPassword();
         if ( pwd.equals(password)) {
-            return "index";
+            session.setAttribute("usersHadLogin", username);
+            return "redirect:/index.html";
         } else {
             map.put("warning","密码错误");
             return "login";
