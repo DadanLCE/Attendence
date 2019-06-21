@@ -15,6 +15,6 @@ public class Employee {
     private String empTel;
     private String empContact;
     private String empCTel;
-    private String empJobId;
+    private String empStaCode;
     private String empNote;
 }
