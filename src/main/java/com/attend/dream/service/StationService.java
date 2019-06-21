@@ -11,17 +11,42 @@ import java.util.List;
 @Service
 public class StationService {
 
-//    @Autowired(required = false)
-//    StationMapper stationMapper;
-//
-//    public List<Station> getEmployees(){
-//        List<Station> list = stationMapper.g;
-//        return list;
-//    }
-//
-//    public List<Employee> getEmployeesByName(String empName){
-//        List<Employee> employee = employeesMapper.getEmployeesByname(empName);
-//        return employee;w
-//    }
+    @Autowired(required = false)
+    StationMapper stationMapper;
 
+    public List<Station> getStations(){
+        List<Station> list = stationMapper.getStations();
+        return list;
+    }
+
+    public List<Station> getStationByName(String staCode){
+        List<Station> station = stationMapper.getStationsByCode(staCode);
+        return station;
+    }
+
+    //添加员工
+//    public boolean insertStation(Station e) {
+//
+//        String uniqueCode = e.getStaCode();
+//        Station station = stationMapper.isEmpCodeExist(uniqueCode);
+//        if (employee == null) {
+//            employeesMapper.insertEmployee(e);
+//            return true;
+//        }else {
+//            return true;
+//        }
+//
+//    }
+//
+//    public boolean deleteEmployee(int empId){
+//        employeesMapper.deleteEmployee(empId);
+//        return true;
+//    }
+//
+//    public boolean deleteEmployees(List<Employee> employees){
+//        for(Employee e : employees){
+//            employeesMapper.deleteEmployee(e.getEmpId());
+//        }
+//        return true;
+//    }
 }
