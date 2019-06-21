@@ -5,15 +5,15 @@ import lombok.Data;
 @Data
 public class Department {
 
-    private int id;//序号
+    private int id;
 
-    private String depCode;//部门编码
+    private String depCode;
 
-    private String depJob;//部门职责
+    private String depJob;
 
-    private String depName;//部门名称
+    private String depName;
 
-    private String depBoss;//部门负责人
+    private String depBossCode;
 
-    private String TopId;//上级部门ID
+    private String depTopId;
 }
