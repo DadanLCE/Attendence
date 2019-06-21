@@ -61,7 +61,9 @@
 			</div>
 			<div class="weadmin-block">
 				<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-				<button class="layui-btn" onclick="WeAdminShow('添加用户','add_employee.html',600,500)"><i class="layui-icon"></i>添加</button>
+				<form action="" th:action="@{/emp/goToAddHtml}" th:method="get">
+				<button class="layui-btn" type="submit"><i class="layui-icon"></i>添加</button>
+				</form>
 				<span class="fr" style="line-height:40px">共有数据：88 条</span>
 			</div>
 			<table class="layui-table" id="memberList">
@@ -101,20 +103,6 @@
 						</td>
 
 					</tr>
-					<!--<tr data-id="1">-->
-						<!--<td>-->
-							<!--<div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="1"><i class="layui-icon">&#xe605;</i></div>-->
-						<!--</td>-->
-						<!--<-->
-						<!--<td>1</td>-->
-						<!--<td>admin</td>-->
-						<!--<td>小明</td>-->
-						<!--<td>男</td>-->
-						<!--<td>20</td>-->
-						<!--<td>汉</td>-->
-						<!--<td>CEO</td>-->
-
-					<!--</tr>-->
 				</tbody>
 			</table>
 			<div class="page">
@@ -130,7 +118,7 @@
 		</div>
 		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 		<script src="../lib/layui/layui.js" charset="utf-8" th:src="@{/layui/layui.js}"></script>
-		<script src="../static/js/eleDel.js" type="text/javascript" charset="utf-8" th:src="@{/js/eleDel.js}"></script>
+		<!--<script src="../static/js/eleDel.js" type="text/javascript" charset="utf-8" th:src="@{/js/eleDel.js}"></script>-->
 	</body>
 
 </html>
