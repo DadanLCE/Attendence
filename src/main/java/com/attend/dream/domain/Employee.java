@@ -15,6 +15,6 @@ public class Employee {
     private String empTel;//职工电话
     private String empContact;//紧急联系人
     private String empCTel;//紧急联系人电话
-    private String empJobId;//工作编号
+    private String empStaCode;//工作编号
     private String empNote;//简介
 }
