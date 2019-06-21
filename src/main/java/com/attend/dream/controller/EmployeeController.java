@@ -20,15 +20,16 @@ import java.util.List;
 
 @Controller
 public class EmployeeController {
+
     @Autowired
     EmployeeService employeeService;
 
-    @GetMapping("/emps")
+    @GetMapping("/employee")
     public String list(Model model){
         Collection<Employee> employees=employeeService.getEmployees();
         model.addAttribute("emps",employees);
 
-        return "/employee_list";
+        return "employee_list";
     }
 
 //

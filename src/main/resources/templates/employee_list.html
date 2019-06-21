@@ -11,34 +11,34 @@
 		<link rel="stylesheet" href="../static/css/font.css" th:href="@{/css/font.css}">
 		<link rel="stylesheet" href="../static/css/weadmin.css" th:href="@{/css/weadmin}">
 	</head>
-	<script type="text/javascript">
-		// $(function(){
-		// 	refurbishIndex();
-		// })
-		//
-		// function refurbishIndex(){
-		// 	var queryData = {
-		// 		empId:$('#empId').val()
-		// 	}
-		// 	$.ajax({
-		// 		type:"post",
-		// 		url:"/easyuiIndexTable",
-		// 		data:JSON.stringify(queryData),
-		// 		contentType:"application/json",
-		// 		success:function (data) {
-		// 			var str ="";
-		// 			for(i in data){
-		// 				str+="<tr>"+
-		// 						"<td>"+"<input type='checkbox' />"+"</td>"+
-		// 						"<td align='center'>"+data[i].empId+"</td>"+
-		// 						"</tr>";
-		// 			}
-		// 			document.getElementById("tbodydata").innerHTML = str;
-		//
-		// 		}
-		// 	})
-		// }
-	</script>
+	<!--<script type="text/javascript">-->
+		<!--// $(function(){-->
+		<!--// 	refurbishIndex();-->
+		<!--// })-->
+		<!--//-->
+		<!--// function refurbishIndex(){-->
+		<!--// 	var queryData = {-->
+		<!--// 		empId:$('#empId').val()-->
+		<!--// 	}-->
+		<!--// 	$.ajax({-->
+		<!--// 		type:"post",-->
+		<!--// 		url:"/easyuiIndexTable",-->
+		<!--// 		data:JSON.stringify(queryData),-->
+		<!--// 		contentType:"application/json",-->
+		<!--// 		success:function (data) {-->
+		<!--// 			var str ="";-->
+		<!--// 			for(i in data){-->
+		<!--// 				str+="<tr>"+-->
+		<!--// 						"<td>"+"<input type='checkbox' />"+"</td>"+-->
+		<!--// 						"<td align='center'>"+data[i].empId+"</td>"+-->
+		<!--// 						"</tr>";-->
+		<!--// 			}-->
+		<!--// 			document.getElementById("tbodydata").innerHTML = str;-->
+		<!--//-->
+		<!--// 		}-->
+		<!--// 	})-->
+		<!--// }-->
+	<!--</script>-->
 	<body>
 		<div class="weadmin-nav">
 			<span class="layui-breadcrumb">
@@ -134,9 +134,9 @@
 				</div>
 			</div>
 		</div>
-		<!--<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>-->
-		<script src="./lib/layui/layui.js" charset="utf-8"></script>
-		<script src="./static/js/eleDel.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<script src="../lib/layui/layui.js" charset="utf-8" th:src="@{/layui/layui.js}"></script>
+		<script src="../static/js/eleDel.js" type="text/javascript" charset="utf-8" th:src="@{/js/eleDel.js}"></script>
 	</body>
 
 </html>
