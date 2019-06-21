@@ -14,7 +14,11 @@ public interface EmployeesMapper {
     //通过员工的名字查询
     @Select("select empId,empCode,empName,empSex,empAge,empNation,empIdCard,empSalary,empTel,empContact,empCTel,empStaCode,empNote\n" +
             "from employees where empName = #{empName}")
-    Employee getEmployeesByName(String empName);
+    Employee getEmployeeByName(String empName);
+
+    @Select("select empId,empCode,empName,empSex,empAge,empNation,empIdCard,empSalary,empTel,empContact,empCTel,empStaCode,empNote\n" +
+            "from employees where empName LIKE CONCAT('%',#{empName},'%') ")
+    List<Employee> getEmployeesByname(String empName);
 
     //通过员工编码查询
     @Select("select empId,empCode,empName,empSex,empAge,empNation,empIdCard,empSalary,empTel,empContact,empCTel,empStaCode,empNote\n" +

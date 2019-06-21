@@ -13,9 +13,12 @@ public interface DepartmentMapper {
 
     //通过编码查询
     @Select("select id,depCode,depJob,depName,depBossCode,depTopId\n" +
-            "from department where depCode = #{depCode}")
+            "from department where depCode = #{depCode} ")
     Department getDepartmentByDepCode(String depCode);
 
+    @Select("select id,depCode,depJob,depName,depBossCode,depTopId\n" +
+            "from department where depCode LIKE CONCAT('%',#{depCode},'%') ")
+    List<Department> getDepartmentsByDepCode(String depCode);
     @Insert("insert into department (depCode,depName,depBossCode,depJob,depTopId)\n" +
             "values(#{depCode},#{depName},#{depBossCode},#{depJob},#{depTopId})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
