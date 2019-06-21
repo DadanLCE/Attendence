@@ -39,7 +39,8 @@ public class LoginController {
         String pwd = user.getPassword();
         if ( pwd.equals(password)) {
             session.setAttribute("usersHadLogin", username);
-            return "redirect:/index.html";
+            return "index";
+            //return "redirect:/index.html";
         } else {
             map.put("warning","密码错误");
             return "login";
