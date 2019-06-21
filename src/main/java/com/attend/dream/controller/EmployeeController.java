@@ -31,4 +31,10 @@ public class EmployeeController {
         return "/employee_list";
     }
 
+//
+//    @GetMapping("/empSer")
+//    public String ser(Model model){
+//        Collection
+//    }
+
 }
