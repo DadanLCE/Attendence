@@ -26,7 +26,6 @@ public class EmployeeController {
     @GetMapping("/emps")
     public String list(Model model){
         Collection<Employee> employees=employeeService.getEmployees();
-        System.out.println(employees);
         model.addAttribute("emps",employees);
 
         return "/employee_list";
