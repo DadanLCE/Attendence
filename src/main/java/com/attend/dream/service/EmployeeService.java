@@ -20,9 +20,20 @@ public class EmployeeService {
         return list;
     }
 
-    public Employee getEmployeesByName(String empName){
-        Employee employee = employeesMapper.getEmployeesByName(empName);
+    public List<Employee> getEmployeesByName(String empName){
+        List<Employee> employee = employeesMapper.getEmployeesByname(empName);
         return employee;
     }
 
+    public boolean deleteEmployee(int empId){
+        employeesMapper.deleteEmployee(empId);
+        return true;
+    }
+
+    public boolean deleteEmployees(List<Employee> employees){
+        for(Employee e : employees){
+            employeesMapper.deleteEmployee(e.getEmpId());
+        }
+        return true;
+    }
 }

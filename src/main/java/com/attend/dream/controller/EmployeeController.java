@@ -24,7 +24,7 @@ public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
 
-
+    //显示全部员工列表
     @GetMapping("/employee")
     public String list(Model model){
         Collection<Employee> employees=employeeService.getEmployees();
@@ -33,18 +33,21 @@ public class EmployeeController {
         return "employee_list";
     }
 
-
+    //查询员工
     @PostMapping("/emp/get")
     public String getEmployeesByName(@RequestParam(value = "empName") String empName,Model model){
-        Employee employee = employeeService.getEmployeesByName(empName);
+        List<Employee> employee = employeeService.getEmployeesByName(empName);
         model.addAttribute("emps",employee);
         return "employee_list";
     }
 
-    @GetMapping("/department")
-    public String gotoDep() {
-        return "department_list";
+    //删除单行员工信息
+    @DeleteMapping("/emp/{empId}")
+    public String deleteEmployee(@PathVariable(value = "empId") int empId){
+        employeeService.deleteEmployee(empId);
+        return "redirect:/employee";
     }
+
 
 
 }
