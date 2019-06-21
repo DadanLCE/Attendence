@@ -20,6 +20,7 @@ import java.util.List;
 
 @Controller
 public class EmployeeController {
+
     @Autowired
     EmployeeService employeeService;
 
@@ -28,7 +29,7 @@ public class EmployeeController {
         Collection<Employee> employees=employeeService.getEmployees();
         model.addAttribute("emps",employees);
 
-        return "/employee_list";
+        return "employee_list";
     }
 
 
