@@ -15,5 +15,5 @@ public class Department {
 
     private String depBossCode;
 
-    private String TopId;
+    private String depTopId;
 }
