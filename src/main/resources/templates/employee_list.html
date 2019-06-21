@@ -9,6 +9,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
 		<link rel="stylesheet" href="../static/css/font.css" th:href="@{/css/font.css}">
 		<link rel="stylesheet" href="../static/css/weadmin.css" th:href="@{/css/weadmin.css}">
+		<link rel="stylesheet" href="../lib/layui/css/layui.css" th:href="@{/layui/css/layui.css.css}">
+
 	</head>
 
 	<body>
@@ -32,7 +34,7 @@
 				</form>
 			</div>
 			<div class="weadmin-block">
-				<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
+				<button class="layui-btn layui-btn-danger" th:action="@{/emp/empsDel}"><i class="layui-icon"></i>批量删除</button>
 				<form action="" th:action="@{/emp/goToAddHtml}" th:method="get">
 				<button class="layui-btn" type="submit"><i class="layui-icon"></i>添加</button>
 				</form>
@@ -43,7 +45,7 @@
 					<tr>
 
 						<th>
-							<div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
+							<input type="checkbox" />
 						</th>
 						<th>ID</th>
 						<th>员工编码</th>
@@ -57,7 +59,7 @@
 				</thead>
 				<tbody >
 					<tr th:each="emp:${emps}">
-						<input type="checkbox"
+						<td><input name="empsDel" th:value="${emp.empCode}" type="checkbox" /></td>
 						<td th:text="${emp.empId}"></td>
 						<td th:text="${emp.empCode}"></td>
 						<td th:text="${emp.empName}"></td>
