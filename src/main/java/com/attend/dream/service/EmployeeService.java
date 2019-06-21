@@ -20,6 +20,9 @@ public class EmployeeService {
         return list;
     }
 
-//    public List<Employee> getEmployeesByName(String name)
+    public Employee getEmployeesByName(String empName){
+        Employee employee = employeesMapper.getEmployeesByName(empName);
+        return employee;
+    }
 
 }

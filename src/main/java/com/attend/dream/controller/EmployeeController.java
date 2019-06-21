@@ -23,7 +23,7 @@ public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
 
-    @GetMapping("/emps")
+    @GetMapping("/employee")
     public String list(Model model){
         Collection<Employee> employees=employeeService.getEmployees();
         model.addAttribute("emps",employees);
@@ -31,10 +31,13 @@ public class EmployeeController {
         return "/employee_list";
     }
 
-//
-//    @GetMapping("/empSer")
-//    public String ser(Model model){
-//        Collection
-//    }
+
+    @PostMapping("/emp/get")
+    public String getEmployeesByName(@RequestParam(value = "empName") String empName,Model model){
+        Employee employee = employeeService.getEmployeesByName(empName);
+        model.addAttribute("emps",employee);
+        return "/employee_list";
+    }
+
 
 }

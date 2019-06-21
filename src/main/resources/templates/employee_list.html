@@ -52,17 +52,11 @@
 		</div>
 		<div class="weadmin-body">
 			<div class="layui-row">
-				<form class="layui-form layui-col-md12 we-search">
-					<!-- <div class="layui-inline">
-						<input class="layui-input" placeholder="开始日" name="start" id="start">
-					</div>
+				<form class="layui-form layui-col-md12 we-search" method="post" th:action="@{/emp/get}">
 					<div class="layui-inline">
-						<input class="layui-input" placeholder="截止日" name="end" id="end">
-					</div> -->
-					<div class="layui-inline">
-						<input type="text" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+						<input type="text" name="empName" placeholder="请输入员工名" autocomplete="off" class="layui-input" >
 					</div>
-					<button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+					<button class="layui-btn" lay-submit="" lay-filter="sreach" ><i class="layui-icon">&#xe615;</i></button>
 				</form>
 			</div>
 			<div class="weadmin-block">
