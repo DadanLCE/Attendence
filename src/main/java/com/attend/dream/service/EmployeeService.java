@@ -21,8 +21,22 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployeesByName(String empName){
-        List<Employee> employee = employeesMapper.getEmployeesByname(empName);
+        List<Employee> employee = employeesMapper.getEmployeesByName(empName);
         return employee;
+    }
+
+    //添加员工
+    public boolean insertEmployee(Employee e) {
+
+        String uniqueCode = e.getEmpCode();
+        Employee employee = employeesMapper.isEmpCodeExist(uniqueCode);
+        if (employee == null) {
+            employeesMapper.insertEmployee(e);
+            return true;
+        }else {
+            return true;
+        }
+
     }
 
     public boolean deleteEmployee(int empId){

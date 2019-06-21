@@ -19,95 +19,95 @@
 
 	<body>
 		<div class="weadmin-body">
-			<form class="layui-form">
+			<form class="layui-form" th:action="@{/emp/addEmployee}" method="post">
 				<div class="layui-form-item">
 					<label for="L_username" class="layui-form-label">
 		                <span class="we-red">*</span>员工编码
 		            </label>
 					<div class="layui-input-inline">
-						<input type="text" id="L_username" name="username" lay-verify="required|nikename" autocomplete="off" class="layui-input">
+						<input type="text" id="L_username" name="empCode" lay-verify="required|nikename" autocomplete="off" class="layui-input">
 					</div>
 					<div class="layui-form-mid layui-word-aux">
 						将会成为您唯一的登录名
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label for="L_email" class="layui-form-label">
+					<label  class="layui-form-label">
 		                <span class="we-red">*</span>姓名
 		            </label>
 					<div class="layui-input-inline">
-						<input type="text" id="L_name" name="name" lay-verify="required|name" autocomplete="" class="layui-input">
+						<input type="text" id="L_name" name="empName" lay-verify="required|name" autocomplete="" class="layui-input">
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label for="L_email" class="layui-form-label">
+					<label  class="layui-form-label">
 		                <span class="we-red">*</span>年龄	
 		            </label>
 					<div class="layui-input-inline">
-						<input type="text" id="L_age" name="age" autocomplete="off" class="layui-input">
+						<input type="text" id="L_age" name="empAge" autocomplete="off" class="layui-input">
 					</div>
 
 				</div>
 				<div class="layui-form-item">
-					<label for="L_pass" class="layui-form-label">
+					<label  class="layui-form-label">
                   <span class="we-red">*</span>民族
               </label>
 					<div class="layui-input-inline">
-						<input type="text" id="L_nation" name="nation" lay-verify="required|nation" autocomplete="off" class="layui-input">
+						<input type="text" id="L_nation" name="empNation" lay-verify="required|nation" autocomplete="off" class="layui-input">
 					</div>	
 				</div>
 				<div class="layui-form-item">
-					<label for="L_repass" class="layui-form-label">
+					<label  class="layui-form-label">
                   <span class="we-red">*</span>身份证
               </label>
 					<div class="layui-input-inline">
-						<input type="text" id="L_identifycard" name="identifycard" lay-verify="required|identifycard" autocomplete="off" class="layui-input">
+						<input type="text" id="L_identifycard" name="empIdCard" lay-verify="required|identifycard" autocomplete="off" class="layui-input">
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label for="L_repass" class="layui-form-label">
+					<label  class="layui-form-label">
                   <span class="we-red">*</span>薪水
               </label>
 					<div class="layui-input-inline">
-						<input type="text" id="L_salary" name="salary" lay-verify="required|salary" autocomplete="off" class="layui-input">
+						<input type="text" id="L_salary" name="empSalary" lay-verify="required|salary" autocomplete="off" class="layui-input">
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label for="L_repass" class="layui-form-label">
+					<label  class="layui-form-label">
                   <span class="we-red">*</span>联系电话
               </label>
 					<div class="layui-input-inline">
-						<input type="text" id="L_salary" name="salary" lay-verify="required|salary" autocomplete="off" class="layui-input">
+						<input type="text" id="L_salary" name="empContact" lay-verify="required|salary" autocomplete="off" class="layui-input">
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label for="L_repass" class="layui-form-label">
+					<label  class="layui-form-label">
                   <span class="we-red">*</span>紧急联系人
               </label>
 					<div class="layui-input-inline">
-						<input type="text" id="L_salary" name="salary" lay-verify="required|salary" autocomplete="off" class="layui-input">
+						<input type="text" id="L_salary" name="empCTel" lay-verify="required|salary" autocomplete="off" class="layui-input">
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label for="L_repass" class="layui-form-label">
+					<label  class="layui-form-label">
                   <span class="we-red">*</span>岗位
               </label>
 					<div class="layui-input-inline">
-						<!-- <input type="text" id="L_salary" name="salary" lay-verify="required|salary" autocomplete="off" class="layui-input"> -->
-						<select>
-							<option value ="CEO">CEO-总经理</option>
-							<option value ="KJ">KJ-会计</option>
-							<option value="QT">QT-前台</option>
-							<option value="HQ">HQ-后勤</option>
-						  </select>	
+						 <input type="text" id="L_salary" name="empStaCode" lay-verify="required|salary" autocomplete="off" class="layui-input">
+						<!--<select>-->
+							<!--<option value ="CEO">CEO-总经理</option>-->
+							<!--<option value ="KJ">KJ-会计</option>-->
+							<!--<option value="QT">QT-前台</option>-->
+							<!--<option value="HQ">HQ-后勤</option>-->
+						  <!--</select>	-->
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label for="L_repass" class="layui-form-label">
-                  <span class="we-red">*</span>个人描述
+					<label  class="layui-form-label">
+                  <span class="we-red">*</span>简介
               </label>
 					<div class="layui-input-inline">
-						<input type="textarea" id="L_salary" name="salary" lay-verify="required|salary" autocomplete="off" class="layui-input">
+						<input type="textarea" id="L_salary" name="empNote" lay-verify="required|salary" autocomplete="off" class="layui-input">
 					</div>
 				</div>
 
@@ -116,13 +116,13 @@
 
 
 				<div class="layui-form-item">
-					<label for="L_repass" class="layui-form-label">
+					<label  class="layui-form-label">
               </label>
 					<button class="layui-btn" lay-filter="add" lay-submit="">确定</button>
 				</div>
 			</form>
 		</div>
-		<script src="../../lib/layui/layui.js" charset="utf-8"></script>
+		<script src="../../lib/layui/layui.js" th:src="@{/layui/layui.js}" charset="utf-8"></script>
 		
 		<script>
 			layui.extend({
@@ -159,52 +159,52 @@
 					}
 				});
 
-				//监听提交
-				form.on('submit(add)', function(data) {
-					//console.log(data.field);
-					var f = data.field;
-					//console.log(f.username);
-					//console.log(f.sex);				
-					//var sex = $('input:radio[name="sex"]:checked').val();
-					
-					//发异步，把数据提交给php
-					layer.alert("增加成功", {
-						icon: 6
-					}, function() {
-						//获取提交成功的时间
-						var time = new Date();
-						var timeNow = util.toDateString(time);
-						// 获得frame索引
-						var index = parent.layer.getFrameIndex(window.name);
-					
-    					var _len = parent.$('#memberList tr').length;
-    					alert(_len);
-						parent.$('#memberList').append(						
-							'<tr data-id="' + _len + '">' +
-								'<td>'+
-									'<div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="' + _len + '"><i class="layui-icon">&#xe605;</i></div>'+
-								'</td>'+
-								'<td>' + _len + '</td>'+
-								'<td>'+f.username+'</td>'+
-								'<td>'+f.sex+'</td>'+
-								'<td>'+f.phone+'</td>'+
-								'<td>'+f.email+'</td>'+
-								'<td>北京市西城区</td>'+
-								'<td>'+timeNow+'</td>'+
-								'<td class="td-status"><span class="layui-btn layui-btn-normal layui-btn-xs">已启用</span></td>'+
-								'<td class="td-manage">'+
-									'<a onclick="member_stop(this,\'10001\')" href="javascript:;" title="启用"><i class="layui-icon">&#xe601;</i></a>'+
-									'<a title="编辑" onclick="WeAdminShow(\'编辑\',\'./edit.html\',600,400)" href="javascript:;"><i class="layui-icon">&#xe642;</i></a>'+
-									'<a onclick="WeAdminShow(\'修改密码\',\'./password.html\',600,400)" title="修改密码" href="javascript:;"><i class="layui-icon">&#xe631;</i></a>'+
-									'<a title="删除" onclick="member_del(this,\'要删除的id\')" href="javascript:;"><i class="layui-icon">&#xe640;</i></a>'+
-								'</td>'+
-							'</tr>'	
-						);
-						//关闭当前frame
-						parent.layer.close(index);
-					});
-					return false;
-				});
+				// //监听提交
+				// form.on('submit(add)', function(data) {
+				// 	//console.log(data.field);
+				// 	var f = data.field;
+				// 	//console.log(f.username);
+				// 	//console.log(f.sex);
+				// 	//var sex = $('input:radio[name="sex"]:checked').val();
+				//
+				// 	//发异步，把数据提交给php
+				// 	layer.alert("增加成功", {
+				// 		icon: 6
+				// 	}, function() {
+				// 		//获取提交成功的时间
+				// 		var time = new Date();
+				// 		var timeNow = util.toDateString(time);
+				// 		// 获得frame索引
+				// 		var index = parent.layer.getFrameIndex(window.name);
+				//
+    			// 		var _len = parent.$('#memberList tr').length;
+    			// 		alert(_len);
+				// 		parent.$('#memberList').append(
+				// 			'<tr data-id="' + _len + '">' +
+				// 				'<td>'+
+				// 					'<div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="' + _len + '"><i class="layui-icon">&#xe605;</i></div>'+
+				// 				'</td>'+
+				// 				'<td>' + _len + '</td>'+
+				// 				'<td>'+f.username+'</td>'+
+				// 				'<td>'+f.sex+'</td>'+
+				// 				'<td>'+f.phone+'</td>'+
+				// 				'<td>'+f.email+'</td>'+
+				// 				'<td>北京市西城区</td>'+
+				// 				'<td>'+timeNow+'</td>'+
+				// 				'<td class="td-status"><span class="layui-btn layui-btn-normal layui-btn-xs">已启用</span></td>'+
+				// 				'<td class="td-manage">'+
+				// 					'<a onclick="member_stop(this,\'10001\')" href="javascript:;" title="启用"><i class="layui-icon">&#xe601;</i></a>'+
+				// 					'<a title="编辑" onclick="WeAdminShow(\'编辑\',\'./edit.html\',600,400)" href="javascript:;"><i class="layui-icon">&#xe642;</i></a>'+
+				// 					'<a onclick="WeAdminShow(\'修改密码\',\'./password.html\',600,400)" title="修改密码" href="javascript:;"><i class="layui-icon">&#xe631;</i></a>'+
+				// 					'<a title="删除" onclick="member_del(this,\'要删除的id\')" href="javascript:;"><i class="layui-icon">&#xe640;</i></a>'+
+				// 				'</td>'+
+				// 			'</tr>'
+				// 		);
+				// 		//关闭当前frame
+				// 		parent.layer.close(index);
+				// 	});
+				// 	return false;
+				// });
 
 			});
 		</script>

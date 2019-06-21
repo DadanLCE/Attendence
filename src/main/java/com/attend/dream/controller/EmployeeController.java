@@ -17,6 +17,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class EmployeeController {
@@ -41,12 +42,32 @@ public class EmployeeController {
         return "employee_list";
     }
 
+    @GetMapping("/emp/goToAddHtml")
+    public String gotoAddEmployee() {
+        return "add_employee";
     //删除单行员工信息
     @DeleteMapping("/emp/{empId}")
     public String deleteEmployee(@PathVariable(value = "empId") int empId){
         employeeService.deleteEmployee(empId);
         return "redirect:/employee";
     }
+
+
+
+    @PostMapping("/emp/addEmployee")
+    public String addEmployee(Employee emp, Map<String,Object> map) {
+
+        String empCode = emp.getEmpCode();
+
+        employeeService.insertEmployee(emp);
+        return "index";
+
+    }
+//
+//    @GetMapping("/department")
+//    public String gotoDep() {
+//        return "department_list";
+//    }
 
 
 

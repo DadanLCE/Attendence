@@ -16,14 +16,20 @@ public interface EmployeesMapper {
             "from employees where empName = #{empName}")
     Employee getEmployeeByName(String empName);
 
+    //直接判断有没有empCode
+    @Select("select * from employees where empCode = #{empCode}")
+    Employee isEmpCodeExist(String empCode);
+
+    //模糊查询
     @Select("select empId,empCode,empName,empSex,empAge,empNation,empIdCard,empSalary,empTel,empContact,empCTel,empStaCode,empNote\n" +
             "from employees where empName LIKE CONCAT('%',#{empName},'%') ")
-    List<Employee> getEmployeesByname(String empName);
+    List<Employee> getEmployeesByName(String empName);
 
     //通过员工编码查询
     @Select("select empId,empCode,empName,empSex,empAge,empNation,empIdCard,empSalary,empTel,empContact,empCTel,empStaCode,empNote\n" +
             "from employees where empCode = #{empCode}")
     Employee getEmployeesByempCode(String empCode);
+
     //添加员工
     @Insert("insert into employees(empId,empCode,empName,empSex,empAge,empNation,empIdCard,empSalary,empTel,empContact,empCTel,empStaCode,empNote)\n" +
             "values(#{empId},#{empCode},#{empName},#{empSex},#{empAge},#{empNation},#{empIdCard},#{empSalary},#{empTel},#{empContact},#{empCTel},#{empStaCode},#{empNote})")
