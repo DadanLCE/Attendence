@@ -45,6 +45,7 @@ public class EmployeeController {
     @GetMapping("/emp/goToAddHtml")
     public String gotoAddEmployee() {
         return "add_employee";
+    }
     //删除单行员工信息
     @DeleteMapping("/emp/{empId}")
     public String deleteEmployee(@PathVariable(value = "empId") int empId){
