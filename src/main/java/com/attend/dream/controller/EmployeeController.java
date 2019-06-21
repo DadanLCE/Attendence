@@ -24,6 +24,7 @@ public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
 
+
     @GetMapping("/employee")
     public String list(Model model){
         Collection<Employee> employees=employeeService.getEmployees();
@@ -37,7 +38,12 @@ public class EmployeeController {
     public String getEmployeesByName(@RequestParam(value = "empName") String empName,Model model){
         Employee employee = employeeService.getEmployeesByName(empName);
         model.addAttribute("emps",employee);
-        return "/employee_list";
+        return "employee_list";
+    }
+
+    @GetMapping("/department")
+    public String gotoDep() {
+        return "department_list";
     }
 
 
