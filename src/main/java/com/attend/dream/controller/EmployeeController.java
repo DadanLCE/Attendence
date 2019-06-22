@@ -26,7 +26,7 @@ public class EmployeeController {
 
     @Autowired
     EmployeeService employeeService;
-
+    private int maxPage ;
     //显示全部员工列表
 //    @GetMapping("/employee")
 //    public String list(Model model){
@@ -47,17 +47,8 @@ public class EmployeeController {
         List<Employee> emps = employeeService.getEmployeesByPage(currentPage,pageSize);
         model.addAttribute("emps",emps);
         model.addAttribute("empsPage",employeePage);
-//        System.out.println(emps);
-        System.out.println(currentPage);
+        maxPage = employeePage.getNavigateLastPage();
 
-//        for (Employee e: emps
-//             ) {
-//            System.out.println(e);
-//
-//        }
-        System.out.println();
-        System.out.println(employeePage.getPageSize());
-        System.out.println(employeePage.getNextPage());
         return "employee_list";
     }
 
@@ -102,7 +93,7 @@ public class EmployeeController {
         String fallBack = employeeService.insertEmployee(emp);
 
         if ( fallBack.equals("1")) {
-            return "redirect:/employee";
+            return "redirect:/employee?currentPage="+maxPage;
         } else if ( fallBack.equals("2")){
             map.put("msg","员工编码已存在");
             return "add_employee";

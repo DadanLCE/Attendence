@@ -55,6 +55,7 @@
 									</h4>
 								</div>
 								<div class="weadmin-body">
+
 									<form class="layui-form" th:action="@{/emp/addEmployee}" method="post">
 										<div class="layui-form-item">
 											<label for="L_username" class="layui-form-label">
@@ -77,7 +78,7 @@
 												<span class="we-red">*</span>性别
 											</label>
 											<div class="layui-input-inline">
-												<input type="text" id="L_name" name="empName" lay-verify="required|name" autocomplete="" class="layui-input">
+												<input type="text" id="L_name" name="empSex" lay-verify="required|name" autocomplete="" class="layui-input">
 											</div>
 										</div>
 										<div class="layui-form-item">
@@ -151,11 +152,6 @@
 												<input type="textarea" id="L_salary" name="empNote" lay-verify="required|salary" autocomplete="off" class="layui-input">
 											</div>
 										</div>
-
-
-
-
-
 										<div class="layui-form-item">
 											<label  class="layui-form-label">
 											</label>
@@ -169,7 +165,7 @@
 				<!--</form>-->
 				<span class="fr" style="line-height:40px">共有数据：88 条</span>
 			</div>
-			<table class="layui-table" id="memberList">
+			<table class="layui-table" id="memberList" >
 				<thead>
 					<tr>
 
@@ -211,13 +207,13 @@
 				</tbody>
 			</table>
 
-			<div class="page">
+			<div class="page" style="position:absolute; top:630px; margin-left: 680px;">
 				<div>
 					<!--<a class="prev" th:action="@{/employee/}+${empsPage.nextPage}">&lt;&lt;</a>-->
 
-					<a class="num" th:if=" ${empsPage.prePage} gt 0 "  th:href="@{'/employee?currentPage='+${empsPage.prePage}}">上一页[[${empsPage.prePage}]]</a>
+					<a class="num" th:if=" ${empsPage.prePage} gt 0 "  th:href="@{'/employee?currentPage='+${empsPage.prePage}}">上一页&nbsp;[[${empsPage.prePage}]]</a>
 					<span class="current">[[${empsPage.pageNum}]]</span>
-					<a class="num" th:if=" ${empsPage.nextPage} gt 0 "  th:href="@{'/employee?currentPage='+${empsPage.nextPage}}">下一页[[${empsPage.nextPage}]]</a>
+					<a class="num" th:if=" ${empsPage.nextPage} gt 0 "  th:href="@{'/employee?currentPage='+${empsPage.nextPage}}">下一页&nbsp;[[${empsPage.nextPage}]]</a>
 					<!--<a class="num" href="">489</a>-->
 					<!--<a class="next" href="">&gt;&gt;</a>-->
 				</div>
