@@ -65,5 +65,22 @@ public class EmployeeService {
         return true;
     }
 
+    public Employee getEmpById(int empId) {
+
+        return employeesMapper.findEmployeeById(empId);
+    }
+
+    public String updateEmployee(int empId) {
+
+        Employee e = employeesMapper.findEmployeeById(empId);
+
+        return "1";
+    }
+
+    public String updateEmployee( Employee e) {
+        employeesMapper.updateEmployeeById(e);
+        return "employee_list";
+    }
+
 
 }

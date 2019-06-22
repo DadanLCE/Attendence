@@ -72,13 +72,13 @@ public class EmployeeController {
 
         String fallBack = employeeService.insertEmployee(emp);
 
-        if ( fallBack.equals("1")) {
+        if ( fallBack.equals("1") ) {
             map.put("msg","插入成功");
-            return "employee_list";
-        } else if ( fallBack.equals("2")){
+            return "redirect:/employee_list.html";
+        } else if ( fallBack.equals("2") ){
             map.put("msg","员工编码已存在");
             return "add_employee";
-        } else if (fallBack.equals("3")) {
+        } else if ( fallBack.equals("3") ) {
             map.put("msg","暂时还没有这个岗位！！！");
             return "add_employee";
         } else{
@@ -88,12 +88,30 @@ public class EmployeeController {
         //return "index";
 
     }
-//
-//    @GetMapping("/department")
-//    public String gotoDep() {
-//        return "department_list";
-//    }
 
+    @PostMapping("/emp/getAtagValue")
+    public String getIdByAtag() {
 
+        return "";
+    }
+    @GetMapping("/emp/goToUpdateHtml")
+    public String gotoUpdateEmployee() {
+        return "update_employee";
+    }
+
+    @GetMapping("/emp/getEmpById/{id}")
+    @ResponseBody
+    public Employee getEmpById(@PathVariable(value = "id") int empId) {
+        Employee emp = employeeService.getEmpById(empId);
+        return emp;
+
+    }
+
+    @PostMapping("/emp/updateEmp")
+    public String updateEmployee(Employee e) {
+        System.out.println(e.getEmpCode());
+        employeeService.updateEmployee(e);
+        return "employee_list";
+    }
 
 }

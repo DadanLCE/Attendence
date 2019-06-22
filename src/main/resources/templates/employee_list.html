@@ -68,7 +68,7 @@
 						<td th:text="${emp.empNation}"></td>
 						<td th:text="${emp.empStaCode}"></td>
 						<td class="td-manage">
-							<a title="编辑" onclick="WeAdminEdit('编辑','./edit.html', 1, 600, 400)" href="javascript:;">
+							<a title="编辑" name="id" th:id="${emp.empId}" onclick="getId(this)" >
 								<i class="layui-icon">&#xe642;</i>
 							</a>
 							<form th:action="@{/emp/}+${emp.empId}" method="post" >
@@ -124,6 +124,16 @@
 					});
 				}
 			}
+
+		</script>
+		<script type="text/javascript">
+
+			function getId(data) {
+				alert("找到方法");
+				alert(data.id);
+				var url = "/emp/goToUpdateHtml"+"?id="+(data.id);
+				window.open(url);
+			};
 
 		</script>
 	</body>
