@@ -52,9 +52,11 @@ public class EmployeeController {
     @DeleteMapping("/emp/{empId}")
     public String deleteEmployee(@PathVariable(value = "empId") int empId){
         employeeService.deleteEmployee(empId);
-        return "employee_list";
+        return "redirect:/employee";
     }
 
+
+    //批量删除
     @PostMapping("/emp/delEmps")
     public String empsDelete(String userList){
         String[] strs = userList.split(",");
@@ -73,8 +75,7 @@ public class EmployeeController {
         String fallBack = employeeService.insertEmployee(emp);
 
         if ( fallBack.equals("1")) {
-            map.put("msg","插入成功");
-            return "employee_list";
+            return "redirect:/employee";
         } else if ( fallBack.equals("2")){
             map.put("msg","员工编码已存在");
             return "add_employee";
@@ -85,15 +86,5 @@ public class EmployeeController {
             return "index";
         }
 
-        //return "index";
-
     }
-//
-//    @GetMapping("/department")
-//    public String gotoDep() {
-//        return "department_list";
-//    }
-
-
-
 }

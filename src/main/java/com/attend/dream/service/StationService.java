@@ -1,5 +1,6 @@
 package com.attend.dream.service;
 
+import com.attend.dream.domain.Department;
 import com.attend.dream.domain.Employee;
 import com.attend.dream.domain.Station;
 import com.attend.dream.mapper.StationMapper;
@@ -32,16 +33,26 @@ public class StationService {
         return true;
     }
 
-    //添加员工
-    public boolean insertStation(Station e) {
 
-        String uniqueCode = e.getStaCode();
-        Station station = stationMapper.getStationByStaCode(uniqueCode);
-        if (station == null) {
-            stationMapper.insertStation(e);
-            return true;
-        }else {
-            return true;
+    //添加岗位
+    public String insertStation(Station s) {
+
+        String staCode = s.getStaCode();
+
+        /**
+         * 判断是否已经存在岗位编码
+         */
+
+        if (stationMapper.getStationByStaCode(staCode) != null ) {
+            return "2";
+            /**
+             * 判断是否有上级部门
+             */
+        } else if ( stationMapper.getStationByStaCode(s.getStaBoss()) == null ){
+            return "3";
+        } else {
+           stationMapper.insertStation(s);
+            return "1";
         }
 
     }

@@ -14,7 +14,7 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
         //registry.addViewController("/").setViewName("index");
         //进入主页后，用于防止刷新页面表单重复提交，设置重定向
         registry.addViewController("/index.html").setViewName("index");
-        registry.addViewController("/employee_list.html").setViewName("redirectEmpList");
+//        registry.addViewController("/employee_list.html").setViewName("employee_list");
     }
 
     /*@Override
