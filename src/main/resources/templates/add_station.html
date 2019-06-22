@@ -20,12 +20,13 @@
 	<body>
 		<div class="weadmin-body">
 			<form class="layui-form" th:action="@{/sta/addStation}" method="post">
+				<h1 style="color:red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></h1>
 				<div class="layui-form-item">
 					<label for="L_username" class="layui-form-label">
 		                <span class="we-red">*</span>岗位编码
 		            </label>
 					<div class="layui-input-inline">
-						<input type="text" id="L_username" name="username" lay-verify="required|nikename" autocomplete="off" class="layui-input">
+						<input type="text" id="L_username" name="staCode" lay-verify="required|nikename" autocomplete="off" class="layui-input">
 					</div>
 				</div>
 				<div class="layui-form-item">
@@ -33,7 +34,7 @@
 		                <span class="we-red">*</span>岗位名称
 		            </label>
 					<div class="layui-input-inline">
-						<input type="text" id="L_name" name="name" lay-verify="required|name" autocomplete="" class="layui-input">
+						<input type="text" id="L_name" name="staName" lay-verify="required|name" autocomplete="" class="layui-input">
 					</div>
 				</div>
 				<div class="layui-form-item">
@@ -41,26 +42,21 @@
                   <span class="we-red">*</span>所在部门
               </label>
 					<div class="layui-input-inline">
-						 <input type="text" id="L_salary" name="salary" lay-verify="required|salary" autocomplete="off" class="layui-input">
-						<select>
-							<option value ="ZCS">ZCS-总裁室</option>
-							<option value ="CWB">CWB-caiwubu </option>
-							<option value="HR">HR-人力资源部</option>
-						  </select>	
+						 <input type="text" id="L_salary" name="staDep" lay-verify="required|salary" autocomplete="off" class="layui-input">
+<!--						<select>-->
+<!--							<option value ="ZCS">ZCS-总裁室</option>-->
+<!--							<option value ="CWB">CWB-caiwubu </option>-->
+<!--							<option value="HR">HR-人力资源部</option>-->
+<!--						  </select>	-->
 					</div>
 				</div>
 				<div class="layui-form-item">
 					<label  class="layui-form-label">
-                  <span class="we-red">*</span>直接上级
+                  <span class="we-red">*</span>直接上级编码
               </label>
 					<div class="layui-input-inline">
-						 <input type="text" id="L_salary" name="salary" lay-verify="required|salary" autocomplete="off" class="layui-input">
-						<select>
-							<option value ="CEO">CEO-总经理</option>
-							<option value ="KJ">KJ-会计</option>
-							<option value="QT">QT-前台</option>
-							<option value="HQ">HQ-后勤</option>
-						  </select>	
+						 <input type="text" id="L_salary" name="staBoss" lay-verify="required|salary" autocomplete="off" class="layui-input">
+
 					</div>
 				</div>
 				<div class="layui-form-item">
@@ -68,7 +64,7 @@
                   <span class="we-red">*</span>岗位类别
               </label>
 					<div class="layui-input-inline">
-						 <input type="text" id="L_salary" name="salary" lay-verify="required|salary" autocomplete="off" class="layui-input">
+						 <input type="text" id="L_salary" name="staCate" lay-verify="required|salary" autocomplete="off" class="layui-input">
 						<select>
 							<option value ="GL">管理类</option>
 							<option value ="WZ">文职类</option>
@@ -78,10 +74,10 @@
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">
-                  <span class="we-red">*</span>个人描述
+                  <span class="we-red">*</span>职责描述
               </label>
 					<div class="layui-input-inline">
-						<input type="textarea" id="L_salary" name="salary" lay-verify="required|salary" autocomplete="off" class="layui-input">
+						<input type="textarea" id="L_salary" name="staDes" lay-verify="required|salary" autocomplete="off" class="layui-input">
 					</div>
 				</div>
 

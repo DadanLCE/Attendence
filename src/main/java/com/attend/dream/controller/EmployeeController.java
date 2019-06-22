@@ -24,12 +24,28 @@ public class EmployeeController {
 
     @Autowired
     EmployeeService employeeService;
-
+    private int maxPage ;
     //显示全部员工列表
+//    @GetMapping("/employee")
+//    public String list(Model model){
+//        Collection<Employee> employees=employeeService.getEmployees();
+//        model.addAttribute("emps",employees);
+//
+//        return "employee_list";
+//    }
+
+
+    //通过 分页 显示全部员工列表
     @GetMapping("/employee")
-    public String list(Model model){
-        Collection<Employee> employees=employeeService.getEmployees();
-        model.addAttribute("emps",employees);
+    public String employeePage(Model model,@RequestParam(value = "currentPage") int currentPage,
+                                @RequestParam(value = "pageSize", defaultValue = "5") int pageSize){
+
+
+        PageInfo<Employee> employeePage = employeeService.getEmployeesPage(currentPage,pageSize);
+        List<Employee> emps = employeeService.getEmployeesByPage(currentPage,pageSize);
+        model.addAttribute("emps",emps);
+        model.addAttribute("empsPage",employeePage);
+        maxPage = employeePage.getNavigateLastPage();
 
         return "employee_list";
     }
@@ -52,9 +68,11 @@ public class EmployeeController {
     @DeleteMapping("/emp/{empId}")
     public String deleteEmployee(@PathVariable(value = "empId") int empId){
         employeeService.deleteEmployee(empId);
-        return "employee_list";
+        return "redirect:/employee";
     }
 
+
+    //批量删除
     @PostMapping("/emp/delEmps")
     public String empsDelete(String userList){
         String[] strs = userList.split(",");
@@ -72,28 +90,23 @@ public class EmployeeController {
 
         String fallBack = employeeService.insertEmployee(emp);
 
-        if ( fallBack.equals("1") ) {
-            map.put("msg","插入成功");
-            return "redirect:/employee_list.html";
-        } else if ( fallBack.equals("2") ){
+        if ( fallBack.equals("1")) {
+            return "redirect:/employee?currentPage="+maxPage;
+        } else if ( fallBack.equals("2")){
             map.put("msg","员工编码已存在");
             return "add_employee";
-        } else if ( fallBack.equals("3") ) {
+        } else if (fallBack.equals("3")) {
             map.put("msg","暂时还没有这个岗位！！！");
             return "add_employee";
         } else{
             return "index";
         }
 
-        //return "index";
+
 
     }
 
-    @PostMapping("/emp/getAtagValue")
-    public String getIdByAtag() {
 
-        return "";
-    }
     @GetMapping("/emp/goToUpdateHtml")
     public String gotoUpdateEmployee() {
         return "update_employee";

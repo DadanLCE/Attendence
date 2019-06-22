@@ -48,20 +48,34 @@ public class StationController {
     }
 
     //批量删除员工
-    @DeleteMapping("/sta/stasDel")
-    public String deleteEmployees(@RequestParam(value = "staIds") int[] staIds){
-        for(int i : staIds)
-            stationService.deleteStation(i);
-        return "redirect:/station";
+    @PostMapping("/sta/stasDel")
+    public String stasDelete(String staList){
+        String[] strs = staList.split(",");
+        for (int i = 0; i < strs.length; i++) {
+            stationService.deleteStation(Integer.parseInt(strs[i]));
+        }
+        return "station_list";
+
     }
 
-
-//    //添加员工
+    //添加员工
     @PostMapping("/sta/addStation")
     public String addStation(Station sta, Map<String,Object> map) {
-//        String staCode = sta.getStaCode();
-        stationService.insertStation(sta);
-        return "index";
+
+        String fallBack = stationService.insertStation(sta);
+
+        if ( fallBack.equals("1")) {
+            return "redirect:/station";
+        } else if ( fallBack.equals("2")){
+            map.put("msg","岗位已存在");
+            return "add_station";
+        } else if (fallBack.equals("3")) {
+            map.put("msg","上级部门不存在");
+            return "add_station";
+        } else{
+            return "index";
+        }
 
     }
+
 }
