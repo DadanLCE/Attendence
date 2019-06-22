@@ -42,26 +42,50 @@ public class EmployeeController {
         return "employee_list";
     }
 
+    //点击添加跳转到添加页面
     @GetMapping("/emp/goToAddHtml")
     public String gotoAddEmployee() {
         return "add_employee";
     }
+
     //删除单行员工信息
     @DeleteMapping("/emp/{empId}")
     public String deleteEmployee(@PathVariable(value = "empId") int empId){
         employeeService.deleteEmployee(empId);
-        return "redirect:/employee";
+        return "employee_list";
+    }
+
+    @PostMapping("/emp/delEmps")
+    public String empsDelete(String userList){
+        String[] strs = userList.split(",");
+        for (int i = 0; i < strs.length; i++) {
+            employeeService.deleteEmployee(Integer.parseInt(strs[i]));
+        }
+        return "employee_list";
+
     }
 
 
-
+    //添加员工
     @PostMapping("/emp/addEmployee")
     public String addEmployee(Employee emp, Map<String,Object> map) {
 
-        String empCode = emp.getEmpCode();
+        String fallBack = employeeService.insertEmployee(emp);
 
-        employeeService.insertEmployee(emp);
-        return "index";
+        if ( fallBack.equals("1")) {
+            map.put("msg","插入成功");
+            return "employee_list";
+        } else if ( fallBack.equals("2")){
+            map.put("msg","员工编码已存在");
+            return "add_employee";
+        } else if (fallBack.equals("3")) {
+            map.put("msg","暂时还没有这个岗位！！！");
+            return "add_employee";
+        } else{
+            return "index";
+        }
+
+        //return "index";
 
     }
 //

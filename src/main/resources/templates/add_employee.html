@@ -20,6 +20,7 @@
 	<body>
 		<div class="weadmin-body">
 			<form class="layui-form" th:action="@{/emp/addEmployee}" method="post">
+				<h1 style="color:red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></h1>
 				<div class="layui-form-item">
 					<label for="L_username" class="layui-form-label">
 		                <span class="we-red">*</span>员工编码
