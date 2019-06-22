@@ -41,7 +41,7 @@
 				<!--<form action="" th:action="@{/emp/goToAddHtml}" th:method="get">-->
 				<!--<button class="layui-btn" type="submit"><i class="layui-icon"></i>添加</button>-->
 					<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-						开始演示模态框
+						添加用户
 					</button>
 					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						<div class="modal-dialog">
@@ -51,7 +51,7 @@
 										&times;
 									</button>
 									<h4 class="modal-title" id="myModalLabel">
-										模态框（Modal）标题
+										新增用户
 									</h4>
 								</div>
 								<div class="weadmin-body">
@@ -73,6 +73,14 @@
 											</label>
 											<div class="layui-input-inline">
 												<input type="text" id="L_name" name="empName" lay-verify="required|name" autocomplete="" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-form-item">
+											<label  class="layui-form-label">
+												<span class="we-red">*</span>性别
+											</label>
+											<div class="layui-input-inline">
+												<input type="text" id="L_name" name="empSex" lay-verify="required|name" autocomplete="" class="layui-input">
 											</div>
 										</div>
 										<div class="layui-form-item">

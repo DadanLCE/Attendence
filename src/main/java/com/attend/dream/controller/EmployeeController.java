@@ -27,6 +27,15 @@ public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
 
+    private int maxPage ;
+    //显示全部员工列表
+//    @GetMapping("/employee")
+//    public String list(Model model){
+//        Collection<Employee> employees=employeeService.getEmployees();
+//        model.addAttribute("emps",employees);
+//
+//        return "employee_list";
+//    }
 
 
     //通过 分页 显示全部员工列表
@@ -91,7 +100,7 @@ public class EmployeeController {
         String fallBack = employeeService.insertEmployee(emp);
 
         if ( fallBack.equals("1")) {
-            return "redirect:/employee";
+            return "redirect:/employee?currentPage="+maxPage;
         } else if ( fallBack.equals("2")){
             map.put("msg","员工编码已存在");
             return "add_employee";
