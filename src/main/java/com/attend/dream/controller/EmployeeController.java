@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sun.plugin2.message.Message;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -52,22 +53,27 @@ public class EmployeeController {
         return "employee_list";
     }
 
-    //查询通过姓名查询员工（模糊查询）
-    @PostMapping("/emp/get")
-    public String getEmployeesByName(@RequestParam(value = "empName") String empName,Model model){
-        List<Employee> employee = employeeService.getEmployeesByName(empName);
-        model.addAttribute("emps",employee);
-        return "employee?currentPage=1";
+    //查询员工通过名字 模糊查询 分页
+    @RequestMapping("/emp/get")
+    public String getEmployeesByName(Model model,@RequestParam(value = "currentPage") int currentPage,
+                                     @RequestParam(value = "pageSize", defaultValue = "5") int pageSize,@RequestParam(value = "empName") String empName){
+        PageInfo<Employee> empsPage = employeeService.getEmployeesPageMsgByName(currentPage,pageSize,empName);
+        List<Employee> emps = employeeService.getEmployeesMsgByName(currentPage,pageSize,empName);
+        model.addAttribute("emps",emps);
+        model.addAttribute("empsPage",empsPage);
+        //模糊查询判断
+        model.addAttribute("empName",empName);
+        model.addAttribute("isFuzzy",1);
+        return "employee_list";
     }
 
+    //点击添加跳转到添加页面
+    @GetMapping("/emp/goToAddHtml")
+    public String gotoAddEmployee() {
+        return "add_employee";
+    }
 
-//    //点击添加跳转到添加页面
-//    @GetMapping("/emp/goToAddHtml")
-//    public String gotoAddEmployee() {
-//        return "add_employee";
-//    }
-
-    //删除单个员工信息
+    //删除单行员工信息
     @DeleteMapping("/emp/{empId}")
     public String deleteEmployee(@PathVariable(value = "empId") int empId){
         employeeService.deleteEmployee(empId);
@@ -82,7 +88,7 @@ public class EmployeeController {
         for (int i = 0; i < strs.length; i++) {
             employeeService.deleteEmployee(Integer.parseInt(strs[i]));
         }
-        return "employee_list";
+        return "redirect:/employee?currentPage=1";
 
     }
 

@@ -29,7 +29,7 @@
 		</div>
 		<div class="weadmin-body">
 			<div class="layui-row">
-				<form class="layui-form layui-col-md12 we-search" method="post" th:action="@{/emp/get}">
+				<form class="layui-form layui-col-md12 we-search" method="post" th:action="@{/emp/get?currentPage=1}">
 					<div class="layui-inline">
 						<input type="text" name="empName" placeholder="请输入员工名" autocomplete="off" class="layui-input" >
 					</div>
@@ -91,18 +91,6 @@
 				</tbody>
 			</table>
 
-			<!--分页查询-->
-			<div class="page" style="position:absolute; top:630px; margin-left: 680px;">
-				<div>
-					<!--<a class="prev" th:action="@{/employee/}+${empsPage.nextPage}">&lt;&lt;</a>-->
-
-					<a class="num" th:if=" ${empsPage.prePage} gt 0 "  th:href="@{'/employee?currentPage='+${empsPage.prePage}}">上一页&nbsp;[[${empsPage.prePage}]]</a>
-					<span class="current">[[${empsPage.pageNum}]]</span>
-					<a class="num" th:if=" ${empsPage.nextPage} gt 0 "  th:href="@{'/employee?currentPage='+${empsPage.nextPage}}">下一页&nbsp;[[${empsPage.nextPage}]]</a>
-					<!--<a class="num" href="">489</a>-->
-					<!--<a class="next" href="">&gt;&gt;</a>-->
-				</div>
-			</div>
 		</div>
 
 		<!--隐藏窗口，点击button弹出编辑页面-->
@@ -265,96 +253,115 @@
 									<input type="text" id="L_age" name="empAge" autocomplete="off" class="layui-input">
 								</div>
 
-							</div>
-							<div class="layui-form-item">
-								<label  class="layui-form-label">
-									<span class="we-red">*</span>民族
-								</label>
-								<div class="layui-input-inline">
-									<input type="text" id="L_nation" name="empNation" lay-verify="required|nation" autocomplete="off" class="layui-input">
+										</div>
+										<div class="layui-form-item">
+											<label  class="layui-form-label">
+												<span class="we-red">*</span>民族
+											</label>
+											<div class="layui-input-inline">
+												<input type="text" id="L_nation" name="empNation" lay-verify="required|nation" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-form-item">
+											<label  class="layui-form-label">
+												<span class="we-red">*</span>身份证
+											</label>
+											<div class="layui-input-inline">
+												<input type="text" id="L_identifycard" name="empIdCard" lay-verify="required|identifycard" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-form-item">
+											<label  class="layui-form-label">
+												<span class="we-red">*</span>薪水
+											</label>
+											<div class="layui-input-inline">
+												<input type="text" id="L_salary" name="empSalary" lay-verify="required|salary" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-form-item">
+											<label  class="layui-form-label">
+												<span class="we-red">*</span>联系电话
+											</label>
+											<div class="layui-input-inline">
+												<input type="text" id="L_salary" name="empContact" lay-verify="required|salary" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-form-item">
+											<label  class="layui-form-label">
+												<span class="we-red">*</span>紧急联系人
+											</label>
+											<div class="layui-input-inline">
+												<input type="text" id="L_salary" name="empCTel" lay-verify="required|salary" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-form-item">
+											<label  class="layui-form-label">
+												<span class="we-red">*</span>岗位
+											</label>
+											<div class="layui-input-inline">
+												<input type="text" id="L_salary" name="empStaCode" lay-verify="required|salary" autocomplete="off" class="layui-input">-->
+<!--												<select>-->
+<!--												<option value ="CEO">CEO-总经理</option>-->
+<!--												<option value ="KJ">KJ-会计</option>-->
+<!--												<option value="QT">QT-前台</option>-->
+<!--												<option value="HQ">HQ-后勤</option>-->
+<!--												</select>-->
+											</div>
+										</div>
+										<div class="layui-form-item">
+											<label  class="layui-form-label">
+												<span class="we-red">*</span>简介
+											</label>
+											<div class="layui-input-inline">
+												<input type="textarea" id="L_salary" name="empNote" lay-verify="required|salary" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-form-item">
+											<label  class="layui-form-label">
+											</label>
+											<button class="layui-btn" lay-filter="add" lay-submit="">确定</button>
+										</div>
+									</form>
 								</div>
-							</div>
-							<div class="layui-form-item">
-								<label  class="layui-form-label">
-									<span class="we-red">*</span>身份证
-								</label>
-								<div class="layui-input-inline">
-									<input type="text" id="L_identifycard" name="empIdCard" lay-verify="required|identifycard" autocomplete="off" class="layui-input">
-								</div>
-							</div>
-							<div class="layui-form-item">
-								<label  class="layui-form-label">
-									<span class="we-red">*</span>薪水
-								</label>
-								<div class="layui-input-inline">
-									<input type="text" id="L_salary" name="empSalary" lay-verify="required|salary" autocomplete="off" class="layui-input">
-								</div>
-							</div>
-							<div class="layui-form-item">
-								<label  class="layui-form-label">
-									<span class="we-red">*</span>联系电话
-								</label>
-								<div class="layui-input-inline">
-									<input type="text" id="L_salary" name="empTel" lay-verify="required|salary" autocomplete="off" class="layui-input">
-								</div>
-							</div>
-							<div class="layui-form-item">
-								<label  class="layui-form-label">
-									<span class="we-red">*</span>紧急联系人电话
-								</label>
-								<div class="layui-input-inline">
-									<input type="text" id="L_salary" name="empCTel" lay-verify="required|salary" autocomplete="off" class="layui-input">
-								</div>
-							</div>
-							<div class="layui-form-item">
-								<label  class="layui-form-label">
-									<span class="we-red">*</span>岗位
-								</label>
-								<div class="layui-input-inline">
-									<input type="text" id="L_salary" name="empStaCode" lay-verify="required|salary" autocomplete="off" class="layui-input">
-									<!--<select>-->
-									<!--<option value ="CEO">CEO-总经理</option>-->
-									<!--<option value ="KJ">KJ-会计</option>-->
-									<!--<option value="QT">QT-前台</option>-->
-									<!--<option value="HQ">HQ-后勤</option>-->
-									<!--</select>	-->
-								</div>
-							</div>
-							<div class="layui-form-item">
-								<label  class="layui-form-label">
-									<span class="we-red">*</span>简介
-								</label>
-								<div class="layui-input-inline">
-									<input type="textarea" id="L_salary" name="empNote" lay-verify="required|salary" autocomplete="off" class="layui-input">
-								</div>
-							</div>
-
-
-
-
-
-							<div class="layui-form-item">
-								<label  class="layui-form-label">
-								</label>
-								<button class="layui-btn" lay-filter="add" lay-submit="">确定</button>
-							</div>
-						</form>
+							</div><!-- /.modal-content -->
+						</div><!-- /.modal -->
 					</div>
-				</div><!-- /.modal-content -->
-			</div><!-- /.modal -->
+
+
+            <div class="page">
+                <div th:if="${isFuzzy == null}">
+                    <!--<a class="prev" th:action="@{/employee/}+${empsPage.nextPage}">&lt;&lt;</a>-->
+
+                    <a class="num" th:if=" ${empsPage.prePage} gt 0 "  th:href="@{'/employee?currentPage='+${empsPage.prePage}}">上一页[[${empsPage.prePage}]]</a>
+                    <span class="current">[[${empsPage.pageNum}]]</span>
+                    <a class="num" th:if=" ${empsPage.nextPage} gt 0 "  th:href="@{'/employee?currentPage='+${empsPage.nextPage}}">下一页[[${empsPage.nextPage}]]</a>
+                    <!--<a class="num" href="">489</a>-->
+                    <!--<a class="next" href="">&gt;&gt;</a>-->
+                </div>
+
+                <div th:if=" ${isFuzzy !=null} ">
+                    <!--<a class="prev" th:action="@{/employee/}+${empsPage.nextPage}">&lt;&lt;</a>-->
+
+                    <a class="num" th:if=" ${empsPage.prePage} gt 0 "  th:href="@{'/emp/get?currentPage='+${empsPage.prePage}+'&empName='+${empName}}">上一页[[${empsPage.prePage}]]</a>
+                    <span class="current">[[${empsPage.pageNum}]]</span>
+                    <a class="num" th:if=" ${empsPage.nextPage} gt 0 "  th:href="@{'/emp/get?currentPage='+${empsPage.nextPage}+'&empName='+${empName}}">下一页[[${empsPage.nextPage}]]</a>
+                    <!--<a class="num" href="">489</a>-->
+                    <!--<a class="next" href="">&gt;&gt;</a>-->
+                </div>
+            </div>
 		</div>
 
+        <!-- ***************************************************************** -->
+
+		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 		<script src="../lib/layui/layui.js" charset="utf-8" th:src="@{/layui/layui.js}"></script>
 		<script src="../static/js/eleDel.js" type="text/javascript" charset="utf-8" th:src="@{/js/eleDel.js}"></script>
 		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-
-		<script type="text/javascript">
-				var getServerMsg =
-
-		</script>
+		<!--<script src="../static/js/eleDel.js" type="text/javascript" charset="utf-8" th:src="@{/js/eleDel.js}"></script>-->
 		<script type="text/javascript">
 
 			function empsDelete() {
+
 				if (confirm("确定删除选中的用户？")) {
 					var userList = new Array();
 					$("input[name='empsDelete']:checked").each(function () {
