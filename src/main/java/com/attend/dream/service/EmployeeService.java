@@ -1,7 +1,9 @@
 package com.attend.dream.service;
 
 import com.attend.dream.domain.Employee;
+import com.attend.dream.domain.Station;
 import com.attend.dream.mapper.EmployeesMapper;
+import com.attend.dream.mapper.StationMapper;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,9 @@ public class EmployeeService {
     @Autowired(required = false)
     EmployeesMapper employeesMapper;
 
+    @Autowired(required = false)
+    StationMapper stationMapper;
+
     public List<Employee> getEmployees(){
         List<Employee> list = employeesMapper.getEmployees();
         return list;
@@ -26,20 +31,35 @@ public class EmployeeService {
     }
 
     //添加员工
-    public boolean insertEmployee(Employee e) {
+    public String insertEmployee(Employee e) {
 
+        //唯一编码
         String uniqueCode = e.getEmpCode();
+        //获取想插入的岗位码
+        String staCode = e.getEmpStaCode();
+
+        Station sta = stationMapper.getStationByStaCode(staCode);
         Employee employee = employeesMapper.isEmpCodeExist(uniqueCode);
-        if (employee == null) {
+
+        /**
+         *  employee != null → 存在员工，编码重复
+         *  sta != null → 岗位不符合要求
+         */
+
+        if (employee != null ) {
+            return "2";
+        } else if (sta == null ){
+            return "3";
+        } else {
             employeesMapper.insertEmployee(e);
-            return true;
-        }else {
-            return true;
+            return "1";
         }
+
 
     }
 
-    //删除员工
+    //
+
     public boolean deleteEmployee(int empId){
         employeesMapper.deleteEmployee(empId);
         return true;

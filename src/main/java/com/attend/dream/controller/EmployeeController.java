@@ -4,8 +4,6 @@ package com.attend.dream.controller;
 import com.attend.dream.domain.Employee;
 import com.attend.dream.service.EmployeeService;
 import com.attend.dream.service.UserService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Controller;
@@ -44,6 +42,7 @@ public class EmployeeController {
         return "employee_list";
     }
 
+    //点击添加跳转到添加页面
     @GetMapping("/emp/goToAddHtml")
     public String gotoAddEmployee() {
         return "add_employee";
@@ -53,26 +52,47 @@ public class EmployeeController {
     @DeleteMapping("/emp/{empId}")
     public String deleteEmployee(@PathVariable(value = "empId") int empId){
         employeeService.deleteEmployee(empId);
-        return "redirect:/employee";
+        return "employee_list";
     }
 
-    //批量删除员工
-    @DeleteMapping("/emp/empsDel")
-    public String deleteEmployees(@RequestParam(value = "empIds") int[] empIds){
-        for(int i : empIds)
-        employeeService.deleteEmployee(i);
-        return "redirect:/employee";
+    @PostMapping("/emp/delEmps")
+    public String empsDelete(String userList){
+        String[] strs = userList.split(",");
+        for (int i = 0; i < strs.length; i++) {
+            employeeService.deleteEmployee(Integer.parseInt(strs[i]));
+        }
+        return "employee_list";
+
     }
 
 
     //添加员工
     @PostMapping("/emp/addEmployee")
     public String addEmployee(Employee emp, Map<String,Object> map) {
-        String empCode = emp.getEmpCode();
-        employeeService.insertEmployee(emp);
-        return "index";
+
+        String fallBack = employeeService.insertEmployee(emp);
+
+        if ( fallBack.equals("1")) {
+            map.put("msg","插入成功");
+            return "employee_list";
+        } else if ( fallBack.equals("2")){
+            map.put("msg","员工编码已存在");
+            return "add_employee";
+        } else if (fallBack.equals("3")) {
+            map.put("msg","暂时还没有这个岗位！！！");
+            return "add_employee";
+        } else{
+            return "index";
+        }
+
+        //return "index";
 
     }
+//
+//    @GetMapping("/department")
+//    public String gotoDep() {
+//        return "department_list";
+//    }
 
 
 
