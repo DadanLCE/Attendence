@@ -38,8 +38,10 @@
 				</form>
 			</div>
 			<div class="weadmin-block">
-				<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-				<button class="layui-btn" onclick="WeAdminShow('添加用户','add_department.html',600,400)"><i class="layui-icon"></i>添加</button>
+				<button class="layui-btn layui-btn-danger" onclick="depsDelete()"><i class="layui-icon"></i>批量删除</button>
+				<form action="" th:action="@{/dep/goToAddHtml}" th:method="get">
+					<button class="layui-btn" type="submit"><i class="layui-icon"></i>添加</button>
+				</form>
 				<span class="fr" style="line-height:40px">共有数据：88 条</span>
 			</div>
 			<table class="layui-table" id="memberList">
@@ -58,25 +60,21 @@
 				</thead>
 				<tbody>
 				<tr th:each="dep:${deps}">
-					<div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="1"><i class="layui-icon">&#xe605;</i></div>
+					<td><input name="depIds" th:value="${dep.id}" type="checkbox" /></td>
 					<td th:text="${dep.id}"></td>
 					<td th:text="${dep.depCode}"></td>
 					<td th:text="${dep.depName}"></td>
 					<td th:text="${dep.depBossCode}"></td>
 					<td th:text="${dep.depTopId}"></td>
 					<td class="td-manage">
-						<a onclick="member_stop(this,'10001')" href="javascript:;" title="启用">
-							<i class="layui-icon">&#xe601;</i>
-						</a>
+
 						<a title="编辑" onclick="WeAdminEdit('编辑','./edit.html', 1, 600, 400)" href="javascript:;">
 							<i class="layui-icon">&#xe642;</i>
 						</a>
-						<a onclick="WeAdminShow('修改密码','./password.html',600,400)" title="修改密码" href="javascript:;">
-							<i class="layui-icon">&#xe631;</i>
-						</a>
-						<a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
-							<i class="layui-icon">&#xe640;</i>
-						</a>
+						<form th:action="@{/dep/}+${dep.id}" method="post" >
+							<input type="hidden" name="_method" value="delete" />
+							<button  type="submit" >删除</button>
+						</form>
 					</td>
 				</tr>
 
@@ -93,9 +91,36 @@
 				</div>
 			</div>
 		</div>
+
+	<!--       ************************************************************************  -->
+
 		<!--<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>-->
 		<script src="../lib/layui/layui.js" charset="utf-8" th:src="@{/layui/layui.js}"></script>
 		<script src="../static/js/eleDel.js" type="text/javascript" charset="utf-8" th:src="@{/js/eleDel.js}"></script>
+		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script type="text/javascript">
+			function depsDelete() {
+
+				if (confirm("确定删除选中的用户？")) {
+					var depList = new Array();
+					$("input[name='depIds']:checked").each(function () {
+						depList.push($(this).val());
+					});
+					$.ajax({
+						type: "post",
+						url: "/dep/depsDel",
+						data: {depList: depList.toString()},
+						success: function () {
+							alert("删除成功！");
+							location.reload();
+						},
+						error: function () {
+							alert("刪除失败！")
+						}
+					});
+				}
+			}
+		</script>
 	</body>
 
 </html>
