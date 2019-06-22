@@ -39,12 +39,12 @@
 				</form>
 			</div>
 			<div class="weadmin-block">
+					<button class="layui-btn layui-btn-danger" onclick="stasDelete()"><i class="layui-icon"></i>批量删除</button>
 					<form action="" th:action="@{/sta/goToAddHtml}" th:method="get">
 					<button class="layui-btn" type="submit"><i class="layui-icon"></i>添加</button>
 				</form>
 				<span class="fr" style="line-height:40px">共有数据：88 条</span>
 			</div>
-			<form method="post" th:action="@{/sta/stasDel}" >
 			<table class="layui-table" id="memberList">
 				<thead>
 					<tr>
@@ -62,7 +62,7 @@
 				</thead>
 				<tbody>
 				<tr th:each="sta:${stas}">
-					<td><input name="staIds" th:value="${sta.id}" type="checkbox" /></td>
+					<td><input name="stasDelete" th:value="${sta.id}" type="checkbox" /></td>
 					<td th:text="${sta.id}"></td>
 					<td th:text="${sta.staCode}"></td>
 					<td th:text="${sta.staName}"></td>
@@ -83,9 +83,7 @@
 				</tr>
 				</tbody>
 			</table>
-				<input type="hidden" name="_method" value="delete" />
-				<button class="layui-btn" type="submit"><i class="layui-icon"></i>批量删除</button>
-			</form>
+
 			<div class="page">
 				<div>
 					<a class="prev" href="">&lt;&lt;</a>
@@ -97,9 +95,37 @@
 				</div>
 			</div>
 		</div>
+
+		<!--       ************************************************************************  -->
+
 		<!--<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>-->
 		<script src="../lib/layui/layui.js" charset="utf-8" th:src="@{/layui/layui.js}"></script>
 		<script src="../static/js/eleDel.js" type="text/javascript" charset="utf-8" th:src="@{/js/eleDel.js}"></script>
+		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script type="text/javascript">
+
+			function stasDelete() {
+
+				if (confirm("确定删除选中的用户？")) {
+					var staList = new Array();
+					$("input[name='stasDelete']:checked").each(function () {
+						staList.push($(this).val());
+					});
+					$.ajax({
+						type: "post",
+						url: "/sta/stasDel",
+						data: {staList: staList.toString()},
+						success: function () {
+							alert("删除成功！");
+							location.reload();
+						},
+						error: function () {
+							alert("刪除失败！")
+						}
+					});
+				}
+			}
+		</script>
 	</body>
 
 </html>
