@@ -34,12 +34,13 @@
 				</form>
 			</div>
 			<div class="weadmin-block">
-				<button class="layui-btn layui-btn-danger" th:action="@{/emp/empsDel}"><i class="layui-icon"></i>批量删除</button>
+
 				<form action="" th:action="@{/emp/goToAddHtml}" th:method="get">
 				<button class="layui-btn" type="submit"><i class="layui-icon"></i>添加</button>
 				</form>
 				<span class="fr" style="line-height:40px">共有数据：88 条</span>
 			</div>
+			<form method="post" th:action="@{/emp/empsDel}" >
 			<table class="layui-table" id="memberList">
 				<thead>
 					<tr>
@@ -59,7 +60,7 @@
 				</thead>
 				<tbody >
 					<tr th:each="emp:${emps}">
-						<td><input name="empsDel" th:value="${emp.empCode}" type="checkbox" /></td>
+						<td><input name="empIds" th:value="${emp.empId}" type="checkbox" /></td>
 						<td th:text="${emp.empId}"></td>
 						<td th:text="${emp.empCode}"></td>
 						<td th:text="${emp.empName}"></td>
@@ -71,17 +72,19 @@
 							<a title="编辑" onclick="WeAdminEdit('编辑','./edit.html', 1, 600, 400)" href="javascript:;">
 								<i class="layui-icon">&#xe642;</i>
 							</a>
+
 							<form th:action="@{/emp/}+${emp.empId}" method="post" >
+								<button type="submit" >删除</button>
 								<input type="hidden" name="_method" value="delete" />
-								<button  type="submit" >删除</button>
 							</form>
-
 						</td>
-
 					</tr>
 				</tbody>
 			</table>
+					<input type="hidden" name="_method" value="delete" />
+					<button class="layui-btn" type="submit"><i class="layui-icon"></i>批量删除</button>
 
+			</form>
 			<div class="page">
 				<div>
 					<a class="prev" href="">&lt;&lt;</a>

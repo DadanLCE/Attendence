@@ -30,30 +30,28 @@
 		</div>
 		<div class="weadmin-body">
 			<div class="layui-row">
-				<form class="layui-form layui-col-md12 we-search">
-					<!-- <div class="layui-inline">
-						<input class="layui-input" placeholder="开始日" name="start" id="start">
-					</div>
+				<form class="layui-form layui-col-md12 we-search"  method="post" th:action="@{/sta/get}">
+
 					<div class="layui-inline">
-						<input class="layui-input" placeholder="截止日" name="end" id="end">
-					</div> -->
-					<div class="layui-inline">
-						<input type="text" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+						<input type="text" name="staCode" placeholder="请输入岗位编码" autocomplete="off" class="layui-input">
 					</div>
 					<button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
 				</form>
 			</div>
 			<div class="weadmin-block">
-				<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-				<button class="layui-btn" onclick="WeAdminShow('添加用户','add_station.html',600,400)"><i class="layui-icon"></i>添加</button>
+					<form action="" th:action="@{/sta/goToAddHtml}" th:method="get">
+					<button class="layui-btn" type="submit"><i class="layui-icon"></i>添加</button>
+				</form>
 				<span class="fr" style="line-height:40px">共有数据：88 条</span>
 			</div>
+			<form method="post" th:action="@{/sta/stasDel}" >
 			<table class="layui-table" id="memberList">
 				<thead>
 					<tr>
 						<th>
-							<div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
+							<input type="checkbox" />
 						</th>
+						<th>ID</th>
 						<th>岗位编码</th>
 						<th>岗位名称</th>
 						<th>所在部门</th>
@@ -63,44 +61,31 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr data-id="1">
-						<td>
-							<div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="1"><i class="layui-icon">&#xe605;</i></div>
-						</td>
-						<td>CEO</td>
-						<td>总经理</td>
-						<td>总裁室</td>
-						<td></td>
-						<td>管理类</td>
-						<td class="td-manage">
-							<a title="编辑" onclick="WeAdminEdit('编辑','./edit.html', 1, 600, 400)" href="javascript:;">
-								<i class="layui-icon">&#xe642;</i>
-							</a>
-							<a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
-								<i class="layui-icon">&#xe640;</i>
-							</a>
-						</td>
-					</tr>
-					<tr data-id="2">
-						<td>
-							<div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
-						</td>
-						<td>KJ</td>
-						<td>会计</td>
-						<td>财务部</td>
-						<td>CEO</td>
-						<td>技术类</td>
-						<td class="td-manage">
-							<a title="编辑" onclick="WeAdminEdit('编辑','./edit.html', 2, 600, 400)" href="javascript:;">
-								<i class="layui-icon">&#xe642;</i>
-							</a>
-							<a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
-								<i class="layui-icon">&#xe640;</i>
-							</a>
-						</td>
-					</tr>
+				<tr th:each="sta:${stas}">
+					<td><input name="staIds" th:value="${sta.id}" type="checkbox" /></td>
+					<td th:text="${sta.id}"></td>
+					<td th:text="${sta.staCode}"></td>
+					<td th:text="${sta.staName}"></td>
+					<td th:text="${sta.staDep}"></td>
+					<td th:text="${sta.staBoss}"></td>
+					<td th:text="${sta.staCate}"></td>
+					<td class="td-manage">
+						<a title="编辑" onclick="WeAdminEdit('编辑','./edit.html', 1, 600, 400)" href="javascript:;">
+							<i class="layui-icon">&#xe642;</i>
+						</a>
+						<form th:action="@{/sta/}+${sta.id}" method="post" >
+							<input type="hidden" name="_method" value="delete" />
+							<button  type="submit" >删除</button>
+						</form>
+
+					</td>
+
+				</tr>
 				</tbody>
 			</table>
+				<input type="hidden" name="_method" value="delete" />
+				<button class="layui-btn" type="submit"><i class="layui-icon"></i>批量删除</button>
+			</form>
 			<div class="page">
 				<div>
 					<a class="prev" href="">&lt;&lt;</a>

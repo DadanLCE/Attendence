@@ -39,15 +39,11 @@ public class EmployeeService {
 
     }
 
+    //删除员工
     public boolean deleteEmployee(int empId){
         employeesMapper.deleteEmployee(empId);
         return true;
     }
 
-    public boolean deleteEmployees(List<Employee> employees){
-        for(Employee e : employees){
-            employeesMapper.deleteEmployee(e.getEmpId());
-        }
-        return true;
-    }
+
 }

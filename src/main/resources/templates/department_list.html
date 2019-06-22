@@ -28,7 +28,7 @@
 			<a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
 				<i class="layui-icon" style="line-height:30px">&#x1002;</i></a>
 		</div>
-		<div class="weadmin-body">
+		<form class="weadmin-body">
 			<div class="layui-row">
 				<form class="layui-form layui-col-md12 we-search" method="post" th:action="@{/dep/get}">
 					<div class="layui-inline">
@@ -42,6 +42,7 @@
 				<button class="layui-btn" onclick="WeAdminShow('添加用户','add_department.html',600,400)"><i class="layui-icon"></i>添加</button>
 				<span class="fr" style="line-height:40px">共有数据：88 条</span>
 			</div>
+			<form method="post" th:action="@{/dep/depsDel}" >
 			<table class="layui-table" id="memberList">
 				<thead>
 					<tr>
@@ -58,30 +59,29 @@
 				</thead>
 				<tbody>
 				<tr th:each="dep:${deps}">
-					<div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="1"><i class="layui-icon">&#xe605;</i></div>
+					<td><input name="depIds" th:value="${dep.id}" type="checkbox" /></td>
 					<td th:text="${dep.id}"></td>
 					<td th:text="${dep.depCode}"></td>
 					<td th:text="${dep.depName}"></td>
 					<td th:text="${dep.depBossCode}"></td>
 					<td th:text="${dep.depTopId}"></td>
 					<td class="td-manage">
-						<a onclick="member_stop(this,'10001')" href="javascript:;" title="启用">
-							<i class="layui-icon">&#xe601;</i>
-						</a>
+
 						<a title="编辑" onclick="WeAdminEdit('编辑','./edit.html', 1, 600, 400)" href="javascript:;">
 							<i class="layui-icon">&#xe642;</i>
 						</a>
-						<a onclick="WeAdminShow('修改密码','./password.html',600,400)" title="修改密码" href="javascript:;">
-							<i class="layui-icon">&#xe631;</i>
-						</a>
-						<a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
-							<i class="layui-icon">&#xe640;</i>
-						</a>
+						<form th:action="@{/dep/}+${dep.id}" method="post" >
+							<input type="hidden" name="_method" value="delete" />
+							<button  type="submit" >删除</button>
+						</form>
 					</td>
 				</tr>
 
 				</tbody>
 			</table>
+				<input type="hidden" name="_method" value="delete" />
+				<button class="layui-btn" type="submit"><i class="layui-icon"></i>批量删除</button>
+			</form>
 			<div class="page">
 				<div>
 					<a class="prev" href="">&lt;&lt;</a>

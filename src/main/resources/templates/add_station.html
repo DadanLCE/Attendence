@@ -19,7 +19,7 @@
 
 	<body>
 		<div class="weadmin-body">
-			<form class="layui-form">
+			<form class="layui-form" th:action="@{/sta/addStation}" method="post">
 				<div class="layui-form-item">
 					<label for="L_username" class="layui-form-label">
 		                <span class="we-red">*</span>岗位编码
@@ -29,7 +29,7 @@
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label for="L_email" class="layui-form-label">
+					<label  class="layui-form-label">
 		                <span class="we-red">*</span>岗位名称
 		            </label>
 					<div class="layui-input-inline">
@@ -37,11 +37,11 @@
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label for="L_repass" class="layui-form-label">
+					<label class="layui-form-label">
                   <span class="we-red">*</span>所在部门
               </label>
 					<div class="layui-input-inline">
-						<!-- <input type="text" id="L_salary" name="salary" lay-verify="required|salary" autocomplete="off" class="layui-input"> -->
+						 <input type="text" id="L_salary" name="salary" lay-verify="required|salary" autocomplete="off" class="layui-input">
 						<select>
 							<option value ="ZCS">ZCS-总裁室</option>
 							<option value ="CWB">CWB-caiwubu </option>
@@ -50,11 +50,11 @@
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label for="L_repass" class="layui-form-label">
+					<label  class="layui-form-label">
                   <span class="we-red">*</span>直接上级
               </label>
 					<div class="layui-input-inline">
-						<!-- <input type="text" id="L_salary" name="salary" lay-verify="required|salary" autocomplete="off" class="layui-input"> -->
+						 <input type="text" id="L_salary" name="salary" lay-verify="required|salary" autocomplete="off" class="layui-input">
 						<select>
 							<option value ="CEO">CEO-总经理</option>
 							<option value ="KJ">KJ-会计</option>
@@ -64,11 +64,11 @@
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label for="L_repass" class="layui-form-label">
+					<label  class="layui-form-label">
                   <span class="we-red">*</span>岗位类别
               </label>
 					<div class="layui-input-inline">
-						<!-- <input type="text" id="L_salary" name="salary" lay-verify="required|salary" autocomplete="off" class="layui-input"> -->
+						 <input type="text" id="L_salary" name="salary" lay-verify="required|salary" autocomplete="off" class="layui-input">
 						<select>
 							<option value ="GL">管理类</option>
 							<option value ="WZ">文职类</option>
@@ -77,7 +77,7 @@
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label for="L_repass" class="layui-form-label">
+					<label class="layui-form-label">
                   <span class="we-red">*</span>个人描述
               </label>
 					<div class="layui-input-inline">
@@ -90,7 +90,7 @@
 
 
 				<div class="layui-form-item">
-					<label for="L_repass" class="layui-form-label">
+					<label class="layui-form-label">
               </label>
 					<button class="layui-btn" lay-filter="add" lay-submit="">确定</button>
 				</div>
@@ -133,52 +133,52 @@
 					}
 				});
 
-				//监听提交
-				form.on('submit(add)', function(data) {
-					//console.log(data.field);
-					var f = data.field;
-					//console.log(f.username);
-					//console.log(f.sex);				
-					//var sex = $('input:radio[name="sex"]:checked').val();
-					
-					//发异步，把数据提交给php
-					layer.alert("增加成功", {
-						icon: 6
-					}, function() {
-						//获取提交成功的时间
-						var time = new Date();
-						var timeNow = util.toDateString(time);
-						// 获得frame索引
-						var index = parent.layer.getFrameIndex(window.name);
-					
-    					var _len = parent.$('#memberList tr').length;
-    					alert(_len);
-						parent.$('#memberList').append(						
-							'<tr data-id="' + _len + '">' +
-								'<td>'+
-									'<div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="' + _len + '"><i class="layui-icon">&#xe605;</i></div>'+
-								'</td>'+
-								'<td>' + _len + '</td>'+
-								'<td>'+f.username+'</td>'+
-								'<td>'+f.sex+'</td>'+
-								'<td>'+f.phone+'</td>'+
-								'<td>'+f.email+'</td>'+
-								'<td>北京市西城区</td>'+
-								'<td>'+timeNow+'</td>'+
-								'<td class="td-status"><span class="layui-btn layui-btn-normal layui-btn-xs">已启用</span></td>'+
-								'<td class="td-manage">'+
-									'<a onclick="member_stop(this,\'10001\')" href="javascript:;" title="启用"><i class="layui-icon">&#xe601;</i></a>'+
-									'<a title="编辑" onclick="WeAdminShow(\'编辑\',\'./edit.html\',600,400)" href="javascript:;"><i class="layui-icon">&#xe642;</i></a>'+
-									'<a onclick="WeAdminShow(\'修改密码\',\'./password.html\',600,400)" title="修改密码" href="javascript:;"><i class="layui-icon">&#xe631;</i></a>'+
-									'<a title="删除" onclick="member_del(this,\'要删除的id\')" href="javascript:;"><i class="layui-icon">&#xe640;</i></a>'+
-								'</td>'+
-							'</tr>'	
-						);
-						//关闭当前frame
-						parent.layer.close(index);
-					});
-					return false;
-				});
+				// //监听提交
+				// form.on('submit(add)', function(data) {
+				// 	//console.log(data.field);
+				// 	var f = data.field;
+				// 	//console.log(f.username);
+				// 	//console.log(f.sex);
+				// 	//var sex = $('input:radio[name="sex"]:checked').val();
+				//
+				// 	//发异步，把数据提交给php
+				// 	layer.alert("增加成功", {
+				// 		icon: 6
+				// 	}, function() {
+				// 		//获取提交成功的时间
+				// 		var time = new Date();
+				// 		var timeNow = util.toDateString(time);
+				// 		// 获得frame索引
+				// 		var index = parent.layer.getFrameIndex(window.name);
+				//
+    			// 		var _len = parent.$('#memberList tr').length;
+    			// 		alert(_len);
+				// 		parent.$('#memberList').append(
+				// 			'<tr data-id="' + _len + '">' +
+				// 				'<td>'+
+				// 					'<div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="' + _len + '"><i class="layui-icon">&#xe605;</i></div>'+
+				// 				'</td>'+
+				// 				'<td>' + _len + '</td>'+
+				// 				'<td>'+f.username+'</td>'+
+				// 				'<td>'+f.sex+'</td>'+
+				// 				'<td>'+f.phone+'</td>'+
+				// 				'<td>'+f.email+'</td>'+
+				// 				'<td>北京市西城区</td>'+
+				// 				'<td>'+timeNow+'</td>'+
+				// 				'<td class="td-status"><span class="layui-btn layui-btn-normal layui-btn-xs">已启用</span></td>'+
+				// 				'<td class="td-manage">'+
+				// 					'<a onclick="member_stop(this,\'10001\')" href="javascript:;" title="启用"><i class="layui-icon">&#xe601;</i></a>'+
+				// 					'<a title="编辑" onclick="WeAdminShow(\'编辑\',\'./edit.html\',600,400)" href="javascript:;"><i class="layui-icon">&#xe642;</i></a>'+
+				// 					'<a onclick="WeAdminShow(\'修改密码\',\'./password.html\',600,400)" title="修改密码" href="javascript:;"><i class="layui-icon">&#xe631;</i></a>'+
+				// 					'<a title="删除" onclick="member_del(this,\'要删除的id\')" href="javascript:;"><i class="layui-icon">&#xe640;</i></a>'+
+				// 				'</td>'+
+				// 			'</tr>'
+				// 		);
+				// 		//关闭当前frame
+				// 		parent.layer.close(index);
+				// 	});
+				// 	return false;
+				// });
 
 			});
 		</script>

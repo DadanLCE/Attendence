@@ -22,11 +22,19 @@ public class DepartmentService {
             return list;
         }
 
+        //编码查询单个部门
         public List<Department> getDepartmentsByDepCode(String depCode){
 
             List<Department> department = departmentMapper.getDepartmentsByDepCode(depCode);
             return department;
         }
+
+        //删除单个部门
+        public boolean deleteDepartment(int depId){
+            departmentMapper.deleteDepartment(depId);
+            return true;
+        }
+
 
 
 

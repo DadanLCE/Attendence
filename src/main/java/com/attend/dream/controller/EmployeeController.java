@@ -4,6 +4,8 @@ package com.attend.dream.controller;
 import com.attend.dream.domain.Employee;
 import com.attend.dream.service.EmployeeService;
 import com.attend.dream.service.UserService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Controller;
@@ -46,6 +48,7 @@ public class EmployeeController {
     public String gotoAddEmployee() {
         return "add_employee";
     }
+
     //删除单行员工信息
     @DeleteMapping("/emp/{empId}")
     public String deleteEmployee(@PathVariable(value = "empId") int empId){
@@ -53,22 +56,23 @@ public class EmployeeController {
         return "redirect:/employee";
     }
 
+    //批量删除员工
+    @DeleteMapping("/emp/empsDel")
+    public String deleteEmployees(@RequestParam(value = "empIds") int[] empIds){
+        for(int i : empIds)
+        employeeService.deleteEmployee(i);
+        return "redirect:/employee";
+    }
 
 
+    //添加员工
     @PostMapping("/emp/addEmployee")
     public String addEmployee(Employee emp, Map<String,Object> map) {
-
         String empCode = emp.getEmpCode();
-
         employeeService.insertEmployee(emp);
         return "index";
 
     }
-//
-//    @GetMapping("/department")
-//    public String gotoDep() {
-//        return "department_list";
-//    }
 
 
 
