@@ -85,10 +85,11 @@ public class EmployeeController {
     @PostMapping("/emp/delEmps")
     public String empsDelete(String userList){
         String[] strs = userList.split(",");
+        System.out.println(userList);
         for (int i = 0; i < strs.length; i++) {
             employeeService.deleteEmployee(Integer.parseInt(strs[i]));
         }
-        return "employee_list";
+        return "redirect:/employee?currentPage=1";
 
     }
 
