@@ -5,6 +5,8 @@ import com.attend.dream.domain.Employee;
 import com.attend.dream.domain.Station;
 import com.attend.dream.mapper.DepartmentMapper;
 import com.attend.dream.mapper.EmployeesMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,24 @@ public class DepartmentService {
 
         @Autowired(required = false)
         EmployeesMapper employeesMapper;
+
+        //查询页面的信息 上一页 下一页
+        public PageInfo<Department> getDepartmentsPage(int currentPage, int pageSize){
+            PageHelper.startPage(currentPage, pageSize);
+            List<Department> AllDep = departmentMapper.getDepartments();
+            PageInfo<Department> pageInfo = new PageInfo<>(AllDep);
+            return pageInfo;
+        }
+        //查询到的所有页面信息
+        public List<Department> getDepartmentsByPage(int currentPage, int pageSize){
+            PageHelper.startPage(currentPage, pageSize);
+            List<Department> AllDep = departmentMapper.getDepartments();
+            return AllDep;
+        }
+
+
+
+
 
         //查询全部
         public List<Department> getDepartments(){
