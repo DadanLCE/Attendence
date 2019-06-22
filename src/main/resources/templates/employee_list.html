@@ -29,7 +29,7 @@
 		</div>
 		<div class="weadmin-body">
 			<div class="layui-row">
-				<form class="layui-form layui-col-md12 we-search" method="post" th:action="@{/emp/get}">
+				<form class="layui-form layui-col-md12 we-search" method="post" th:action="@{/emp/get?currentPage=1}">
 					<div class="layui-inline">
 						<input type="text" name="empName" placeholder="请输入员工名" autocomplete="off" class="layui-input" >
 					</div>
@@ -207,12 +207,22 @@
 			</table>
 
 			<div class="page">
-				<div>
+				<div th:if="${isFuzzy == null}">
 					<!--<a class="prev" th:action="@{/employee/}+${empsPage.nextPage}">&lt;&lt;</a>-->
 
 					<a class="num" th:if=" ${empsPage.prePage} gt 0 "  th:href="@{'/employee?currentPage='+${empsPage.prePage}}">上一页[[${empsPage.prePage}]]</a>
 					<span class="current">[[${empsPage.pageNum}]]</span>
 					<a class="num" th:if=" ${empsPage.nextPage} gt 0 "  th:href="@{'/employee?currentPage='+${empsPage.nextPage}}">下一页[[${empsPage.nextPage}]]</a>
+					<!--<a class="num" href="">489</a>-->
+					<!--<a class="next" href="">&gt;&gt;</a>-->
+				</div>
+
+				<div th:if=" ${isFuzzy !=null} ">
+					<!--<a class="prev" th:action="@{/employee/}+${empsPage.nextPage}">&lt;&lt;</a>-->
+
+					<a class="num" th:if=" ${empsPage.prePage} gt 0 "  th:href="@{'/emp/get?currentPage='+${empsPage.prePage}+'&empName='+${empName}}">上一页[[${empsPage.prePage}]]</a>
+					<span class="current">[[${empsPage.pageNum}]]</span>
+					<a class="num" th:if=" ${empsPage.nextPage} gt 0 "  th:href="@{'/emp/get?currentPage='+${empsPage.nextPage}+'&empName='+${empName}}">下一页[[${empsPage.nextPage}]]</a>
 					<!--<a class="num" href="">489</a>-->
 					<!--<a class="next" href="">&gt;&gt;</a>-->
 				</div>

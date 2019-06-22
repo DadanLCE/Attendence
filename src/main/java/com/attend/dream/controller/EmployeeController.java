@@ -27,14 +27,6 @@ public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
 
-    //显示全部员工列表
-//    @GetMapping("/employee")
-//    public String list(Model model){
-//        Collection<Employee> employees=employeeService.getEmployees();
-//        model.addAttribute("emps",employees);
-//
-//        return "employee_list";
-//    }
 
 
     //通过 分页 显示全部员工列表
@@ -47,25 +39,22 @@ public class EmployeeController {
         List<Employee> emps = employeeService.getEmployeesByPage(currentPage,pageSize);
         model.addAttribute("emps",emps);
         model.addAttribute("empsPage",employeePage);
-//        System.out.println(emps);
-        System.out.println(currentPage);
-
-//        for (Employee e: emps
-//             ) {
-//            System.out.println(e);
-//
-//        }
-        System.out.println();
         System.out.println(employeePage.getPageSize());
         System.out.println(employeePage.getNextPage());
         return "employee_list";
     }
 
-    //查询员工
-    @PostMapping("/emp/get")
-    public String getEmployeesByName(@RequestParam(value = "empName") String empName,Model model){
-        List<Employee> employee = employeeService.getEmployeesByName(empName);
-        model.addAttribute("emps",employee);
+    //查询员工通过名字 模糊查询 分页
+    @RequestMapping("/emp/get")
+    public String getEmployeesByName(Model model,@RequestParam(value = "currentPage") int currentPage,
+                                     @RequestParam(value = "pageSize", defaultValue = "5") int pageSize,@RequestParam(value = "empName") String empName){
+        PageInfo<Employee> empsPage = employeeService.getEmployeesPageMsgByName(currentPage,pageSize,empName);
+        List<Employee> emps = employeeService.getEmployeesMsgByName(currentPage,pageSize,empName);
+        model.addAttribute("emps",emps);
+        model.addAttribute("empsPage",empsPage);
+        //模糊查询判断
+        model.addAttribute("empName",empName);
+        model.addAttribute("isFuzzy",1);
         return "employee_list";
     }
 

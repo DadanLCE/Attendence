@@ -39,14 +39,24 @@ public class EmployeeService {
     }
 
 
+
     public List<Employee> getEmployees(){
         List<Employee> list = employeesMapper.getEmployees();
         return list;
     }
 
-    public List<Employee> getEmployeesByName(String empName){
-        List<Employee> employee = employeesMapper.getEmployeesByName(empName);
-        return employee;
+    //模糊查询 分页查询的页面数据
+    public List<Employee> getEmployeesMsgByName(int currentPage,int pageSize, String empName){
+        PageHelper.startPage(currentPage,pageSize);
+        List<Employee> AllEmp = employeesMapper.getEmployeesByName(empName);
+        return AllEmp;
+    }
+
+    public PageInfo<Employee> getEmployeesPageMsgByName(int currentPage,int pageSize, String empName){
+        PageHelper.startPage(currentPage,pageSize);
+        List<Employee> AllEmp = employeesMapper.getEmployeesByName(empName);
+        PageInfo<Employee> pageInfo = new PageInfo<>(AllEmp);
+        return pageInfo;
     }
 
     //添加员工
