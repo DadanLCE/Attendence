@@ -215,9 +215,9 @@
 				<div>
 					<!--<a class="prev" th:action="@{/employee/}+${empsPage.nextPage}">&lt;&lt;</a>-->
 
-					<a class="num" th:if=" ${empsPage.prePage} gt 0 "  th:href="@{'/employee?currentPage='+${empsPage.prePage}}">[[${empsPage.prePage}]]</a>
+					<a class="num" th:if=" ${empsPage.prePage} gt 0 "  th:href="@{'/employee?currentPage='+${empsPage.prePage}}">上一页[[${empsPage.prePage}]]</a>
 					<span class="current">[[${empsPage.pageNum}]]</span>
-					<a class="num" th:if=" ${empsPage.nextPage} gt 0 "  th:href="@{'/employee?currentPage='+${empsPage.nextPage}}">[[${empsPage.nextPage}]]</a>
+					<a class="num" th:if=" ${empsPage.nextPage} gt 0 "  th:href="@{'/employee?currentPage='+${empsPage.nextPage}}">下一页[[${empsPage.nextPage}]]</a>
 					<!--<a class="num" href="">489</a>-->
 					<!--<a class="next" href="">&gt;&gt;</a>-->
 				</div>
