@@ -41,7 +41,7 @@
 				<!--<form action="" th:action="@{/emp/goToAddHtml}" th:method="get">-->
 				<!--<button class="layui-btn" type="submit"><i class="layui-icon"></i>添加</button>-->
 					<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-						开始演示模态框
+						添加用户
 					</button>
 					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						<div class="modal-dialog">
@@ -51,7 +51,7 @@
 										&times;
 									</button>
 									<h4 class="modal-title" id="myModalLabel">
-										模态框（Modal）标题
+										新增用户
 									</h4>
 								</div>
 								<div class="weadmin-body">
@@ -63,13 +63,18 @@
 											<div class="layui-input-inline">
 												<input type="text" id="L_username" name="empCode" lay-verify="required|nikename" autocomplete="off" class="layui-input">
 											</div>
-											<div class="layui-form-mid layui-word-aux">
-												将会成为您唯一的登录名
-											</div>
 										</div>
 										<div class="layui-form-item">
 											<label  class="layui-form-label">
 												<span class="we-red">*</span>姓名
+											</label>
+											<div class="layui-input-inline">
+												<input type="text" id="L_name" name="empName" lay-verify="required|name" autocomplete="" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-form-item">
+											<label  class="layui-form-label">
+												<span class="we-red">*</span>性别
 											</label>
 											<div class="layui-input-inline">
 												<input type="text" id="L_name" name="empName" lay-verify="required|name" autocomplete="" class="layui-input">
@@ -129,13 +134,13 @@
 												<span class="we-red">*</span>岗位
 											</label>
 											<div class="layui-input-inline">
-												<input type="text" id="L_salary" name="empStaCode" lay-verify="required|salary" autocomplete="off" class="layui-input">
-												<!--<select>-->
-												<!--<option value ="CEO">CEO-总经理</option>-->
-												<!--<option value ="KJ">KJ-会计</option>-->
-												<!--<option value="QT">QT-前台</option>-->
-												<!--<option value="HQ">HQ-后勤</option>-->
-												<!--</select>	-->
+												<input type="text" id="L_salary" name="empStaCode" lay-verify="required|salary" autocomplete="off" class="layui-input">-->
+<!--												<select>-->
+<!--												<option value ="CEO">CEO-总经理</option>-->
+<!--												<option value ="KJ">KJ-会计</option>-->
+<!--												<option value="QT">QT-前台</option>-->
+<!--												<option value="HQ">HQ-后勤</option>-->
+<!--												</select>-->
 											</div>
 										</div>
 										<div class="layui-form-item">
