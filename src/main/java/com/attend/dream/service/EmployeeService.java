@@ -4,6 +4,8 @@ import com.attend.dream.domain.Employee;
 import com.attend.dream.domain.Station;
 import com.attend.dream.mapper.EmployeesMapper;
 import com.attend.dream.mapper.StationMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,23 @@ public class EmployeeService {
 
     @Autowired(required = false)
     StationMapper stationMapper;
+
+    //分页查询的页
+    public PageInfo<Employee> getEmployeesPage(int currentPage,int pageSize){
+        PageHelper.startPage(currentPage,pageSize);
+        List<Employee> AllEmp = employeesMapper.getEmployees();
+        PageInfo<Employee> pageInfo = new PageInfo<>(AllEmp);
+        return pageInfo;
+    }
+
+    //分页查询的查询数据
+    public List<Employee> getEmployeesByPage(int currentPage,int pageSize){
+
+        PageHelper.startPage(currentPage,pageSize);
+        List<Employee> AllEmp = employeesMapper.getEmployees();
+        return AllEmp;
+    }
+
 
     public List<Employee> getEmployees(){
         List<Employee> list = employeesMapper.getEmployees();

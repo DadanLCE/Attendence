@@ -78,7 +78,8 @@
 						</a>
 						<ul class="sub-menu">
 							<li>
-								<a href="employee_list.html" th:href="@{/employee}">
+								<a href="employee_list.html" th:href="@{/employee?currentPage=1}">
+									<!--/pageController?pageNum='+${pageNum}-->
 									<i class="iconfont">&#xe6a7;</i>
 									<cite>员工</cite>
 
