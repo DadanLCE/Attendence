@@ -98,11 +98,11 @@ public class EmployeeController {
         } else if ( fallBack.equals("2")){
             map.put("msg","员工编码已存在");
             map.put("addWarningMsg","2");
-            return "redirect:/employee?currentPage=1";
+            return "add_employee";
         } else if (fallBack.equals("3")) {
             map.put("msg","暂时还没有这个岗位！！！");
             map.put("addWarningMsg","3");
-            return "redirect:/employee?currentPage=1";
+            return "add_employee";
         } else{
             return "index";
         }
