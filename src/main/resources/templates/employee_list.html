@@ -130,7 +130,7 @@
 						<form class="layui-form" action="/emp/updateEmp" method="post">
 							<p style="color:red">更新</p>
 							<div class="layui-form-item">
-								<label for="L_username" class="layui-form-label">
+								<label class="layui-form-label">
 									<span class="we-red">*</span>员工编码
 								</label>
 								<div class="layui-input-inline">
@@ -239,7 +239,7 @@
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 							&times;
 						</button>
-						<h2 class="modal-title" id="myModalLabel">
+						<h2 class="modal-title">
 							新增用户
 						</h2>
 <!--						<h4 style="color:red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></h4>-->
@@ -250,7 +250,7 @@
 						<!--<form class="layui-form" th:action="@{/emp/addEmployee}" method="post">-->
 
 							<div class="layui-form-item">
-								<label for="L_username" class="layui-form-label">
+								<label class="layui-form-label">
 									<span class="we-red">*</span>员工编码
 								</label>
 								<div class="layui-input-inline">
@@ -345,7 +345,7 @@
 											<button class="layui-btn" onclick="addAjax()" id="confirmAdd" lay-filter="add" lay-submit="">确定</button>
 
                                             <!--隐藏button-->
-											<button type="button" class="btn btn-default" style="display: none" data-dismiss="modal" id="closemodel">关闭</button>
+											<button type="button" class="btn btn-default" style="display:none" data-dismiss="modal" id="closemodel">关闭</button>
 
 										</div>
 									<!--</form>-->
@@ -448,7 +448,7 @@
 			}
 		</script>
 
-		<script th:inline="none">
+		<script>
 			var currentPage = 0;
 			alert("lzh");
 			function loadData(key,page, pageSize) {
@@ -488,7 +488,7 @@
 									"<button class=\"btn btn-primary btn-lg\" id="+ list['empId'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
 									"编辑用户"+
 									"</button>"+
-									"<form action=\"/test/" + list['empId'] + " method=\"post\" >"+
+									"<form action=\"/emp/" + list['empId'] + " method=\"post\" >"+
 									"<input type=\"hidden\" name=\"_method\" value=\"delete\" />"+
 									"<button  type=\"submit\" >删除</button>"+
 									"</form>"+
@@ -527,6 +527,7 @@
 		<!--添加用户-->
 		<script type="text/javascript">
 			function addAjax() {
+
 				var empCodex = document.getElementById('addEmpCode').value;
 				var empName = document.getElementById('addEmpName').value;
 				var empAge = document.getElementById('addEmpAge').value;
@@ -561,13 +562,12 @@
 						},
 						success : function (fallBack) {
 							alert("后端传值成功:"+fallBack);
-							if ( fallBack === 1 ) {
+							if ( fallBack === '1' ) {
 								alert('恭喜你，添加成功！！！');
 								$("#closemodel").click();
-								//document.getElementById('addEmpPage').style.display="none";
-							} else if ( fallBack === 2) {
+							} else if ( fallBack === '2') {
 								alert ("员工编码已存在，请重来，(✪ω✪)");
-							} else if (fallBack === 3) {
+							} else if (fallBack === '3' ) {
 								alert("暂时还没有这个岗位！！！(✪ω✪)");
 							} else {
 								alert('哎呀，出现意外了！')	;
