@@ -23,23 +23,21 @@ public class DepartmentService {
         @Autowired(required = false)
         EmployeesMapper employeesMapper;
 
+
+        //模糊查询
         //查询页面的信息 上一页 下一页
-        public PageInfo<Department> getDepartmentsPage(int currentPage, int pageSize){
+        public PageInfo<Department> getDepartmentsByDepCodePage(int currentPage, int pageSize, String depCode){
             PageHelper.startPage(currentPage, pageSize);
-            List<Department> AllDep = departmentMapper.getDepartments();
-            PageInfo<Department> pageInfo = new PageInfo<>(AllDep);
+            List<Department> deps = departmentMapper.getDepartmentsByDepCode(depCode);
+            PageInfo<Department> pageInfo = new PageInfo<>(deps);
             return pageInfo;
         }
-        //查询到的所有页面信息
-        public List<Department> getDepartmentsByPage(int currentPage, int pageSize){
+        //查询到的部门信息
+        public List<Department> getDepartmentsByDepCode(int currentPage, int pageSize, String depCode){
             PageHelper.startPage(currentPage, pageSize);
-            List<Department> AllDep = departmentMapper.getDepartments();
-            return AllDep;
+            List<Department> deps = departmentMapper.getDepartmentsByDepCode(depCode);
+            return deps;
         }
-
-
-
-
 
         //查询全部
         public List<Department> getDepartments(){
@@ -47,12 +45,12 @@ public class DepartmentService {
             return list;
         }
 
-        //编码查询单个部门
-        public List<Department> getDepartmentsByDepCode(String depCode){
-
-            List<Department> department = departmentMapper.getDepartmentsByDepCode(depCode);
-            return department;
-        }
+//        //编码查询模糊查询部门
+//        public List<Department> getDepartmentsByDepCode(String depCode){
+//
+//            List<Department> department = departmentMapper.getDepartmentsByDepCode(depCode);
+//            return department;
+//        }
 
         //删除单个部门
         public boolean deleteDepartment(int depId){

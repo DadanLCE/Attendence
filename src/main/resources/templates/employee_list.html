@@ -29,7 +29,7 @@
 		</div>
 		<div class="weadmin-body">
 			<div class="layui-row">
-				<form class="layui-form layui-col-md12 we-search" method="post" action="/emp/get?currentPage=1">
+				<form class="layui-form layui-col-md12 we-search" method="post" th:action="@{/emp/get}">
 					<div class="layui-inline">
 						<input type="text" name="empName" placeholder="请输入员工名" autocomplete="off" class="layui-input" >
 					</div>
@@ -80,7 +80,6 @@
 							<button class="btn btn-primary btn-lg" th:id="${emp.empId}" onclick="clickEdit(this)" data-toggle="modal" data-target="#updateEmpPage">
 								编辑用户
 							</button>
-							<form action=""></form>
 							<form th:action="@{/emp/}+${emp.empId}" method="post" >
 								<input type="hidden" name="_method" value="delete" />
 								<button  type="submit" >删除</button>

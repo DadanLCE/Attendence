@@ -9,12 +9,26 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
 		<link rel="stylesheet" href="../static/css/font.css" th:href="@{/css/font.css}">
 		<link rel="stylesheet" href="../static/css/weadmin.css" th:href="@{/css/weadmin.css}">
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 		<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
 		<!--[if lt IE 9]>
 	      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
 	      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
 	    <![endif]-->
+		<style type="text/css">
+			.layui-form-label{
+				width: 120px;
+			}
+			.layui-form-item{
+				margin-bottom: 7px;
+			}
+			.layui-input{
+				border-color: #3F3F3F;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -30,7 +44,7 @@
 		</div>
 		<div class="weadmin-body">
 			<div class="layui-row">
-				<form class="layui-form layui-col-md12 we-search" method="post" th:action="@{/dep/get}">
+				<form class="layui-form layui-col-md12 we-search" method="post" th:action="@{/department?currentPage=1}">
 					<div class="layui-inline">
 						<input type="text" name="depCode" placeholder="请输入部门编码" autocomplete="off" class="layui-input">
 					</div>
@@ -39,9 +53,79 @@
 			</div>
 			<div class="weadmin-block">
 				<button class="layui-btn layui-btn-danger" onclick="depsDelete()"><i class="layui-icon"></i>批量删除</button>
-				<form action="" th:action="@{/dep/goToAddHtml}" th:method="get">
-					<button class="layui-btn" type="submit"><i class="layui-icon"></i>添加</button>
-				</form>
+				<!--<form action="" th:action="@{/dep/goToAddHtml}" th:method="get">-->
+					<!--<button class="layui-btn" type="submit"><i class="layui-icon"></i>添加</button>-->
+				<!--添加弹窗-->
+				<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+					添加
+				</button>
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+									&times;
+								</button>
+								<h4 class="modal-title" id="myModalLabel">
+									添加
+								</h4>
+							</div>
+							<div class="weadmin-body">
+								<form class="layui-form" th:action="@{/dep/addDepartment}" method="post">
+									<h1 style="color:red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></h1>
+									<div class="layui-form-item">
+										<label for="L_username" class="layui-form-label">
+											<span class="we-red">*</span>部门编码
+										</label>
+										<div class="layui-input-inline">
+											<input type="text" id="L_username" name="depCode" lay-verify="required|nikename" autocomplete="off" class="layui-input">
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<label for="L_email" class="layui-form-label">
+											<span class="we-red">*</span>部门名称
+										</label>
+										<div class="layui-input-inline">
+											<input type="text" id="L_name" name="depName" lay-verify="required|name" autocomplete="" class="layui-input">
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<label for="L_repass" class="layui-form-label">
+											<span class="we-red">*</span>部门负责人
+										</label>
+										<div class="layui-input-inline">
+											<input type="text" id="L_salary" name="depBossCode" lay-verify="required|salary" autocomplete="off" class="layui-input">
+
+										</div>
+									</div>
+
+
+									<div class="layui-form-item">
+										<label for="L_email" class="layui-form-label">
+											<span class="we-red">*</span>部门职责
+										</label>
+										<div class="layui-input-inline">
+											<input type="text" id="L_age" name="depJob" autocomplete="off" class="layui-input">
+										</div>
+
+									</div>
+									<div class="layui-form-item">
+										<label for="L_pass" class="layui-form-label">
+											<span class="we-red">*</span>上级部门
+										</label>
+										<div class="layui-input-inline">
+											<input type="text" id="L_nation" name="depTopId" lay-verify="required|nation" autocomplete="off" class="layui-input">
+										</div>
+									</div>
+
+									<button class="layui-btn" lay-filter="add" lay-submit="">确定</button>
+							</div>
+							</form>
+						</div>
+						</div><!-- /.modal-content -->
+					</div><!-- /.modal -->
+				</div>
+				<!--</form>-->
 				<span class="fr" style="line-height:40px">共有数据：88 条</span>
 			</div>
 			<table class="layui-table" id="memberList">
@@ -80,14 +164,19 @@
 
 				</tbody>
 			</table>
+
 			<div class="page">
 				<div>
-					<a class="prev" href="">&lt;&lt;</a>
-					<a class="num" href="">1</a>
-					<span class="current">2</span>
-					<a class="num" href="">3</a>
-					<a class="num" href="">489</a>
-					<a class="next" href="">&gt;&gt;</a>
+					<!--<a class="prev" href="">&lt;&lt;</a>-->
+					<!--<a class="num" href="">1</a>-->
+					<!--<span class="current">2</span>-->
+					<!--<a class="num" href="">3</a>-->
+					<!--<a class="num" href="">489</a>-->
+					<!--<a class="next" href="">&gt;&gt;</a>-->
+					<a class="num" th:if=" ${depsPage.prePage} gt 0 "  th:href="@{'/department?currentPage='+${depsPage.prePage}+'&depCode='+${depCode}}">上一页 &nbsp [[${depsPage.prePage}]]</a>
+					<span class="current">[[${depsPage.pageNum}]]</span>
+					<a class="num" th:if=" ${depsPage.nextPage} gt 0 "  th:href="@{'/department?currentPage='+${depsPage.nextPage}+'&depCode='+${depCode}}">下一页 &nbsp [[${depsPage.nextPage}]]</a>
+
 				</div>
 			</div>
 		</div>
