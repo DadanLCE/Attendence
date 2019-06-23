@@ -17,15 +17,14 @@ import java.util.List;
 @SpringBootTest
 @MapperScan(basePackages = {"com.attend.dream.mapper"})
 public class DreamApplicationTests {
-    @Autowired
-    private EmployeesMapper employeesMapper;
+//    @Autowired
+//    private EmployeesMapper employeesMapper;
 
 
     @Test
     public void contextLoads() {
-        Employee e = employeesMapper.getEmployeeByName("方少少");
-        e.setEmpAge("10000000");
-        employeesMapper.updateEmployee(e);
+//        Employee e = employeesMapper.getEmployeeByName("方少少");
+
 //        PageHelper.startPage(2,2);
 //        List<Employee> allE = employeesMapper.getEmployees();
 //        PageInfo<Employee> pageInfo = new PageInfo<>(allE);

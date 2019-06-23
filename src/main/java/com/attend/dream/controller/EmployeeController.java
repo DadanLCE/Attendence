@@ -26,9 +26,9 @@ public class EmployeeController {
 
     @Autowired
     EmployeeService employeeService;
-
     private int maxPage ;
-    //显示全部员工列表
+
+    //显示全部员工列表(保留，不要删除这个！)
 //    @GetMapping("/employee")
 //    public String list(Model model){
 //        Collection<Employee> employees=employeeService.getEmployees();
@@ -48,8 +48,8 @@ public class EmployeeController {
         List<Employee> emps = employeeService.getEmployeesByPage(currentPage,pageSize);
         model.addAttribute("emps",emps);
         model.addAttribute("empsPage",employeePage);
-        System.out.println(employeePage.getPageSize());
-        System.out.println(employeePage.getNextPage());
+        maxPage = employeePage.getNavigateLastPage();
+
         return "employee_list";
     }
 
@@ -77,15 +77,14 @@ public class EmployeeController {
     @DeleteMapping("/emp/{empId}")
     public String deleteEmployee(@PathVariable(value = "empId") int empId){
         employeeService.deleteEmployee(empId);
-        return "redirect:/employee";
+        return "redirect:/employee?currentPage=1";
     }
 
 
-    //批量删除
+    //批量删除员工
     @PostMapping("/emp/delEmps")
     public String empsDelete(String userList){
         String[] strs = userList.split(",");
-        System.out.println(userList);
         for (int i = 0; i < strs.length; i++) {
             employeeService.deleteEmployee(Integer.parseInt(strs[i]));
         }
@@ -104,13 +103,39 @@ public class EmployeeController {
             return "redirect:/employee?currentPage="+maxPage;
         } else if ( fallBack.equals("2")){
             map.put("msg","员工编码已存在");
+            map.put("addWarningMsg","2");
             return "add_employee";
         } else if (fallBack.equals("3")) {
             map.put("msg","暂时还没有这个岗位！！！");
+            map.put("addWarningMsg","3");
             return "add_employee";
         } else{
             return "index";
         }
 
+
+
     }
+
+//      请勿删除
+//    @GetMapping("/emp/goToUpdateHtml")
+//    public String gotoUpdateEmployee() {
+//        return "update_employee";
+//    }
+
+    @GetMapping("/emp/getEmpById/{id}")
+    @ResponseBody
+    public Employee getEmpById(@PathVariable(value = "id") int empId) {
+        Employee emp = employeeService.getEmpById(empId);
+        return emp;
+
+    }
+
+    @PostMapping("/emp/updateEmp")
+    public String updateEmployee(Employee e) {
+        System.out.println(e.getEmpCode());
+        employeeService.updateEmployee(e);
+        return "redirect:/employee?currentPage=1";
+    }
+
 }
