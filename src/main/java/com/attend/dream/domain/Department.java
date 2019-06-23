@@ -1,7 +1,6 @@
 package com.attend.dream.domain;
 
 import lombok.Data;
-
 @Data
 public class Department {
 
@@ -16,4 +15,6 @@ public class Department {
     private String depBossCode;
 
     private String depTopId;
+
+
 }

@@ -29,17 +29,15 @@ public class EmployeeService {
         PageInfo<Employee> pageInfo = new PageInfo<>(AllEmp);
         return pageInfo;
     }
-
     //分页查询的查询数据
     public List<Employee> getEmployeesByPage(int currentPage,int pageSize){
-
         PageHelper.startPage(currentPage,pageSize);
         List<Employee> AllEmp = employeesMapper.getEmployees();
         return AllEmp;
     }
 
 
-
+    //查询所有
     public List<Employee> getEmployees(){
         List<Employee> list = employeesMapper.getEmployees();
         return list;
@@ -51,13 +49,13 @@ public class EmployeeService {
         List<Employee> AllEmp = employeesMapper.getEmployeesByName(empName);
         return AllEmp;
     }
-
     public PageInfo<Employee> getEmployeesPageMsgByName(int currentPage,int pageSize, String empName){
         PageHelper.startPage(currentPage,pageSize);
         List<Employee> AllEmp = employeesMapper.getEmployeesByName(empName);
         PageInfo<Employee> pageInfo = new PageInfo<>(AllEmp);
         return pageInfo;
     }
+
 
     //添加员工
     public String insertEmployee(Employee e) {
