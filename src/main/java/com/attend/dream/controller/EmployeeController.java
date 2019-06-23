@@ -96,7 +96,7 @@ public class EmployeeController {
 //    }
 
     //删除单行员工信息
-    @DeleteMapping("/emp/{empId}")
+    @DeleteMapping("/test/{empId}")
     public String deleteEmployee(@PathVariable(value = "empId") int empId){
         employeeService.deleteEmployee(empId);
         return "redirect:/employee?currentPage=1";
