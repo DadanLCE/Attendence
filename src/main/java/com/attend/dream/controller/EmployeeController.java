@@ -59,35 +59,8 @@ public class EmployeeController {
         return empMap;
     }
 
-    //通过 分页 显示全部员工列表
-    @GetMapping("/employee")
-    public String employeePage(Model model,@RequestParam(value = "currentPage") int currentPage,
-                                @RequestParam(value = "pageSize", defaultValue = "5") int pageSize){
 
 
-        PageInfo<Employee> employeePage = employeeService.getEmployeesPage(currentPage,pageSize);
-        List<Employee> emps = employeeService.getEmployeesByPage(currentPage,pageSize);
-        model.addAttribute("emps",emps);
-        model.addAttribute("empsPage",employeePage);
-        maxPage = employeePage.getNavigateLastPage();
-
-        return "employee_list";
-    }
-
-    //查询员工通过名字 模糊查询 分页
-    @RequestMapping("/emp/get")
-    public String getEmployeesByName(Model model,@RequestParam(value = "currentPage") int currentPage,
-                                     @RequestParam(value = "pageSize", defaultValue = "5") int pageSize,@RequestParam(value = "empName") String empName){
-        PageInfo<Employee> empsPage = employeeService.getEmployeesPageMsgByName(currentPage,pageSize,empName);
-        List<Employee> emps = employeeService.getEmployeesMsgByName(currentPage,pageSize,empName);
-        model.addAttribute("emps",emps);
-        model.addAttribute("empsPage",empsPage);
-        //模糊查询判断
-        //将模糊查询的empName传入到页面 让上一页和下一页可以获取到empName
-        model.addAttribute("empName",empName);
-        model.addAttribute("isFuzzy",1);
-        return "employee_list";
-    }
 //
 //    //点击添加跳转到添加页面
 //    @GetMapping("/emp/goToAddHtml")
