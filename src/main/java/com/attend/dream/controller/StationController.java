@@ -85,4 +85,9 @@ public class StationController {
 
     }
 
+    @GetMapping("/goToStalist")
+    public String gotoEmpList() {
+        return "station_list";
+    }
+
 }
