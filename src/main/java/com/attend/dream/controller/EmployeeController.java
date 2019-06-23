@@ -5,6 +5,7 @@ import com.attend.dream.domain.Employee;
 import com.attend.dream.service.EmployeeService;
 import com.attend.dream.service.UserService;
 import com.github.pagehelper.PageInfo;
+import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Controller;
@@ -14,12 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import sun.plugin2.message.Message;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.ws.Response;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class EmployeeController {
@@ -36,7 +35,29 @@ public class EmployeeController {
 //
 //        return "employee_list";
 //    }
+    @RequestMapping(value = "/showEmp",method = RequestMethod.POST)
+    public String showEmp(){
+        return "employee_list";
+    }
 
+    @RequestMapping(value = "/emp", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<Object, Object> getEmployeesByName(@RequestParam(value = "currentPage") int currentPage,
+                                                  @RequestParam(value = "pageSize", defaultValue = "5") int pageSize,@RequestParam(value = "empName") String empName){
+        PageInfo<Employee> empsPage = employeeService.getEmployeesPageMsgByName(currentPage,pageSize,empName);
+        List<Employee> emps = employeeService.getEmployeesMsgByName(currentPage,pageSize,empName);
+        int prePage = empsPage.getPrePage();
+        int nextPage = empsPage.getNextPage();
+        int pageNum = empsPage.getPages();
+
+        Map<Object, Object> empMap = new HashMap();
+        empMap.put("emps", emps);
+        empMap.put("nextPage", nextPage);
+        empMap.put("prePage", prePage);
+        empMap.put("pageNum", pageNum);
+
+        return empMap;
+    }
 
     //通过 分页 显示全部员工列表
     @GetMapping("/employee")
@@ -66,12 +87,12 @@ public class EmployeeController {
         model.addAttribute("isFuzzy",1);
         return "employee_list";
     }
-
-    //点击添加跳转到添加页面
-    @GetMapping("/emp/goToAddHtml")
-    public String gotoAddEmployee() {
-        return "add_employee";
-    }
+//
+//    //点击添加跳转到添加页面
+//    @GetMapping("/emp/goToAddHtml")
+//    public String gotoAddEmployee() {
+//        return "add_employee";
+//    }
 
     //删除单行员工信息
     @DeleteMapping("/emp/{empId}")
@@ -112,8 +133,6 @@ public class EmployeeController {
         } else{
             return "index";
         }
-
-
 
     }
 
