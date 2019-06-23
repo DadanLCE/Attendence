@@ -12,7 +12,22 @@
 		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" href="/layui/css/layui.css" >
+		<link rel="stylesheet" href="../lib/layui/css/layui.css" th:href="@{/layui/css/layui.css.css}">
+        <style type="text/css">
+            .layui-form-label{
+                width: 120px;
+            }
+            .layui-form-item{
+                margin-bottom: 7px;
+            }
+            .layui-input{
+                border-color: #3F3F3F;
+            }
+            .close{
+                width: 100px;
+                height: 50px;
+            }
+        </style>
 
 	</head>
 	<style>
@@ -98,7 +113,7 @@
 
 		</div>
 
-		<!--隐藏窗口，点击button弹出  编辑   页面-->
+		<!--隐藏窗口，点击button弹出编辑页面-->
 		<div class="modal fade" id="updateEmpPage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -215,7 +230,7 @@
 			</div><!-- /.modal -->
 		</div>
 
-		<!--隐藏窗口，点击button弹出  添加  页面-->
+		<!--隐藏窗口，点击button弹出添加页面-->
 		<div class="modal fade" id="addEmpPage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -304,13 +319,13 @@
 												<span class="we-red">*</span>岗位
 											</label>
 											<div class="layui-input-inline">
-												<input type="text" id="L_salary" name="empStaCode" lay-verify="required|salary" autocomplete="off" class="layui-input">-->
-<!--												<select>-->
-<!--												<option value ="CEO">CEO-总经理</option>-->
-<!--												<option value ="KJ">KJ-会计</option>-->
-<!--												<option value="QT">QT-前台</option>-->
-<!--												<option value="HQ">HQ-后勤</option>-->
-<!--												</select>-->
+												<input type="text" id="L_salary" name="empStaCode" lay-verify="required|salary" autocomplete="off" class="layui-input">
+												<!--<select>-->
+												<!--<option value ="CEO">CEO-总经理</option>-->
+												<!--<option value ="KJ">KJ-会计</option>-->
+												<!--<option value="QT">QT-前台</option>-->
+												<!--<option value="HQ">HQ-后勤</option>-->
+												<!--</select>	-->
 											</div>
 										</div>
 										<div class="layui-form-item">
@@ -347,79 +362,79 @@
 		<script src="/js/eleDel.js" type="text/javascript" charset="utf-8" ></script>
 		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 		<!--<script src="../static/js/eleDel.js" type="text/javascript" charset="utf-8" th:src="@{/js/eleDel.js}"></script>-->
-<!--		<script type="text/javascript">-->
+		<script type="text/javascript">
 
-<!--			function empsDelete() {-->
+			function empsDelete() {
 
-<!--				if (confirm("确定删除选中的用户？")) {-->
-<!--					var userList = new Array();-->
-<!--					$("input[name='empsDelete']:checked").each(function () {-->
-<!--						userList.push($(this).val());-->
-<!--					});-->
-<!--					$.ajax({-->
-<!--						type: "post",-->
-<!--						url: "/emp/delEmps",-->
-<!--						data: {userList: userList.toString()},-->
-<!--						success: function () {-->
-<!--							alert("删除成功！");-->
-<!--							location.reload();-->
-<!--						},-->
-<!--						error: function () {-->
-<!--							alert("刪除失败！")-->
-<!--						}-->
-<!--					});-->
-<!--				}-->
-<!--			}-->
+				if (confirm("确定删除选中的用户？")) {
+					var userList = new Array();
+					$("input[name='empsDelete']:checked").each(function () {
+						userList.push($(this).val());
+					});
+					$.ajax({
+						type: "post",
+						url: "/emp/delEmps",
+						data: {userList: userList.toString()},
+						success: function () {
+							alert("删除成功！");
+							location.reload();
+						},
+						error: function () {
+							alert("刪除失败！")
+						}
+					});
+				}
+			}
 
-<!--		</script>-->
+		</script>
 
-<!--		//编辑用户-->
-<!--		<script type="text/javascript">-->
-<!--			var url = window.location.href;-->
-<!--			//var location = ;-->
-<!--			//alert(location);-->
-<!--			var id  = url.substring(url.lastIndexOf("=")+1,url.length);-->
-<!--			//alert("取id"+id);-->
-<!--			function clickEdit(data) {-->
-<!--				var clickId = data.id;-->
-<!--				$(document).ready(function () {-->
-<!--					var subUrl = "/emp/getEmpById/";-->
-<!--					var now = subUrl + clickId;-->
-<!--					$.ajax({-->
-<!--						type: "get",-->
-<!--						url: now,-->
-<!--						success: function (emp) {-->
-<!--							var empId = emp.id;-->
-<!--							//var weaBody = $("weadmin-body");-->
-<!--							var inputCode = $("#empCode");-->
-<!--							var inputName = $("#empName");-->
-<!--							var inputAge = $("#empAge");-->
-<!--							var inputNation = $("#empNation");-->
-<!--							var inputIdCard = $("#empIdCard");-->
-<!--							var inputSalary = $("#empSalary");-->
-<!--							var inputTel = $("#empTel");-->
-<!--							var inputStaCode = $("#empStaCode");-->
-<!--							var inputNote = $("#empNote");-->
-<!--							inputCode.attr('value', emp.empCode);-->
-<!--							inputName.attr('value', emp.empName);-->
-<!--							inputAge.attr('value', emp.empAge);-->
-<!--							inputNation.attr('value', emp.empNation);-->
-<!--							inputIdCard.attr('value', emp.empIdCard);-->
-<!--							inputSalary.attr('value', emp.empSalary);-->
-<!--							inputTel.attr('value', emp.empTel);-->
-<!--							inputStaCode.attr('value', emp.empStaCode);-->
-<!--							inputNote.attr('value', emp.empNote);-->
+		//编辑用户
+		<script type="text/javascript">
+			var url = window.location.href;
+			//var location = ;
+			//alert(location);
+			var id  = url.substring(url.lastIndexOf("=")+1,url.length);
+			//alert("取id"+id);
+			function clickEdit(data) {
+				var clickId = data.id;
+				$(document).ready(function () {
+					var subUrl = "/emp/getEmpById/";
+					var now = subUrl + clickId;
+					$.ajax({
+						type: "get",
+						url: now,
+						success: function (emp) {
+							var empId = emp.id;
+							//var weaBody = $("weadmin-body");
+							var inputCode = $("#empCode");
+							var inputName = $("#empName");
+							var inputAge = $("#empAge");
+							var inputNation = $("#empNation");
+							var inputIdCard = $("#empIdCard");
+							var inputSalary = $("#empSalary");
+							var inputTel = $("#empTel");
+							var inputStaCode = $("#empStaCode");
+							var inputNote = $("#empNote");
+							inputCode.attr('value', emp.empCode);
+							inputName.attr('value', emp.empName);
+							inputAge.attr('value', emp.empAge);
+							inputNation.attr('value', emp.empNation);
+							inputIdCard.attr('value', emp.empIdCard);
+							inputSalary.attr('value', emp.empSalary);
+							inputTel.attr('value', emp.empTel);
+							inputStaCode.attr('value', emp.empStaCode);
+							inputNote.attr('value', emp.empNote);
 
-<!--						},-->
-<!--						error: function () {-->
-<!--							alert("ajax失败");-->
-<!--						}-->
-<!--					})-->
+						},
+						error: function () {
+							alert("ajax失败");
+						}
+					})
 
 
-<!--				});-->
-<!--			}-->
-<!--		</script>-->
+				});
+			}
+		</script>
 
 		<script th:inline="none">
 			var currentPage = 0;
