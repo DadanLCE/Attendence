@@ -89,9 +89,9 @@
 					<!--<a class="num" href="">3</a>-->
 					<!--<a class="num" href="">489</a>-->
 					<!--<a class="next" href="">&gt;&gt;</a>-->
-					<a class="num" th:if=" ${depsPage.prePage} gt 0 "  th:href="@{'/department?currentPage='+${depsPage.prePage}+'&depCode='+${depCode}}">上一页</a>
+					<a class="num" th:if=" ${depsPage.prePage} gt 0 "  th:href="@{'/department?currentPage='+${depsPage.prePage}+'&depCode='+${depCode}}">上一页 &nbsp [[${depsPage.prePage}]]</a>
 					<span class="current">[[${depsPage.pageNum}]]</span>
-					<a class="num" th:if=" ${depsPage.nextPage} gt 0 "  th:href="@{'/department?currentPage='+${depsPage.nextPage}+'&depCode='+${depCode}}">下一页</a>
+					<a class="num" th:if=" ${depsPage.nextPage} gt 0 "  th:href="@{'/department?currentPage='+${depsPage.nextPage}+'&depCode='+${depCode}}">下一页 &nbsp [[${depsPage.nextPage}]]</a>
 
 				</div>
 			</div>
