@@ -44,14 +44,13 @@
 		</div>
 		<div class="weadmin-body">
 			<div class="layui-row">
-				<form class="layui-form layui-col-md12 we-search"  method="post" th:action="@{/station?currentPage=1}">
 
 					<div class="layui-inline">
 						<input type="text" name="staCode" placeholder="请输入岗位编码" autocomplete="off" class="layui-input">
 					</div>
 					<button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
-				</form>
-			</div>
+
+            </div>
 			<div class="weadmin-block">
 					<button class="layui-btn layui-btn-danger" onclick="stasDelete()"><i class="layui-icon"></i>批量删除</button>
 					<!--<form action="" th:action="@{/sta/goToAddHtml}" th:method="get">-->
@@ -166,42 +165,15 @@
 						<th>操作</th>
 					</tr>
 				</thead>
-				<tbody>
-				<tr th:each="sta:${stas}">
-					<td><input name="stasDelete" th:value="${sta.id}" type="checkbox" /></td>
-					<td th:text="${sta.id}"></td>
-					<td th:text="${sta.staCode}"></td>
-					<td th:text="${sta.staName}"></td>
-					<td th:text="${sta.staDep}"></td>
-					<td th:text="${sta.staBoss}"></td>
-					<td th:text="${sta.staCate}"></td>
-					<td class="td-manage">
-						<a title="编辑" onclick="WeAdminEdit('编辑','./edit.html', 1, 600, 400)" href="javascript:;">
-							<i class="layui-icon">&#xe642;</i>
-						</a>
-						<form th:action="@{/sta/}+${sta.id}" method="post" >
-							<input type="hidden" name="_method" value="delete" />
-							<button  type="submit" >删除</button>
-						</form>
+                <tbody id="tbody" >
 
-					</td>
-
-				</tr>
-				</tbody>
+                </tbody>
 			</table>
 
-			<div class="page">
-				<div>
-					<!--<a class="prev" href="">&lt;&lt;</a>-->
-					<!--<a class="num" href="">1</a>-->
-					<!--<span class="current">2</span>-->
-					<!--<a class="num" href="">3</a>-->
-					<!--<a class="num" href="">489</a>-->
-					<!--<a class="next" href="">&gt;&gt;</a>-->
-					<a class="num" th:if=" ${stasPage.prePage} gt 0 "  th:href="@{'/station?currentPage='+${stasPage.prePage}+'&staCode='+${staCode}}">上一页 &nbsp [[${stasPage.prePage}]]</a>
-					<span class="current">[[${stasPage.pageNum}]]</span>
-					<a class="num" th:if=" ${stasPage.nextPage} gt 0 "  th:href="@{'/station?currentPage='+${stasPage.nextPage}+'&staCode='+${staCode}}">下一页 &nbsp [[${stasPage.nextPage}]]</a>
-				</div>
+
+            <div id='ulList' class="page">
+
+            </div>
 			</div>
 		</div>
 
@@ -235,6 +207,72 @@
 				}
 			}
 		</script>
+
+
+        <script th:inline="none">
+            var currentPage = 0;
+            function loadData(key,page, pageSize) {
+                $.ajax({
+                    type: 'POST',
+                    url: "/sta",
+                    dataType: "json",
+                    data: {staCode: key,
+                        pageSize:5,
+                        currentPage:page},
+                    success: function (data) {
+                        $("#tbody").html("");
+                        // $("#ulList").html("");
+                        var tabledata = data['stas'];
+                        jQuery.each(tabledata, function (i, list) {
+                            var tr="";
+                            tr+="<tr>"+
+                                "<td><input name=\"stasDelete\" value=" + list['id'] + " type=\"checkbox\" /></td>"+
+                                "<td>" + list['id'] + "</td>"+
+                                "<td>" + list['staCode'] + "</td>"+
+                                "<td>" + list['staName'] + "</td>"+
+                                "<td>" + list['staDep'] + "</td>"+
+                                "<td>" + list['staBoss'] + "</td>"+
+                                "<td>" + list['staCate'] + "</td>"+
+                                "<td>" + list['staDes'] + "</td>"+
+                                "<td class=\"td-manage\">"+
+                                "<button class=\"btn btn-primary btn-lg\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
+                                "编辑用户"+
+                                "</button>"+
+                                "<form action=\"/test/" + list['id'] + " method=\"post\" >"+
+                                "<input type=\"hidden\" name=\"_method\" value=\"delete\" />"+
+                                "<button  type=\"submit\" >删除</button>"+
+                                "</form>"+
+                                "</td></tr>";
+
+                            $("#tbody").append(tr);
+                        });
+                        $("#ulList").html('');
+                        var li="<a class=\"num\" onclick='loadData(\"\","+(currentPage-1)+","+5+")'><<</a>";
+                        for (var i = 1; i <= data['pageNum']; i++) {
+                            if (i==currentPage){
+                                li+="<a class=\"current\" class='active' onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
+                            }
+                            else {
+                                li+="<a class=\"num\" onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
+                            }
+                        }
+                        li+="<a class=\"num\" onclick='loadData(\"\","+(currentPage+1)+","+5+")'>>></a>";
+                        $("#ulList").append(li);
+                        // console.log(tr);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        console.log(XMLHttpRequest.status);
+                        console.log(XMLHttpRequest.readyState);
+                        console.log(textStatus);
+                    }
+                });
+            }
+
+            $(document).ready(function () {
+                loadData('', 1, 5);
+            })
+
+        </script>
 	</body>
 
 </html>

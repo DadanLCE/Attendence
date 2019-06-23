@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,19 +21,43 @@ public class StationController {
     @Autowired
     StationService stationService;
 
-    //显示全部岗位列表
-    @RequestMapping("/station")
-    public String list(Model model, @RequestParam(value = "currentPage") int currentPage,
-    @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, @RequestParam(value = "staCode") String staCode){
+
+
+    @RequestMapping(value = "/sta", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<Object, Object> getEmployeesByName(@RequestParam(value = "currentPage") int currentPage,
+                                                  @RequestParam(value = "pageSize", defaultValue = "5") int pageSize,@RequestParam(value = "staCode") String staCode){
         PageInfo<Station> stasPage = stationService.getStationBystaCodePage(currentPage, pageSize, staCode);
         List<Station> stas = stationService.getStationBystaCode(currentPage, pageSize, staCode);
+        int prePage = stasPage.getPrePage();
+        int nextPage = stasPage.getNextPage();
+        int pageNum = stasPage.getPages();
+        for (Station s:
+            stas ) {
+            System.out.println(s);
+        }
+        Map<Object, Object> empMap = new HashMap();
+        empMap.put("stas", stas);
+        empMap.put("nextPage", nextPage);
+        empMap.put("prePage", prePage);
+        empMap.put("pageNum", pageNum);
 
-        model.addAttribute("stas",stas);
-        model.addAttribute("stasPage",stasPage);
-        //传递staCode到station_list 的下一页和上一页
-        model.addAttribute("staCode",staCode);
-        return "station_list";
+        return empMap;
     }
+
+//    //显示全部岗位列表
+//    @RequestMapping("/station")
+//    public String list(Model model, @RequestParam(value = "currentPage") int currentPage,
+//    @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, @RequestParam(value = "staCode") String staCode){
+//        PageInfo<Station> stasPage = stationService.getStationBystaCodePage(currentPage, pageSize, staCode);
+//        List<Station> stas = stationService.getStationBystaCode(currentPage, pageSize, staCode);
+//
+//        model.addAttribute("stas",stas);
+//        model.addAttribute("stasPage",stasPage);
+//        //传递staCode到station_list 的下一页和上一页
+//        model.addAttribute("staCode",staCode);
+//        return "station_list";
+//    }
 
 //    //查询岗位
 //    @PostMapping("/sta/get")
@@ -83,6 +108,11 @@ public class StationController {
             return "index";
         }
 
+    }
+
+    @RequestMapping(value = "/showSta",method = RequestMethod.POST)
+    public String showEmp(){
+        return "station_list";
     }
 
 }

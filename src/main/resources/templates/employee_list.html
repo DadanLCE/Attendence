@@ -448,9 +448,9 @@
 			}
 		</script>
 
-		<script>
+		<script th:inline="none">
 			var currentPage = 0;
-			alert("lzh");
+
 			function loadData(key,page, pageSize) {
 				$.ajax({
 					type: 'POST',
@@ -527,7 +527,6 @@
 		<!--添加用户-->
 		<script type="text/javascript">
 			function addAjax() {
-
 				var empCodex = document.getElementById('addEmpCode').value;
 				var empName = document.getElementById('addEmpName').value;
 				var empAge = document.getElementById('addEmpAge').value;

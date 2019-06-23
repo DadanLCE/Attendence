@@ -1,7 +1,10 @@
 package com.attend.dream;
 
+import com.attend.dream.domain.Department;
 import com.attend.dream.domain.Employee;
+import com.attend.dream.mapper.DepartmentMapper;
 import com.attend.dream.mapper.EmployeesMapper;
+import com.attend.dream.service.DepartmentService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.junit.Test;
@@ -23,6 +26,7 @@ public class DreamApplicationTests {
 
     @Test
     public void contextLoads() {
+
 //        Employee e = employeesMapper.getEmployeeByName("方少少");
 
 //        PageHelper.startPage(2,2);
@@ -43,5 +47,20 @@ public class DreamApplicationTests {
 //        PageInfo<Employee> pageInfo = new PageInfo<>(allE);
 
     }
+    @Autowired
+    private DepartmentMapper departmentMapper;
+    @Autowired
+    private DepartmentService departmentService;
 
+    @Test
+    public void departmentT(){
+        String code = null;
+        PageInfo<Department> pageInfo = departmentService.getDepartmentsByDepCodePage(1,5,"");
+       List<Department> list =  departmentService.getDepartmentsByDepCode(1,5,"");
+//        for (Department d:
+//             list   ) {
+//            System.out.println(d);
+//        }
+        System.out.println(pageInfo);
+    }
 }
