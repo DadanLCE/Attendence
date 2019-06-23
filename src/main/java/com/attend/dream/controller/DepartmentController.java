@@ -68,22 +68,26 @@ public class DepartmentController {
 
     }
 
-    //添加员工
+    //添加部门
     @PostMapping("/dep/addDepartment")
+    @ResponseBody
     public String addDepartment(Department dep, Map<String,Object> map) {
 
         String fallBack = departmentService.insertDepartment(dep);
 
         if ( fallBack.equals("1")) {
-            return "redirect:/department";
+            //return "redirect:/department";
+            return fallBack;
         } else if ( fallBack.equals("2")){
             map.put("msg","部门已存在");
-            return "add_department";
+            //return "add_department";
+            return fallBack;
         } else if (fallBack.equals("3")) {
             map.put("msg","负责人不存在");
-            return "add_department";
+            //return "add_department";
+            return fallBack;
         } else{
-            return "index";
+            return "error";
         }
 
     }

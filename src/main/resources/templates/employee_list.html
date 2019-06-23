@@ -19,13 +19,13 @@
 	<body>
 		<div class="weadmin-nav">
 			<span class="layui-breadcrumb">
-        <a href="">首页</a>
-        <a href="">公司架构</a>
-        <a>
-          <cite>员工</cite></a>
-      </span>
+                <a href="">首页</a>
+                <a href="">公司架构</a>
+                <a><cite>员工</cite></a>
+            </span>
 			<a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
-				<i class="layui-icon" style="line-height:30px">&#x1002;</i></a>
+				<i class="layui-icon" style="line-height:30px">&#x1002;</i>
+            </a>
 		</div>
 		<div class="weadmin-body">
 			<div class="layui-row">
@@ -48,6 +48,7 @@
 				<!--</form>-->
 				<span class="fr" style="line-height:40px"></span>
 			</div>
+            <!--显示员工-->
 			<table class="layui-table" id="memberList" >
 				<thead>
 					<tr>
@@ -320,6 +321,8 @@
 											<label  class="layui-form-label">
 											</label>
 											<button class="layui-btn" onclick="addAjax()" id="confirmAdd" lay-filter="add" lay-submit="">确定</button>
+
+                                            <!--隐藏button-->
 											<button type="button" class="btn btn-default" style="display: none" data-dismiss="modal" id="closemodel">关闭</button>
 
 										</div>
@@ -350,8 +353,7 @@
                     <!--<a class="num" href="">489</a>-->
                     <!--<a class="next" href="">&gt;&gt;</a>-->
                 </div>
-            </div>
-		</div>
+            </div></div>
 
         <!-- ***************************************************************** -->
 
@@ -385,14 +387,6 @@
 				}
 			}
 		</script>
-		<!--<script type="text/javascript">-->
-
-			<!--function getId(data) {-->
-				<!--//alert("找到方法");-->
-				<!--//alert(data.id);-->
-				<!--var url = "/emp/goToUpdateHtml"+"?id="+(data.id);-->
-				<!--window.open(url);-->
-			<!--};-->
 
 		<!--编辑功能回显ajax-->
 		<script type="text/javascript">
@@ -481,7 +475,7 @@
 						},
 						success : function (fallBack) {
 							alert("后端传值成功:"+fallBack);
-							if ( fallBack == 1 ) {
+							if ( fallBack === 1 ) {
 								alert('恭喜你，添加成功！！！');
 								$("#closemodel").click();
 								//document.getElementById('addEmpPage').style.display="none";

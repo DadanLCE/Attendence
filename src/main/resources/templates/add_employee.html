@@ -209,6 +209,20 @@
 
 			});
 		</script>
+		<script type="text/javascript">
+			function addAjax() {
+				$document.ready(function () {
+					$.ajax({
+						type : "post",
+						url : "/emp/addEmployee",
+						success : function (fallBack) {
+							alert("后端传值:"+fallBack);
+
+						}
+					})
+				})
+			};
+		</script>
 	</body>
 
 </html>
