@@ -32,7 +32,7 @@ public class DepartmentService {
             PageInfo<Department> pageInfo = new PageInfo<>(deps);
             return pageInfo;
         }
-        //查询到的所有页面信息
+        //查询到的部门信息
         public List<Department> getDepartmentsByDepCode(int currentPage, int pageSize, String depCode){
             PageHelper.startPage(currentPage, pageSize);
             List<Department> deps = departmentMapper.getDepartmentsByDepCode(depCode);
