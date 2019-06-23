@@ -11,11 +11,18 @@
 		<link rel="stylesheet" href="../static/css/font.css" th:href="@{/css/font.css}">
 		<link rel="stylesheet" href="../static/css/weadmin.css" th:href="@{/css/weadmin.css}">
 		<script type="text/javascript" src="../lib/layui/layui.js" th:src="@{/layui/layui.js}" charset="utf-8"></script>
+		<script src="http://code.jquery.com/jquery-3.2.0.min.js"></script>
 
 
 
 	</head>
-
+	<style>
+		.content{
+			float: left;
+			padding: 1.875em;
+			width: 100%;
+		}
+	</style>
 	<body>
 		<!-- 顶部开始 -->
 		<div class="container">
@@ -25,23 +32,6 @@
 			<div class="left_open">
 				<i title="展开左侧栏" class="iconfont">&#xe699;</i>
 			</div>
-			<!-- <ul class="layui-nav left fast-add" lay-filter="">
-				<li class="layui-nav-item">
-					<a href="javascript:;">+新增</a>
-					<dl class="layui-nav-child">
-						
-						<dd>
-							<a onclick="WeAdminShow('资讯','https://www.youfa365.com/')"><i class="iconfont">&#xe6a2;</i>资讯</a>
-						</dd>
-						<dd>
-							<a onclick="WeAdminShow('图片','http://www.baidu.com')"><i class="iconfont">&#xe6a8;</i>图片</a>
-						</dd>
-						<dd>
-							<a onclick="WeAdminShow('用户','https://www.youfa365.com/')"><i class="iconfont">&#xe6b8;</i>用户</a>
-						</dd>
-					</dl>
-				</li>
-			</ul> -->
 			<ul class="layui-nav right" lay-filter="">
 				<li class="layui-nav-item">
 					<a href="javascript:;">Admin</a>
@@ -58,9 +48,6 @@
 						</dd>
 					</dl>
 				</li>
-				<!-- <li class="layui-nav-item to-index">
-					<a href="/">前台首页</a>
-				</li> -->
 			</ul>
 
 		</div>
@@ -78,35 +65,26 @@
 						</a>
 						<ul class="sub-menu">
 							<li>
-								<a href="employee_list.html" th:href="@{/employee?currentPage=1}">
-									<!--/pageController?pageNum='+${pageNum}-->
-									<i class="iconfont">&#xe6a7;</i>
-									<cite>员工</cite>
+								<a href="javascript:goToEmployee();" class="iconfont">
+
+									员工
 
 								</a>
 							</li>
 							<li>
-								<!--@{/emp/get?currentPage=1-->
-								<a href="department_list.html" th:href="@{/department?currentPage=1&depCode= }">
+								<a href="department_list.html" th:href="@{/department}">
 									<i class="iconfont">&#xe6a7;</i>
 									<cite>部门</cite>
 
 								</a>
 							</li>
 							<li>
-								<a href="station_list.html" th:href="@{/station?currentPage=1&staCode= }">
+								<a href="station_list.html" th:href="@{/station}">
 									<i class="iconfont">&#xe6a7;</i>
 									<cite>岗位</cite>
-									<!-- <i class="iconfont nav_right">&#xe697;</i> -->
+
 								</a>
-								<!-- <ul class="sub-menu">
-									<li>
-										<a _href="./pages/member/addInput.html">
-											<i class="iconfont">&#xe6a7;</i>
-											<cite>输入框操作</cite>
-										</a>
-									</li>
-								</ul> -->
+
 							</li>
 						</ul>
 					</li>
@@ -182,19 +160,12 @@
 		<!-- <div class="x-slide_left"></div> -->
 		<!-- 左侧菜单结束 -->
 		<!-- 右侧主体开始 -->
-		<div class="page-content">
-			<div class="layui-tab tab" lay-filter="wenav_tab" id="WeTabTip" lay-allowclose="true">
-				<ul class="layui-tab-title" id="tabName">
-					<li>我的桌面</li>
-				</ul>
-				<div class="layui-tab-content">
-					<div class="layui-tab-item layui-show">
-						<iframe src='station_list.html' frameborder="0" scrolling="yes" class="weIframe"></iframe>
-					</div>
-				</div>
-			</div>
+		<div class="page-content" id="showItem">
 		</div>
-		<div class="page-content-bg"></div>
+		</div>
+		<div class="content" >
+
+		</div>
 		<!-- 右侧主体结束 -->
 		<!-- 中部结束 -->
 		<!-- 底部开始 -->
@@ -233,6 +204,27 @@
 			// 		}
 			// 	});
 			// });
+
+		</script>
+		<script type="text/javascript">
+			function goToEmployee() {
+			$.ajax({
+				type:"POST",
+				url:"/showEmp",
+				dataType:"html",
+				success: function(data){
+					alert(data);
+					$("#showItem").html(data);
+				},
+				error: function ()
+				{
+					alert("失败啦")
+					console.log(XMLHttpRequest.status);
+					console.log(XMLHttpRequest.readyState);
+					console.log(textStatus);
+				}
+			})
+			}
 
 		</script>
 	</body>
