@@ -9,12 +9,26 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
 		<link rel="stylesheet" href="../static/css/font.css" th:href="@{/css/font.css}">
 		<link rel="stylesheet" href="../static/css/weadmin.css" th:href="@{/css/weadmin.css}">
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 		<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
 		<!--[if lt IE 9]>
 	      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
 	      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
 	    <![endif]-->
+		<style type="text/css">
+			.layui-form-label{
+				width: 120px;
+			}
+			.layui-form-item{
+				margin-bottom: 7px;
+			}
+			.layui-input{
+				border-color: #3F3F3F;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -40,9 +54,100 @@
 			</div>
 			<div class="weadmin-block">
 					<button class="layui-btn layui-btn-danger" onclick="stasDelete()"><i class="layui-icon"></i>批量删除</button>
-					<form action="" th:action="@{/sta/goToAddHtml}" th:method="get">
-					<button class="layui-btn" type="submit"><i class="layui-icon"></i>添加</button>
-				</form>
+					<!--<form action="" th:action="@{/sta/goToAddHtml}" th:method="get">-->
+					<!--<button class="layui-btn" type="submit"><i class="layui-icon"></i>添加</button>-->
+				<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+					添加
+				</button>
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+									&times;
+								</button>
+								<h4 class="modal-title" id="myModalLabel">
+									添加
+								</h4>
+							</div>
+							<div class="weadmin-body">
+								<form class="layui-form" th:action="@{/sta/addStation}" method="post">
+									<h1 style="color:red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></h1>
+									<div class="layui-form-item">
+										<label for="L_username" class="layui-form-label">
+											<span class="we-red">*</span>岗位编码
+										</label>
+										<div class="layui-input-inline">
+											<input type="text" id="L_username" name="staCode" lay-verify="required|nikename" autocomplete="off" class="layui-input">
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<label  class="layui-form-label">
+											<span class="we-red">*</span>岗位名称
+										</label>
+										<div class="layui-input-inline">
+											<input type="text" id="L_name" name="staName" lay-verify="required|name" autocomplete="" class="layui-input">
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<label class="layui-form-label">
+											<span class="we-red">*</span>所在部门
+										</label>
+										<div class="layui-input-inline">
+											<input type="text" id="L_salary" name="staDep" lay-verify="required|salary" autocomplete="off" class="layui-input">
+											<!--						<select>-->
+											<!--							<option value ="ZCS">ZCS-总裁室</option>-->
+											<!--							<option value ="CWB">CWB-caiwubu </option>-->
+											<!--							<option value="HR">HR-人力资源部</option>-->
+											<!--						  </select>	-->
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<label  class="layui-form-label">
+											<span class="we-red">*</span>直接上级编码
+										</label>
+										<div class="layui-input-inline">
+											<input type="text" id="L_salary" name="staBoss" lay-verify="required|salary" autocomplete="off" class="layui-input">
+
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<label  class="layui-form-label">
+											<span class="we-red">*</span>岗位类别
+										</label>
+										<div class="layui-input-inline">
+											<input type="text" id="L_salary" name="staCate" lay-verify="required|salary" autocomplete="off" class="layui-input">
+											<select>
+												<option value ="GL">管理类</option>
+												<option value ="WZ">文职类</option>
+												<option value="JS">技术类</option>
+											</select>
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<label class="layui-form-label">
+											<span class="we-red">*</span>职责描述
+										</label>
+										<div class="layui-input-inline">
+											<input type="textarea" id="L_salary" name="staDes" lay-verify="required|salary" autocomplete="off" class="layui-input">
+										</div>
+									</div>
+
+
+
+
+
+									<div class="layui-form-item">
+										<label class="layui-form-label">
+										</label>
+										<button class="layui-btn" lay-filter="add" lay-submit="">确定</button>
+									</div>
+								</form>
+							</div>
+						</div><!-- /.modal-content -->
+					</div><!-- /.modal -->
+				</div>
+				<!--</form>-->
 				<span class="fr" style="line-height:40px">共有数据：88 条</span>
 			</div>
 			<table class="layui-table" id="memberList">
