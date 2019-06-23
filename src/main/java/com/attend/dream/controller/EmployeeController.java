@@ -95,22 +95,26 @@ public class EmployeeController {
 
     //添加员工
     @PostMapping("/emp/addEmployee")
+    @ResponseBody
     public String addEmployee(Employee emp, Map<String,Object> map) {
 
         String fallBack = employeeService.insertEmployee(emp);
 
         if ( fallBack.equals("1")) {
-            return "redirect:/employee?currentPage="+maxPage;
+            //return "redirect:/employee?currentPage="+maxPage;
+            return fallBack;
         } else if ( fallBack.equals("2")){
             map.put("msg","员工编码已存在");
             map.put("addWarningMsg","2");
-            return "add_employee";
+            //return "add_employee";
+            return fallBack;
         } else if (fallBack.equals("3")) {
             map.put("msg","暂时还没有这个岗位！！！");
             map.put("addWarningMsg","3");
-            return "add_employee";
+            //return "add_employee";
+            return fallBack;
         } else{
-            return "index";
+            return "error";
         }
 
 

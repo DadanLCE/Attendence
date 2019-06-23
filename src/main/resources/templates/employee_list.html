@@ -29,7 +29,7 @@
 		</div>
 		<div class="weadmin-body">
 			<div class="layui-row">
-				<form class="layui-form layui-col-md12 we-search" method="post" th:action="@{/emp/get?currentPage=1}">
+				<form class="layui-form layui-col-md12 we-search" method="post" action="/emp/get?currentPage=1">
 					<div class="layui-inline">
 						<input type="text" name="empName" placeholder="请输入员工名" autocomplete="off" class="layui-input" >
 					</div>
@@ -80,6 +80,7 @@
 							<button class="btn btn-primary btn-lg" th:id="${emp.empId}" onclick="clickEdit(this)" data-toggle="modal" data-target="#updateEmpPage">
 								编辑用户
 							</button>
+							<form action=""></form>
 							<form th:action="@{/emp/}+${emp.empId}" method="post" >
 								<input type="hidden" name="_method" value="delete" />
 								<button  type="submit" >删除</button>
@@ -171,10 +172,10 @@
 							</div>
 							<div class="layui-form-item">
 								<label  class="layui-form-label">
-									<span class="we-red">*</span>紧急联系人
+									<span class="we-red">*</span>紧急联系人电话
 								</label>
 								<div class="layui-input-inline">
-									<input type="text" id="empContact" name="empCTel" lay-verify="required|salary" autocomplete="off" class="layui-input">
+									<input type="text" id="empCTel" name="empCTel" lay-verify="required|salary" autocomplete="off" class="layui-input">
 								</div>
 							</div>
 							<div class="layui-form-item">
@@ -224,14 +225,14 @@
 						</h4>
 					</div>
 					<div class="weadmin-body">
-						<form class="layui-form" th:action="@{/emp/addEmployee}" method="post">
+						<!--<form class="layui-form" th:action="@{/emp/addEmployee}" method="post">-->
 							<h1 style="color:red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></h1>
 							<div class="layui-form-item">
 								<label for="L_username" class="layui-form-label">
 									<span class="we-red">*</span>员工编码
 								</label>
 								<div class="layui-input-inline">
-									<input type="text" id="L_username" name="empCode" lay-verify="required|nikename" autocomplete="off" class="layui-input">
+									<input type="text" id="addEmpCode" name="empCode" lay-verify="required|nikename" autocomplete="off" class="layui-input">
 								</div>
 								<div class="layui-form-mid layui-word-aux">
 									将会成为您唯一的登录名
@@ -242,7 +243,7 @@
 									<span class="we-red">*</span>姓名
 								</label>
 								<div class="layui-input-inline">
-									<input type="text" id="L_name" name="empName" lay-verify="required|name" autocomplete="" class="layui-input">
+									<input type="text" id="addEmpName" name="empName" lay-verify="required|name" autocomplete="" class="layui-input">
 								</div>
 							</div>
 							<div class="layui-form-item">
@@ -250,7 +251,7 @@
 									<span class="we-red">*</span>年龄
 								</label>
 								<div class="layui-input-inline">
-									<input type="text" id="L_age" name="empAge" autocomplete="off" class="layui-input">
+									<input type="text" id="addEmpAge" name="empAge" autocomplete="off" class="layui-input">
 								</div>
 
 										</div>
@@ -259,7 +260,7 @@
 												<span class="we-red">*</span>民族
 											</label>
 											<div class="layui-input-inline">
-												<input type="text" id="L_nation" name="empNation" lay-verify="required|nation" autocomplete="off" class="layui-input">
+												<input type="text" id="addEmpNation" name="empNation" lay-verify="required|nation" autocomplete="off" class="layui-input">
 											</div>
 										</div>
 										<div class="layui-form-item">
@@ -267,7 +268,7 @@
 												<span class="we-red">*</span>身份证
 											</label>
 											<div class="layui-input-inline">
-												<input type="text" id="L_identifycard" name="empIdCard" lay-verify="required|identifycard" autocomplete="off" class="layui-input">
+												<input type="text" id="addEmpIdCard" name="empIdCard" lay-verify="required|identifycard" autocomplete="off" class="layui-input">
 											</div>
 										</div>
 										<div class="layui-form-item">
@@ -275,7 +276,7 @@
 												<span class="we-red">*</span>薪水
 											</label>
 											<div class="layui-input-inline">
-												<input type="text" id="L_salary" name="empSalary" lay-verify="required|salary" autocomplete="off" class="layui-input">
+												<input type="text" id="addEmpSalary" name="empSalary" lay-verify="required|salary" autocomplete="off" class="layui-input">
 											</div>
 										</div>
 										<div class="layui-form-item">
@@ -283,15 +284,15 @@
 												<span class="we-red">*</span>联系电话
 											</label>
 											<div class="layui-input-inline">
-												<input type="text" id="L_salary" name="empContact" lay-verify="required|salary" autocomplete="off" class="layui-input">
+												<input type="text" id="addEmpContact" name="empContact" lay-verify="required|salary" autocomplete="off" class="layui-input">
 											</div>
 										</div>
 										<div class="layui-form-item">
 											<label  class="layui-form-label">
-												<span class="we-red">*</span>紧急联系人
+												<span class="we-red">*</span>紧急联系人电话
 											</label>
 											<div class="layui-input-inline">
-												<input type="text" id="L_salary" name="empCTel" lay-verify="required|salary" autocomplete="off" class="layui-input">
+												<input type="text" id="addEmpCTel" name="empCTel" lay-verify="required|salary" autocomplete="off" class="layui-input">
 											</div>
 										</div>
 										<div class="layui-form-item">
@@ -299,7 +300,7 @@
 												<span class="we-red">*</span>岗位
 											</label>
 											<div class="layui-input-inline">
-												<input type="text" id="L_salary" name="empStaCode" lay-verify="required|salary" autocomplete="off" class="layui-input">-->
+												<input type="text" id="addEmpStaCode" name="empStaCode" lay-verify="required|salary" autocomplete="off" class="layui-input">-->
 <!--												<select>-->
 <!--												<option value ="CEO">CEO-总经理</option>-->
 <!--												<option value ="KJ">KJ-会计</option>-->
@@ -313,28 +314,30 @@
 												<span class="we-red">*</span>简介
 											</label>
 											<div class="layui-input-inline">
-												<input type="textarea" id="L_salary" name="empNote" lay-verify="required|salary" autocomplete="off" class="layui-input">
+												<input type="textarea" id="addEmpNote" name="empNote" lay-verify="required|salary" autocomplete="off" class="layui-input">
 											</div>
 										</div>
 										<div class="layui-form-item">
 											<label  class="layui-form-label">
 											</label>
-											<button class="layui-btn" lay-filter="add" lay-submit="">确定</button>
+											<button class="layui-btn" onclick="addAjax()" id="confirmAdd" lay-filter="add" lay-submit="">确定</button>
+											<button type="button" class="btn btn-default" style="display: none" data-dismiss="modal" id="closemodel">关闭</button>
+
 										</div>
-									</form>
+									<!--</form>-->
 								</div>
 							</div><!-- /.modal-content -->
 						</div><!-- /.modal -->
-					</div>
+			</div>
 
-
+			<!--分页-->
             <div class="page">
                 <div th:if="${isFuzzy == null}">
                     <!--<a class="prev" th:action="@{/employee/}+${empsPage.nextPage}">&lt;&lt;</a>-->
 
                     <a class="num" th:if=" ${empsPage.prePage} gt 0 "  th:href="@{'/employee?currentPage='+${empsPage.prePage}}">上一页[[${empsPage.prePage}]]</a>
                     <span class="current">[[${empsPage.pageNum}]]</span>
-                    <a class="num" th:if=" ${empsPage.nextPage} gt 0 "  th:href="@{'/employee?currentPage='+${empsPage.nextPage}}">下一页[[${empsPage.nextPage}]]</a>
+                    <a class="num" th:if=" ${empsPage.nextPage} gt 0 "  href="@{'/employee?currentPage='+${empsPage.nextPage}}">下一页[[${empsPage.nextPage}]]</a>
                     <!--<a class="num" href="">489</a>-->
                     <!--<a class="next" href="">&gt;&gt;</a>-->
                 </div>
@@ -357,7 +360,8 @@
 		<script src="../lib/layui/layui.js" charset="utf-8" th:src="@{/layui/layui.js}"></script>
 		<script src="../static/js/eleDel.js" type="text/javascript" charset="utf-8" th:src="@{/js/eleDel.js}"></script>
 		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-		<!--<script src="../static/js/eleDel.js" type="text/javascript" charset="utf-8" th:src="@{/js/eleDel.js}"></script>-->
+
+		<!--批量删除-->
 		<script type="text/javascript">
 
 			function empsDelete() {
@@ -391,7 +395,7 @@
 				<!--window.open(url);-->
 			<!--};-->
 
-		<!--</script>-->
+		<!--编辑功能回显ajax-->
 		<script type="text/javascript">
 			var url = window.location.href;
 			//var location = ;
@@ -416,6 +420,7 @@
 							var inputIdCard = $("#empIdCard");
 							var inputSalary = $("#empSalary");
 							var inputTel = $("#empTel");
+							var inputCTel = $("#empCTel");
 							var inputStaCode = $("#empStaCode");
 							var inputNote = $("#empNote");
 							inputCode.attr('value', emp.empCode);
@@ -425,6 +430,7 @@
 							inputIdCard.attr('value', emp.empIdCard);
 							inputSalary.attr('value', emp.empSalary);
 							inputTel.attr('value', emp.empTel);
+							inputCTel.attr('value',emp.empCTel);
 							inputStaCode.attr('value', emp.empStaCode);
 							inputNote.attr('value', emp.empNote);
 
@@ -437,6 +443,64 @@
 
 				});
 			}
+		</script>
+
+		<!--添加用户-->
+		<script type="text/javascript">
+			function addAjax() {
+				var empCodex = document.getElementById('addEmpCode').value;
+				var empName = document.getElementById('addEmpName').value;
+				var empAge = document.getElementById('addEmpAge').value;
+				var empNation = document.getElementById('addEmpNation').value;
+				var empIdCard = document.getElementById('addEmpIdCard').value;
+				var empSalary = document.getElementById('addEmpSalary').value;
+				var empContact = document.getElementById('addEmpContact').value;
+				var empCTel = document.getElementById('addEmpCTel').value;
+				var empStaCode = document.getElementById('addEmpStaCode').value;
+				var empNote = document.getElementById('addEmpNote').value;
+				alert("进入addAjax");
+				alert(empCodex);
+				alert(empName);
+				alert(empAge);
+
+					$.ajax({
+						type : "post",
+						url : "/emp/addEmployee",
+						data : {
+
+							empCode	:  empCodex,
+							empName	:  empName,
+							empAge	:  empAge,
+							empNation	:  empNation,
+							empIdCard	:  empIdCard,
+							empSalary	:  empSalary,
+							empContact	:  empContact,
+							empCTel	:  empCTel,
+							empStaCode	:  empStaCode,
+							empNote	:  empNote
+
+						},
+						success : function (fallBack) {
+							alert("后端传值成功:"+fallBack);
+							if ( fallBack == 1 ) {
+								alert('恭喜你，添加成功！！！');
+								$("#closemodel").click();
+								//document.getElementById('addEmpPage').style.display="none";
+							} else if ( fallBack === 2) {
+								alert ("员工编码已存在，请重来，(✪ω✪)");
+							} else if (fallBack === 3) {
+								alert("暂时还没有这个岗位！！！(✪ω✪)");
+							} else {
+								alert('哎呀，出现意外了！')	;
+							}
+
+						},
+						error : function () {
+							alert("传值失败");
+						}
+					})
+
+			};
 		</script>
 	</body>
 
