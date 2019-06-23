@@ -44,7 +44,7 @@
 		</div>
 		<div class="weadmin-body">
 			<div class="layui-row">
-				<form class="layui-form layui-col-md12 we-search"  method="post" th:action="@{/sta/get}">
+				<form class="layui-form layui-col-md12 we-search"  method="post" th:action="@{/station?currentPage=1}">
 
 					<div class="layui-inline">
 						<input type="text" name="staCode" placeholder="请输入岗位编码" autocomplete="off" class="layui-input">
@@ -191,12 +191,15 @@
 
 			<div class="page">
 				<div>
-					<a class="prev" href="">&lt;&lt;</a>
-					<a class="num" href="">1</a>
-					<span class="current">2</span>
-					<a class="num" href="">3</a>
-					<a class="num" href="">489</a>
-					<a class="next" href="">&gt;&gt;</a>
+					<!--<a class="prev" href="">&lt;&lt;</a>-->
+					<!--<a class="num" href="">1</a>-->
+					<!--<span class="current">2</span>-->
+					<!--<a class="num" href="">3</a>-->
+					<!--<a class="num" href="">489</a>-->
+					<!--<a class="next" href="">&gt;&gt;</a>-->
+					<a class="num" th:if=" ${stasPage.prePage} gt 0 "  th:href="@{'/station?currentPage='+${stasPage.prePage}+'&staCode='+${staCode}}">上一页 &nbsp [[${stasPage.prePage}]]</a>
+					<span class="current">[[${stasPage.pageNum}]]</span>
+					<a class="num" th:if=" ${stasPage.nextPage} gt 0 "  th:href="@{'/station?currentPage='+${stasPage.nextPage}+'&staCode='+${staCode}}">下一页 &nbsp [[${stasPage.nextPage}]]</a>
 				</div>
 			</div>
 		</div>

@@ -4,6 +4,8 @@ import com.attend.dream.domain.Employee;
 import com.attend.dream.domain.Station;
 import com.attend.dream.mapper.EmployeesMapper;
 import com.attend.dream.mapper.StationMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,15 +22,40 @@ public class EmployeeService {
     @Autowired(required = false)
     StationMapper stationMapper;
 
+    //分页查询的页
+    public PageInfo<Employee> getEmployeesPage(int currentPage,int pageSize){
+        PageHelper.startPage(currentPage,pageSize);
+        List<Employee> AllEmp = employeesMapper.getEmployees();
+        PageInfo<Employee> pageInfo = new PageInfo<>(AllEmp);
+        return pageInfo;
+    }
+    //分页查询的查询数据
+    public List<Employee> getEmployeesByPage(int currentPage,int pageSize){
+        PageHelper.startPage(currentPage,pageSize);
+        List<Employee> AllEmp = employeesMapper.getEmployees();
+        return AllEmp;
+    }
+
+
+    //查询所有
     public List<Employee> getEmployees(){
         List<Employee> list = employeesMapper.getEmployees();
         return list;
     }
 
-    public List<Employee> getEmployeesByName(String empName){
-        List<Employee> employee = employeesMapper.getEmployeesByName(empName);
-        return employee;
+    //模糊查询 分页查询的页面数据
+    public List<Employee> getEmployeesMsgByName(int currentPage,int pageSize, String empName){
+        PageHelper.startPage(currentPage,pageSize);
+        List<Employee> AllEmp = employeesMapper.getEmployeesByName(empName);
+        return AllEmp;
     }
+    public PageInfo<Employee> getEmployeesPageMsgByName(int currentPage,int pageSize, String empName){
+        PageHelper.startPage(currentPage,pageSize);
+        List<Employee> AllEmp = employeesMapper.getEmployeesByName(empName);
+        PageInfo<Employee> pageInfo = new PageInfo<>(AllEmp);
+        return pageInfo;
+    }
+
 
     //添加员工
     public String insertEmployee(Employee e) {
@@ -63,6 +90,23 @@ public class EmployeeService {
     public boolean deleteEmployee(int empId){
         employeesMapper.deleteEmployee(empId);
         return true;
+    }
+
+    public Employee getEmpById(int empId) {
+
+        return employeesMapper.findEmployeeById(empId);
+    }
+
+    public String updateEmployee(int empId) {
+
+        Employee e = employeesMapper.findEmployeeById(empId);
+
+        return "1";
+    }
+
+    public String updateEmployee( Employee e) {
+        employeesMapper.updateEmployeeById(e);
+        return "employee_list";
     }
 
 

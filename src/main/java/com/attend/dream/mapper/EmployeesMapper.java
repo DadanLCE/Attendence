@@ -30,6 +30,11 @@ public interface EmployeesMapper {
             "from employees where empCode = #{empCode}")
     Employee getEmployeesByempCode(String empCode);
 
+    //通过id查询员工
+    @Select("select empId,empCode,empName,empSex,empAge,empNation,empIdCard,empSalary,empTel,empContact,empCTel,empStaCode,empNote\n" +
+            "from employees where empId = #{empId}")
+    Employee findEmployeeById(int empId);
+
     //添加员工
     @Insert("insert into employees(empId,empCode,empName,empSex,empAge,empNation,empIdCard,empSalary,empTel,empContact,empCTel,empStaCode,empNote)\n" +
             "values(#{empId},#{empCode},#{empName},#{empSex},#{empAge},#{empNation},#{empIdCard},#{empSalary},#{empTel},#{empContact},#{empCTel},#{empStaCode},#{empNote})")
@@ -37,10 +42,10 @@ public interface EmployeesMapper {
     Boolean insertEmployee(Employee e);
 
     //通过员工的id 修改员工的信息
-    @Update("update employees set empId=#{empId},empCode=#{empCode},empName=#{empName},empSex=#{empSex},empAge=#{empAge},empNation=#{empNation},empIdCard=#{empIdCard},\n" +
+    @Update("update employees set empCode=#{empCode},empName=#{empName},empSex=#{empSex},empAge=#{empAge},empNation=#{empNation},empIdCard=#{empIdCard},\n" +
             "empSalary=#{empSalary},empTel=#{empTel},empContact=#{empContact},empCTel=#{empCTel},empStaCode=#{empStaCode},empNote=#{empNote}\n" +
-            "where empId = #{empId}")
-    Boolean updateEmployee(Employee e);
+            "where empCode = #{empCode}")
+    void updateEmployeeById(Employee e);
 
     //单条数据删除
     @Delete("delete from employees where empId=#{empId}")

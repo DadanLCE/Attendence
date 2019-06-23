@@ -4,6 +4,7 @@ import com.attend.dream.domain.Employee;
 import com.attend.dream.domain.Station;
 import com.attend.dream.service.EmployeeService;
 import com.attend.dream.service.StationService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,20 +21,26 @@ public class StationController {
     StationService stationService;
 
     //显示全部岗位列表
-    @GetMapping("/station")
-    public String list(Model model){
-        Collection<Station> stations=stationService.getStations();
-        model.addAttribute("stas",stations);
+    @RequestMapping("/station")
+    public String list(Model model, @RequestParam(value = "currentPage") int currentPage,
+    @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, @RequestParam(value = "staCode") String staCode){
+        PageInfo<Station> stasPage = stationService.getStationBystaCodePage(currentPage, pageSize, staCode);
+        List<Station> stas = stationService.getStationBystaCode(currentPage, pageSize, staCode);
+
+        model.addAttribute("stas",stas);
+        model.addAttribute("stasPage",stasPage);
+        //传递staCode到station_list 的下一页和上一页
+        model.addAttribute("staCode",staCode);
         return "station_list";
     }
 
-    //查询岗位
-    @PostMapping("/sta/get")
-    public String getStationsByName(@RequestParam(value = "staCode") String staCode, Model model){
-        List<Station> station = stationService.getStationByName(staCode);
-        model.addAttribute("stas",station);
-        return "station_list";
-    }
+//    //查询岗位
+//    @PostMapping("/sta/get")
+//    public String getStationsByName(@RequestParam(value = "staCode") String staCode, Model model){
+//        List<Station> station = stationService.getStationByName(staCode);
+//        model.addAttribute("stas",station);
+//        return "station_list";
+//    }
 
     @GetMapping("/sta/goToAddHtml")
     public String gotoAddEmployee() {

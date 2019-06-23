@@ -19,11 +19,12 @@ public interface StationMapper {
             "where staCode=#{staCode}")
     Station getStationByStaCode(String staCode);
 
-    //查询单个模糊查询
+
+    //查询Code的模糊查询
     @Select("select id,staCode,staName,staDep,staBoss,staCate,staDes\n" +
             "        from station " +
             "where staCode LIKE CONCAT('%',#{depCode},'%') ")
-    List<Station> getStationsByCode(String staCode);
+    List<Station> getStationsByStaCode(String staCode);
 
     //添加
     @Insert("insert into station(staCode,staName,staDep,staBoss,staCate,staDes)" +

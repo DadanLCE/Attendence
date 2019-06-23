@@ -5,6 +5,8 @@ import com.attend.dream.domain.Employee;
 import com.attend.dream.domain.Station;
 import com.attend.dream.mapper.DepartmentMapper;
 import com.attend.dream.mapper.EmployeesMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,18 +23,34 @@ public class DepartmentService {
         @Autowired(required = false)
         EmployeesMapper employeesMapper;
 
+
+        //模糊查询
+        //查询页面的信息 上一页 下一页
+        public PageInfo<Department> getDepartmentsByDepCodePage(int currentPage, int pageSize, String depCode){
+            PageHelper.startPage(currentPage, pageSize);
+            List<Department> deps = departmentMapper.getDepartmentsByDepCode(depCode);
+            PageInfo<Department> pageInfo = new PageInfo<>(deps);
+            return pageInfo;
+        }
+        //查询到的部门信息
+        public List<Department> getDepartmentsByDepCode(int currentPage, int pageSize, String depCode){
+            PageHelper.startPage(currentPage, pageSize);
+            List<Department> deps = departmentMapper.getDepartmentsByDepCode(depCode);
+            return deps;
+        }
+
         //查询全部
         public List<Department> getDepartments(){
             List<Department> list = departmentMapper.getDepartments();
             return list;
         }
 
-        //编码查询单个部门
-        public List<Department> getDepartmentsByDepCode(String depCode){
-
-            List<Department> department = departmentMapper.getDepartmentsByDepCode(depCode);
-            return department;
-        }
+//        //编码查询模糊查询部门
+//        public List<Department> getDepartmentsByDepCode(String depCode){
+//
+//            List<Department> department = departmentMapper.getDepartmentsByDepCode(depCode);
+//            return department;
+//        }
 
         //删除单个部门
         public boolean deleteDepartment(int depId){

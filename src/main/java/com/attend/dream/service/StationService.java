@@ -4,6 +4,8 @@ import com.attend.dream.domain.Department;
 import com.attend.dream.domain.Employee;
 import com.attend.dream.domain.Station;
 import com.attend.dream.mapper.StationMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +23,21 @@ public class StationService {
         return list;
     }
 
-    //通过编码查询岗位
-    public List<Station> getStationByName(String staCode){
-        List<Station> station = stationMapper.getStationsByCode(staCode);
-        return station;
+    //模糊查询
+    //通过编码查询页面信息
+    public PageInfo<Station> getStationBystaCodePage(int currentPage, int pageSize, String staCode){
+        PageHelper.startPage(currentPage, pageSize);
+        List<Station> stas = stationMapper.getStationsByStaCode(staCode);
+        PageInfo<Station> pageInfo = new PageInfo<>(stas);
+        return pageInfo;
     }
+    //查询到岗位的信息
+    public List<Station> getStationBystaCode(int currentPage, int pageSize, String staCode){
+        PageHelper.startPage(currentPage, pageSize);
+        List<Station> stas = stationMapper.getStationsByStaCode(staCode);
+        return stas;
+    }
+
 
     //删除单个岗位
     public boolean deleteStation(int staId){
