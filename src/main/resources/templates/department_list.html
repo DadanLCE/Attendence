@@ -55,11 +55,12 @@
 				<button class="layui-btn layui-btn-danger" onclick="depsDelete()"><i class="layui-icon"></i>批量删除</button>
 				<!--<form action="" th:action="@{/dep/goToAddHtml}" th:method="get">-->
 					<!--<button class="layui-btn" type="submit"><i class="layui-icon"></i>添加</button>-->
+
 				<!--添加弹窗-->
-				<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+				<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addDepModel">
 					添加
 				</button>
-				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal fade" id="addDepModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
@@ -71,14 +72,14 @@
 								</h4>
 							</div>
 							<div class="weadmin-body">
-								<form class="layui-form" th:action="@{/dep/addDepartment}" method="post">
+								<!--<form class="layui-form" th:action="@{/dep/addDepartment}" method="post">-->
 									<h1 style="color:red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></h1>
 									<div class="layui-form-item">
 										<label for="L_username" class="layui-form-label">
 											<span class="we-red">*</span>部门编码
 										</label>
 										<div class="layui-input-inline">
-											<input type="text" id="L_username" name="depCode" lay-verify="required|nikename" autocomplete="off" class="layui-input">
+											<input type="text" id="addDepCode" name="depCode" lay-verify="required|nikename" autocomplete="off" class="layui-input">
 										</div>
 									</div>
 									<div class="layui-form-item">
@@ -86,7 +87,7 @@
 											<span class="we-red">*</span>部门名称
 										</label>
 										<div class="layui-input-inline">
-											<input type="text" id="L_name" name="depName" lay-verify="required|name" autocomplete="" class="layui-input">
+											<input type="text" id="addDepName" name="depName" lay-verify="required|name" autocomplete="" class="layui-input">
 										</div>
 									</div>
 									<div class="layui-form-item">
@@ -94,7 +95,7 @@
 											<span class="we-red">*</span>部门负责人
 										</label>
 										<div class="layui-input-inline">
-											<input type="text" id="L_salary" name="depBossCode" lay-verify="required|salary" autocomplete="off" class="layui-input">
+											<input type="text" id="addDepBossCode" name="depBossCode" lay-verify="required|salary" autocomplete="off" class="layui-input">
 
 										</div>
 									</div>
@@ -105,7 +106,7 @@
 											<span class="we-red">*</span>部门职责
 										</label>
 										<div class="layui-input-inline">
-											<input type="text" id="L_age" name="depJob" autocomplete="off" class="layui-input">
+											<input type="text" id="addDepJob" name="depJob" autocomplete="off" class="layui-input">
 										</div>
 
 									</div>
@@ -114,13 +115,16 @@
 											<span class="we-red">*</span>上级部门
 										</label>
 										<div class="layui-input-inline">
-											<input type="text" id="L_nation" name="depTopId" lay-verify="required|nation" autocomplete="off" class="layui-input">
+											<input type="text" id="addDepTopId" name="depTopId" lay-verify="required|nation" autocomplete="off" class="layui-input">
 										</div>
 									</div>
 
-									<button class="layui-btn" lay-filter="add" lay-submit="">确定</button>
+									<button onclick="addDepAjax()" class="layui-btn" lay-filter="add" lay-submit="">确定</button>
+
+									<!--隐藏button-->
+									<button type="button" class="btn btn-default" style="display: none" data-dismiss="modal" id="closemodel">关闭</button>
 							</div>
-							</form>
+							<!--</form>-->
 						</div>
 						</div><!-- /.modal-content -->
 					</div><!-- /.modal -->
@@ -152,9 +156,9 @@
 					<td th:text="${dep.depTopId}"></td>
 					<td class="td-manage">
 
-						<a title="编辑" onclick="WeAdminEdit('编辑','./edit.html', 1, 600, 400)" href="javascript:;">
-							<i class="layui-icon">&#xe642;</i>
-						</a>
+						<button class="btn btn-primary btn-lg" th:id="${dep.id}" onclick="clickEdit(this)" data-toggle="modal" data-target="#updateEmpPage">
+							编辑用户
+						</button>
 						<form th:action="@{/dep/}+${dep.id}" method="post" >
 							<input type="hidden" name="_method" value="delete" />
 							<button  type="submit" >删除</button>
@@ -165,6 +169,7 @@
 				</tbody>
 			</table>
 
+			<!--分页-->
 			<div class="page">
 				<div>
 					<!--<a class="prev" href="">&lt;&lt;</a>-->
@@ -187,6 +192,8 @@
 		<script src="../lib/layui/layui.js" charset="utf-8" th:src="@{/layui/layui.js}"></script>
 		<script src="../static/js/eleDel.js" type="text/javascript" charset="utf-8" th:src="@{/js/eleDel.js}"></script>
 		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+		<!--批量删除-->
 		<script type="text/javascript">
 			function depsDelete() {
 
@@ -209,6 +216,56 @@
 					});
 				}
 			}
+		</script>
+
+		<!--添加弹窗-->
+		<script type="text/javascript">
+			function addDepAjax() {
+				var addDepCode = document.getElementById('addDepCode').value;
+				var addDepName = document.getElementById('addDepName').value;
+				var addDepBossCode = document.getElementById('addDepBossCode').value;
+				var addDepJob = document.getElementById('addDepJob').value;
+				var addDepTopId = document.getElementById('addDepTopId').value;
+
+				alert("进入addDepAjax");
+				alert(addDepCode);
+				alert(addDepName);
+				alert(addDepBossCode);
+
+				$.ajax({
+					type : "post",
+					url : "/emp/addEmployee",
+					data : {
+
+						depCode	:  addDepCode,
+						depJob	:  addDepName,
+						depName	:  addDepBossCode,
+						depBossCard	:  addDepJob,
+						depTopId	:  addDepTopId
+
+
+					},
+					success : function (fallBack) {
+						alert("后端传值成功:"+fallBack);
+						if ( fallBack === 1 ) {
+							alert('恭喜你，添加成功！！！');
+							$("#closemodel").click();
+							//document.getElementById('addEmpPage').style.display="none";
+						} else if ( fallBack === 2) {
+							alert ("部门已存在，请重来，(✪ω✪)");
+						} else if (fallBack === 3) {
+							alert("并没有这个负责人(✪ω✪)");
+						} else {
+							alert('哎呀，出现意外了！')	;
+						}
+
+					},
+					error : function () {
+						alert("传值失败");
+					}
+				})
+
+			};
 		</script>
 	</body>
 

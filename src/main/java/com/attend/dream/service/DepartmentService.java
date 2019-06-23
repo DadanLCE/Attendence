@@ -59,7 +59,7 @@ public class DepartmentService {
         }
 
 
-    //添加员工
+    //添加新部门
     public String insertDepartment(Department e) {
 
         String code = e.getDepCode();
