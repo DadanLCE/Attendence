@@ -116,5 +116,21 @@ public class DepartmentController {
 
     }
 
+    @GetMapping("/dep/getDepById/{id}")
+    @ResponseBody
+    public Department getDepById(@PathVariable(value = "id") int depId) {
+        //Employee emp = employeeService.getEmpById(empId);
+        Department dep = departmentService.getDepById(depId);
+        return dep;
+
+    }
+
+    @PostMapping("/sta/updateDep")
+    @ResponseBody
+    public String updateDepartment(Department d) {
+        String fallBack = departmentService.updateDepartment(d);
+        return fallBack;
+    }
+
 
 }

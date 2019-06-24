@@ -82,4 +82,22 @@ public class DepartmentService {
 
     }
 
+    public Department getDepById( int depId) {
+            return departmentMapper.findDepById(depId);
+    }
+
+    public String updateDepartment(Department d) {
+            String topID = d.getDepTopId();
+            Department topDep = departmentMapper.getDepartmentByDepCode(topID);
+            Employee emp = employeesMapper.getEmployeesByempCode(d.getDepBossCode());
+            if ( emp == null) {
+                return "2";
+            } else if (topDep == null) {
+                return "3";
+            } else {
+                departmentMapper.updateDepartment(d);
+                return "1";
+            }
+    }
+
 }

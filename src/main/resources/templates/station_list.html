@@ -1,460 +1,460 @@
 <!DOCTYPE html>
 <html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta charset="UTF-8">
-		<title>岗位-考勤系统</title>
-		<meta name="renderer" content="webkit">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-		<link rel="stylesheet" href="/css/font.css" >
-		<link rel="stylesheet" href="/css/weadmin.css" >
-		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>岗位-考勤系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="/css/font.css" >
+    <link rel="stylesheet" href="/css/weadmin.css" >
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-		<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
-		<!--[if lt IE 9]>
-	      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
-	      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
-	    <![endif]-->
-		<style type="text/css">
-			.layui-form-label{
-				width: 120px;
-			}
-			.layui-form-item{
-				margin-bottom: 7px;
-			}
-			.layui-input{
-				border-color: #3F3F3F;
-			}
-           .content{
-               float: left;
-               padding: 1.875em;
-               width: 100%;
-           }
-		</style>
-	</head>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+        .layui-form-label{
+            width: 120px;
+        }
+        .layui-form-item{
+            margin-bottom: 7px;
+        }
+        .layui-input{
+            border-color: #3F3F3F;
+        }
+        .content{
+            float: left;
+            padding: 1.875em;
+            width: 100%;
+        }
+    </style>
+</head>
 
-	<body>
+<body>
 
-		<div class="content">
-			<div class="layui-row">
+<div class="content">
+    <div class="layui-row">
 
-					<div class="layui-inline">
-						<input type="text" id="searchStaCode" placeholder="请输入岗位编码" autocomplete="off" class="layui-input">
-					</div>
-                    <button class="layui-btn" lay-submit="" lay-filter="sreach" onclick="loadData(document.getElementById('searchStaCode').value, 0, 5)"><i class="layui-icon">&#xe615;</i></button>
+        <div class="layui-inline">
+            <input type="text" id="searchStaCode" placeholder="请输入岗位编码" autocomplete="off" class="layui-input">
+        </div>
+        <button class="layui-btn" lay-submit="" lay-filter="sreach" onclick="loadData(document.getElementById('searchStaCode').value, 0, 5)"><i class="layui-icon">&#xe615;</i></button>
+
+    </div>
+
+    <div class="weadmin-block">
+        <button class="layui-btn layui-btn-danger" onclick="stasDelete()"><i class="layui-icon"></i>批量删除</button>
+        <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addStaPage">
+            添加岗位
+        </button>
+        <!--</form>-->
+        <span class="fr" style="line-height:40px">共有数据：88 条</span>
+    </div>
+
+
+
+    <table class="layui-table" id="memberList">
+        <thead>
+        <tr>
+            <th>
+                <input type="checkbox" />
+            </th>
+            <th>ID</th>
+            <th>岗位编码</th>
+            <th>岗位名称</th>
+            <th>所在部门</th>
+            <th>直接上级</th>
+            <th>岗位类别</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody id="tbody" >
+
+        </tbody>
+    </table>
+
+
+    <div id='ulList' class="page">
+
+    </div>
+</div>
+</div>
+
+
+
+//添加的motai框
+<div class="modal fade"  id="addStaPage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div  class="modal-dialog" >
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h2 class="modal-title" id="myModalLabel">
+                    新增岗位
+                </h2>
 
             </div>
+            <div class="weadmin-body">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span class="we-red">*</span>岗位编码
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="addStaCode" name="staCode" lay-verify="required|nikename" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                        唯一的岗位编码
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label  class="layui-form-label">
+                        <span class="we-red">*</span>岗位名称
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="addStaName" name="staName" lay-verify="required|name" autocomplete="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label  class="layui-form-label">
+                        <span class="we-red">*</span>所在部门
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="addStaDep" name="staDep" autocomplete="off" class="layui-input">
+                    </div>
 
-			<div class="weadmin-block">
-                <button class="layui-btn layui-btn-danger" onclick="stasDelete()"><i class="layui-icon"></i>批量删除</button>
-				    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addStaPage">
-					添加岗位
-				    </button>
-				<!--</form>-->
-				<span class="fr" style="line-height:40px">共有数据：88 条</span>
-			</div>
+                </div>
+                <div class="layui-form-item">
+                    <label  class="layui-form-label">
+                        <span class="we-red">*</span>直接上级
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="addStaBoss" name="staBoss" lay-verify="required|nation" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label  class="layui-form-label">
+                        <span class="we-red">*</span>岗位类别
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="addStaCate" name="staCate" lay-verify="required|identifycard" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label  class="layui-form-label">
+                        <span class="we-red">*</span>岗位职责描述
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="addStaDes" name="staDes" lay-verify="required|salary" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
 
+                <div class="layui-form-item">
+                    <label  class="layui-form-label">
+                    </label>
+                    <button class="layui-btn" onclick="addAjax()" id="confirmAdd" lay-filter="add" lay-submit="">确定</button>
 
+                    <!--隐藏button-->
+                    <button type="button" class="btn btn-default" style="display: none" data-dismiss="modal" id="closemodel">关闭</button>
 
-            <table class="layui-table" id="memberList">
-				<thead>
-					<tr>
-						<th>
-							<input type="checkbox" />
-						</th>
-						<th>ID</th>
-						<th>岗位编码</th>
-						<th>岗位名称</th>
-						<th>所在部门</th>
-						<th>直接上级</th>
-						<th>岗位类别</th>
-						<th>操作</th>
-					</tr>
-				</thead>
-                <tbody id="tbody" >
-
-                </tbody>
-			</table>
-
-
-            <div id='ulList' class="page">
-
+                </div>
+                <!--</form>-->
             </div>
-			</div>
-		</div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 
+<div class="modal fade" id="updateStaPage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel2">
+                    编辑
+                </h4>
+            </div>
+            <div class="weadmin-body">
+                还没有方法
+                <form class="layui-form" action="" method="post">
+                    <p style="color:red">更新</p>
+                    <div class="layui-form-item">
+                        <label  class="layui-form-label">
+                            <span class="we-red">*</span>岗位编码
+                        </label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="staCode" name="staCode" readonly="readonly" lay-verify="required|nikename" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
 
-
-        //添加的motai框
-        <div class="modal fade"  id="addStaPage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div  class="modal-dialog" >
-                <div class="modal-content" >
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            &times;
-                        </button>
-                        <h2 class="modal-title" id="myModalLabel">
-                            新增岗位
-                        </h2>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label  class="layui-form-label">
+                            <span class="we-red">*</span>岗位名称
+                        </label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="staName" name="staName" lay-verify="required|name" autocomplete="" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label  class="layui-form-label">
+                            <span class="we-red">*</span>所在部门
+                        </label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="staDep" name="staDep" autocomplete="off" class="layui-input">
+                        </div>
 
                     </div>
-                    <div class="weadmin-body">
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">
-                                <span class="we-red">*</span>岗位编码
-                            </label>
-                            <div class="layui-input-inline">
-                                <input type="text" id="addStaCode" name="staCode" lay-verify="required|nikename" autocomplete="off" class="layui-input">
-                            </div>
-                            <div class="layui-form-mid layui-word-aux">
-                                唯一的岗位编码
-                            </div>
+                    <div class="layui-form-item">
+                        <label  class="layui-form-label">
+                            <span class="we-red">*</span>直接上级
+                        </label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="staBoss" name="staBoss" lay-verify="required|nation" autocomplete="off" class="layui-input">
                         </div>
-                        <div class="layui-form-item">
-                            <label  class="layui-form-label">
-                                <span class="we-red">*</span>岗位名称
-                            </label>
-                            <div class="layui-input-inline">
-                                <input type="text" id="addStaName" name="staName" lay-verify="required|name" autocomplete="" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label  class="layui-form-label">
-                                <span class="we-red">*</span>所在部门
-                            </label>
-                            <div class="layui-input-inline">
-                                <input type="text" id="addStaDep" name="staDep" autocomplete="off" class="layui-input">
-                            </div>
-
-                        </div>
-                        <div class="layui-form-item">
-                            <label  class="layui-form-label">
-                                <span class="we-red">*</span>直接上级
-                            </label>
-                            <div class="layui-input-inline">
-                                <input type="text" id="addStaBoss" name="staBoss" lay-verify="required|nation" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label  class="layui-form-label">
-                                <span class="we-red">*</span>岗位类别
-                            </label>
-                            <div class="layui-input-inline">
-                                <input type="text" id="addStaCate" name="staCate" lay-verify="required|identifycard" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label  class="layui-form-label">
-                                <span class="we-red">*</span>岗位职责描述
-                            </label>
-                            <div class="layui-input-inline">
-                                <input type="text" id="addStaDes" name="staDes" lay-verify="required|salary" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-
-                        <div class="layui-form-item">
-                            <label  class="layui-form-label">
-                            </label>
-                            <button class="layui-btn" onclick="addAjax()" id="confirmAdd" lay-filter="add" lay-submit="">确定</button>
-
-                            <!--隐藏button-->
-                            <button type="button" class="btn btn-default" style="display: none" data-dismiss="modal" id="closemodel">关闭</button>
-
-                        </div>
-                        <!--</form>-->
                     </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal -->
-        </div>
-
-        <div class="modal fade" id="updateStaPage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true" >
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            &times;
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel2">
-                            编辑
-                        </h4>
+                    <div class="layui-form-item">
+                        <label  class="layui-form-label">
+                            <span class="we-red">*</span>岗位类别
+                        </label>
+                        <div class="layui-input-inline">
+                            <input type="text"  id="staCate" name="staCate" lay-verify="required|identifycard" autocomplete="off" class="layui-input">
+                        </div>
                     </div>
-                    <div class="weadmin-body">
-                         还没有方法
-                        <form class="layui-form" action="" method="post">
-                            <p style="color:red">更新</p>
-                            <div class="layui-form-item">
-                                <label  class="layui-form-label">
-                                    <span class="we-red">*</span>岗位编码
-                                </label>
-                                <div class="layui-input-inline">
-                                    <input type="text" id="staCode" name="staCode" readonly="readonly" lay-verify="required|nikename" autocomplete="off" class="layui-input">
-                                </div>
-                                <div class="layui-form-mid layui-word-aux">
-
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <label  class="layui-form-label">
-                                    <span class="we-red">*</span>岗位名称
-                                </label>
-                                <div class="layui-input-inline">
-                                    <input type="text" id="staName" name="staName" lay-verify="required|name" autocomplete="" class="layui-input">
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <label  class="layui-form-label">
-                                    <span class="we-red">*</span>所在部门
-                                </label>
-                                <div class="layui-input-inline">
-                                    <input type="text" id="staDep" name="staDep" autocomplete="off" class="layui-input">
-                                </div>
-
-                            </div>
-                            <div class="layui-form-item">
-                                <label  class="layui-form-label">
-                                    <span class="we-red">*</span>直接上级
-                                </label>
-                                <div class="layui-input-inline">
-                                    <input type="text" id="staBoss" name="staBoss" lay-verify="required|nation" autocomplete="off" class="layui-input">
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <label  class="layui-form-label">
-                                    <span class="we-red">*</span>岗位类别
-                                </label>
-                                <div class="layui-input-inline">
-                                    <input type="text"  id="staCate" name="staCate" lay-verify="required|identifycard" autocomplete="off" class="layui-input">
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <label  class="layui-form-label">
-                                    <span class="we-red">*</span>岗位职责描述
-                                </label>
-                                <div class="layui-input-inline">
-                                    <input type="text" id="staDes" name="staDes" lay-verify="required|salary" autocomplete="off" class="layui-input">
-                                </div>
-                            </div>
-
-
-                            <div class="layui-form-item">
-                                <label  class="layui-form-label">
-                                </label>
-                                <button class="layui-btn" lay-filter="add" lay-submit="">确定</button>
-                            </div>
-                        </form>
+                    <div class="layui-form-item">
+                        <label  class="layui-form-label">
+                            <span class="we-red">*</span>岗位职责描述
+                        </label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="staDes" name="staDes" lay-verify="required|salary" autocomplete="off" class="layui-input">
+                        </div>
                     </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal -->
-        </div>
-
-		<!--       ************************************************************************  -->
-
-		<!--<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>-->
-		<script src="../lib/layui/layui.js" charset="utf-8" th:src="@{/layui/layui.js}"></script>
-		<script src="../static/js/eleDel.js" type="text/javascript" charset="utf-8" th:src="@{/js/eleDel.js}"></script>
-		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-
-        <!--  批量删除  -->
-        <script type="text/javascript">
-            function stasDelete() {
-				if (confirm("确定删除选中的用户？")) {
-					var staList = new Array();
-					$("input[name='stasDelete']:checked").each(function () {
-						staList.push($(this).val());
-					});
-					$.ajax({
-						type: "post",
-						url: "/sta/stasDel",
-						data: {staList: staList.toString()},
-						success: function () {
-							alert("删除成功！");
-                            loadData('', 1, 5);
-						},
-						error: function () {
-							alert("刪除失败！")
-						}
-					});
-				}
-			}
-		</script>
-
-        <!-- 单条删除 -->
-        <script type="text/javascript">
-
-            function staDelete(data) {
-
-                var clickId = data.id;
-
-                $(document).ready(function () {
-                    $.ajax({
-                        type: "post",
-                        url: "/sta/staDel",
-                        data: {
-                            clickId : clickId
-                        },
-                        success: function () {
-                            alert("删除成功");
-                            loadData('', 1, 5);
-                        },
-                        error: function () {
-                            alert("删除失败");
-                        }
-                    })
-
-                })
-            }
-            </script>
-
-        <!-- 添加 -->
-        <script type="text/javascript">
-            function addAjax() {
-                var staCodex = document.getElementById('addStaCode').value;
-                var staName = document.getElementById('addStaName').value;
-                var staDep = document.getElementById('addStaDep').value;
-                var staBoss = document.getElementById('addStaBoss').value;
-                var staCate = document.getElementById('addStaCate').value;
-                var staDes = document.getElementById('addStaDes').value;
 
 
-                $.ajax({
-                    type : "post",
-                    url : "/sta/addStation",
-                    data : {
+                    <div class="layui-form-item">
+                        <label  class="layui-form-label">
+                        </label>
+                        <button class="layui-btn" lay-filter="add" lay-submit="">确定</button>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 
-                        staCode	:  staCodex,
-                        staName	:  staName,
-                        staDep	:  staDep,
-                        staBoss	:  staBoss,
-                        staCate	: staCate,
-                        staDes	:  staDes,
+<!--       ************************************************************************  -->
 
-                    },
-                    success : function (fallBack) {
-                        if ( fallBack === '1' ) {
+<!--<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>-->
+<script src="../lib/layui/layui.js" charset="utf-8" th:src="@{/layui/layui.js}"></script>
+<script src="../static/js/eleDel.js" type="text/javascript" charset="utf-8" th:src="@{/js/eleDel.js}"></script>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 
-                            $("#closemodel").click();
-                            loadData('', 1, 5);
-                        } else if ( fallBack === '2') {
-                            alert ("员工编码已存在，请重来，(✪ω✪)");
-                        } else if (fallBack === '3' ) {
-                            alert("暂时还没有这个岗位！！！(✪ω✪)");
-                        } else {
-                            alert('哎呀，出现意外了！')	;
-                        }
+<!--  批量删除  -->
+<script type="text/javascript">
+    function stasDelete() {
+        if (confirm("确定删除选中的用户？")) {
+            var staList = new Array();
+            $("input[name='stasDelete']:checked").each(function () {
+                staList.push($(this).val());
+            });
+            $.ajax({
+                type: "post",
+                url: "/sta/stasDel",
+                data: {staList: staList.toString()},
+                success: function () {
+                    alert("删除成功！");
+                    loadData('', 1, 5);
+                },
+                error: function () {
+                    alert("刪除失败！")
+                }
+            });
+        }
+    }
+</script>
 
-                    },
-                    error : function () {
-                        alert("传值失败");
-                    }
-                })
+<!-- 单条删除 -->
+<script type="text/javascript">
 
-            };
-        </script>
+    function staDelete(data) {
 
-        <!-- 数据回显 -->
-        <script type="text/javascript">
-            var url = window.location.href;
-            var id  = url.substring(url.lastIndexOf("=")+1,url.length);
-            function clickEdit(data) {
-                var clickId = data.id;
-                $(document).ready(function () {
-                    var subUrl = "/sta/getStaById/";
-                    var now = subUrl + clickId;
-                    $.ajax({
-                        type: "get",
-                        url: now,
-                        success: function (sta) {
-                            var staId = sta.id;
-                            //var weaBody = $("weadmin-body");
-                            var inputCode = $("#staCode");
-                            var inputName = $("#staName");
-                            var inputDep = $("#staDep");
-                            var inputBoss = $("#staBoss");
-                            var inputCate = $("#staCate");
-                            var inputDes = $("#staDes");
-                            inputCode.attr('value', sta.staCode);
-                            inputName.attr('value', sta.staName);
-                            inputDep.attr('value', sta.staDep);
-                            inputBoss.attr('value', sta.staBoss);
-                            inputCate.attr('value', sta.staCate);
-                            inputDes.attr('value', sta.staDes);
-                        },
-                        error: function () {
-                            alert("ajax失败");
-                        }
-                    })
+        var clickId = data.id;
 
-
-                });
-            }
-        </script>
-
-
-
-        <script th:inline="none">
-            var currentPage = 0;
-            function loadData(key,page, pageSize) {
-                $.ajax({
-                    type: 'POST',
-                    url: "/sta",
-                    dataType: "json",
-                    data: {staCode: key,
-                        pageSize:5,
-                        currentPage:page},
-                    success: function (data) {
-                        $("#tbody").html("");
-                        // $("#ulList").html("");
-                        var tabledata = data['stas'];
-                        jQuery.each(tabledata, function (i, list) {
-                            var tr="";
-                            tr+="<tr>"+
-                                "<td><input name=\"stasDelete\" value=" + list['id'] + " type=\"checkbox\" /></td>"+
-                                "<td>" + list['id'] + "</td>"+
-                                "<td>" + list['staCode'] + "</td>"+
-                                "<td>" + list['staName'] + "</td>"+
-                                "<td>" + list['staDep'] + "</td>"+
-                                "<td>" + list['staBoss'] + "</td>"+
-                                "<td>" + list['staCate'] + "</td>"+
-                                "<td class=\"td-manage\">"+
-                                "<button class=\"btn btn-primary btn-lg\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateStaPage\">"+
-                                "编辑用户"+
-                                "</button>"+
-                                "<button onclick=\"staDelete(this)\" type=\"submit\" id="+ list['id'] +
-                                " >删除</button>"+
-                                "</td></tr>";
-                            $("#tbody").append(tr);
-                        });
-                        $("#ulList").html('');
-                        var li="<a class=\"num\" onclick='loadData(\"\","+(currentPage-1)+","+5+")'><<</a>";
-                        for (var i = 1; i <= data['pageNum']; i++) {
-                            if (i==currentPage){
-                                li+="<a class=\"current\" class='active' onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
-                            }
-                            else {
-                                li+="<a class=\"num\" onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
-                            }
-                        }
-                        li+="<a class=\"num\" onclick='loadData(\"\","+(currentPage+1)+","+5+")'>>></a>";
-                        $("#ulList").append(li);
-                        // console.log(tr);
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        console.log(XMLHttpRequest.status);
-                        console.log(XMLHttpRequest.readyState);
-                        console.log(textStatus);
-                    }
-                });
-            }
-
-            $(document).ready(function () {
-                loadData('', 1, 5);
+        $(document).ready(function () {
+            $.ajax({
+                type: "post",
+                url: "/sta/staDel",
+                data: {
+                    clickId : clickId
+                },
+                success: function () {
+                    alert("删除成功");
+                    loadData('', 1, 5);
+                },
+                error: function () {
+                    alert("删除失败");
+                }
             })
 
-        </script>
-	</body>
+        })
+    }
+</script>
+
+<!-- 添加 -->
+<script type="text/javascript">
+    function addAjax() {
+        var staCodex = document.getElementById('addStaCode').value;
+        var staName = document.getElementById('addStaName').value;
+        var staDep = document.getElementById('addStaDep').value;
+        var staBoss = document.getElementById('addStaBoss').value;
+        var staCate = document.getElementById('addStaCate').value;
+        var staDes = document.getElementById('addStaDes').value;
+
+
+        $.ajax({
+            type : "post",
+            url : "/sta/addStation",
+            data : {
+
+                staCode	:  staCodex,
+                staName	:  staName,
+                staDep	:  staDep,
+                staBoss	:  staBoss,
+                staCate	: staCate,
+                staDes	:  staDes,
+
+            },
+            success : function (fallBack) {
+                if ( fallBack === '1' ) {
+
+                    $("#closemodel").click();
+                    loadData('', 1, 5);
+                } else if ( fallBack === '2') {
+                    alert ("员工编码已存在，请重来，(✪ω✪)");
+                } else if (fallBack === '3' ) {
+                    alert("暂时还没有这个岗位！！！(✪ω✪)");
+                } else {
+                    alert('哎呀，出现意外了！')	;
+                }
+
+            },
+            error : function () {
+                alert("传值失败");
+            }
+        })
+
+    };
+</script>
+
+<!-- 数据回显 -->
+<script type="text/javascript">
+    var url = window.location.href;
+    var id  = url.substring(url.lastIndexOf("=")+1,url.length);
+    function clickEdit(data) {
+        var clickId = data.id;
+        $(document).ready(function () {
+            var subUrl = "/sta/getStaById/";
+            var now = subUrl + clickId;
+            $.ajax({
+                type: "get",
+                url: now,
+                success: function (sta) {
+                    var staId = sta.id;
+                    //var weaBody = $("weadmin-body");
+                    var inputCode = $("#staCode");
+                    var inputName = $("#staName");
+                    var inputDep = $("#staDep");
+                    var inputBoss = $("#staBoss");
+                    var inputCate = $("#staCate");
+                    var inputDes = $("#staDes");
+                    inputCode.attr('value', sta.staCode);
+                    inputName.attr('value', sta.staName);
+                    inputDep.attr('value', sta.staDep);
+                    inputBoss.attr('value', sta.staBoss);
+                    inputCate.attr('value', sta.staCate);
+                    inputDes.attr('value', sta.staDes);
+                },
+                error: function () {
+                    alert("ajax失败");
+                }
+            })
+
+
+        });
+    }
+</script>
+
+
+
+<script th:inline="none">
+    var currentPage = 0;
+    function loadData(key,page, pageSize) {
+        $.ajax({
+            type: 'POST',
+            url: "/sta",
+            dataType: "json",
+            data: {staCode: key,
+                pageSize:5,
+                currentPage:page},
+            success: function (data) {
+                $("#tbody").html("");
+                // $("#ulList").html("");
+                var tabledata = data['stas'];
+                jQuery.each(tabledata, function (i, list) {
+                    var tr="";
+                    tr+="<tr>"+
+                        "<td><input name=\"stasDelete\" value=" + list['id'] + " type=\"checkbox\" /></td>"+
+                        "<td>" + list['id'] + "</td>"+
+                        "<td>" + list['staCode'] + "</td>"+
+                        "<td>" + list['staName'] + "</td>"+
+                        "<td>" + list['staDep'] + "</td>"+
+                        "<td>" + list['staBoss'] + "</td>"+
+                        "<td>" + list['staCate'] + "</td>"+
+                        "<td class=\"td-manage\">"+
+                        "<button class=\"btn btn-primary btn-lg\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateStaPage\">"+
+                        "编辑用户"+
+                        "</button>"+
+                        "<button onclick=\"staDelete(this)\" type=\"submit\" id="+ list['id'] +
+                        " >删除</button>"+
+                        "</td></tr>";
+                    $("#tbody").append(tr);
+                });
+                $("#ulList").html('');
+                var li="<a class=\"num\" onclick='loadData(\"\","+(currentPage-1)+","+5+")'><<</a>";
+                for (var i = 1; i <= data['pageNum']; i++) {
+                    if (i==currentPage){
+                        li+="<a class=\"current\" class='active' onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
+                    }
+                    else {
+                        li+="<a class=\"num\" onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
+                    }
+                }
+                li+="<a class=\"num\" onclick='loadData(\"\","+(currentPage+1)+","+5+")'>>></a>";
+                $("#ulList").append(li);
+                // console.log(tr);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log(XMLHttpRequest.status);
+                console.log(XMLHttpRequest.readyState);
+                console.log(textStatus);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        loadData('', 1, 5);
+    })
+
+</script>
+</body>
 
 
 

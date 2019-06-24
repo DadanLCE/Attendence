@@ -3,6 +3,8 @@ package com.attend.dream.service;
 import com.attend.dream.domain.Department;
 import com.attend.dream.domain.Employee;
 import com.attend.dream.domain.Station;
+import com.attend.dream.mapper.DepartmentMapper;
+import com.attend.dream.mapper.EmployeesMapper;
 import com.attend.dream.mapper.StationMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -16,6 +18,12 @@ public class StationService {
 
     @Autowired(required = false)
     StationMapper stationMapper;
+
+    @Autowired(required = false)
+    DepartmentMapper departmentMapper;
+
+    @Autowired(required = false)
+    EmployeesMapper employeesMapper;
 
     //显示岗位列表
     public List<Station> getStations(){
@@ -69,9 +77,31 @@ public class StationService {
 
     }
 
-    public Station getStationById(int id){
-        Station sta = stationMapper.getStationById(id);
-        return  sta;
+    public Station getStaById(int depId) {
+        return stationMapper.findStationById(depId);
     }
+
+    public String updateStation( Station s) {
+
+       String inWhichDep = s.getStaDep();
+       Department dep = departmentMapper.getDepartmentByDepCode(inWhichDep);
+
+       String topMen = s.getStaBoss();
+       Station stacode = stationMapper.getStationByStaCode(topMen);
+        if ( dep == null) {
+            return "2";
+        } else if (stacode == null) {
+            return "3";
+        }
+        else {
+            stationMapper.updateStation(s);
+            return "1";
+        }
+    }
+
+//    public Station getStationById(int id){
+//       //Station sta = stationMapper.getStationById(id);
+//        //return  sta;
+//    }
 
 }

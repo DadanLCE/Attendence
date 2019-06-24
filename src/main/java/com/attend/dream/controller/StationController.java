@@ -47,7 +47,7 @@ public class StationController {
     //显示全部岗位列表
     @RequestMapping("/station")
     public String list(Model model, @RequestParam(value = "currentPage") int currentPage,
-    @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, @RequestParam(value = "staCode") String staCode){
+                       @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, @RequestParam(value = "staCode") String staCode){
         PageInfo<Station> stasPage = stationService.getStationBystaCodePage(currentPage, pageSize, staCode);
         List<Station> stas = stationService.getStationBystaCode(currentPage, pageSize, staCode);
 
@@ -116,16 +116,28 @@ public class StationController {
 
     }
 
+//    @GetMapping("/sta/getStaById/{id}")
+//    @ResponseBody
+//    public Station getStaById(@PathVariable(value = "id") int id) {
+//        Station sta = stationService.getStationById(id);
+//        return sta;
+//
+//    }
+
     @GetMapping("/sta/getStaById/{id}")
     @ResponseBody
-    public Station getStaById(@PathVariable(value = "id") int id) {
-        Station sta = stationService.getStationById(id);
+    public Station getStaById(@PathVariable(value = "id") int staId) {
+        //Employee emp = employeeService.getEmpById(empId);
+        Station sta = stationService.getStaById(staId);
         return sta;
 
     }
 
-
-
-
+    @PostMapping("/sta/updateSta")
+    @ResponseBody
+    public String updateStation(Station s) {
+        String fallBack = stationService.updateStation(s);
+        return fallBack;
+    }
 
 }

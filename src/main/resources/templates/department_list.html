@@ -4,12 +4,11 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>会员列表-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
-<!--		<meta name="renderer" content="webkit">-->
-<!--		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">-->
-<!--		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">-->
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
 		<link rel="stylesheet" href="/css/font.css" >
 		<link rel="stylesheet" href="/css/weadmin.css" >
-		<link rel="stylesheet" href="/layui/css/layui.css" >
 		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -58,73 +57,145 @@
 				<div class="weadmin-block">
 					<button class="layui-btn layui-btn-danger" onclick="depsDelete()"><i class="layui-icon"></i>批量删除</button>
 
-
-					<!--添加弹窗按钮-->
-					<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addDepModel">
-						添加
-					</button>
-
-
-					<table class="layui-table" id="memberList">
-						<thead>
-						<tr>
-							<th>
-								<div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
-							</th>
-							<th>部门编码</th>
-							<th>部门名称</th>
-							<th>部门负责人</th>
-							<th>部门职责</th>
-							<th>上级部门</th>
-							<th>操作</th>
-						</tr>
-						</thead>
-						<tbody id="tbody">
+				<!--添加按钮-->
+				<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addDepModel">
+					添加
+				</button>
 
 
-						</tbody>
-				</table>
+                    <table class="layui-table" id="memberList">
+                        <thead>
+                        <tr>
+                            <th>
+                                <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
+                            </th>
+                            <th>部门编码</th>
+                            <th>部门名称</th>
+                            <th>部门负责人</th>
+                            <th>部门职责</th>
+                            <th>上级部门</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbody">
+
+
+                        </tbody>
+                    </table>
+
+				<!--编辑模态框-->
+				<div class="modal fade" id="updateDepModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+									&times;
+								</button>
+								<h4 class="modal-title" id="myModalLabel">
+									编辑
+								</h4>
+							</div>
+							<div class="weadmin-body">
+									<p style="color:red">更新</p>
+									<div class="layui-form-item">
+										<label class="layui-form-label">
+											<span class="we-red">*</span>部门编码
+										</label>
+										<div class="layui-input-inline">
+											<input type="text" id="updatedepCode" name="depCode" readonly="readonly" lay-verify="required|nikename" autocomplete="off" class="layui-input">
+										</div>
+										<div class="layui-form-mid layui-word-aux">
+											*不可编辑
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<label  class="layui-form-label">
+											<span class="we-red">*</span>部门名称
+										</label>
+										<div class="layui-input-inline">
+											<input type="text" id="updatedepName" name="depName" lay-verify="required|name" autocomplete="" class="layui-input">
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<label  class="layui-form-label">
+											<span class="we-red">*</span>部门负责人
+										</label>
+										<div class="layui-input-inline">
+											<input type="text" id="updatedepBossCode" name="depBossCode" autocomplete="off" class="layui-input">
+										</div>
+
+									</div>
+									<div class="layui-form-item">
+										<label  class="layui-form-label">
+											<span class="we-red">*</span>部门职责
+										</label>
+										<div class="layui-input-inline">
+											<input type="text" id="updatedepJob" name="depJob" lay-verify="required|nation" autocomplete="off" class="layui-input">
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<label  class="layui-form-label">
+											<span class="we-red">*</span>上级部门
+										</label>
+										<div class="layui-input-inline">
+											<input type="text" id="updatedepTopId" name="depTopId" lay-verify="required|identifycard" autocomplete="off" class="layui-input">
+										</div>
+										<div class="layui-form-mid layui-word-aux">
+											*不可编辑
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<label  class="layui-form-label">
+										</label>
+										<button onclick="updatedepConfirm()" class="layui-btn" lay-filter="add" lay-submit="">确定</button>
+
+										<!--隐藏button-->
+										<button type="button" class="btn btn-default" style="display:none" data-dismiss="modal" id="closeupdatemodel">关闭</button>
+
+									</div>
+								</form>
+							</div>
+						</div><!-- /.modal-content -->
+					</div><!-- /.modal -->
 				</div>
+				<!--添加模块框-->
+				<div class="modal fade" id="addDepModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+									&times;
+								</button>
+								<h4 class="modal-title" id="myModalLabel">
+									添加
+								</h4>
+							</div>
+							<div class="weadmin-body">
+									<div class="layui-form-item">
+										<label  class="layui-form-label">
+											<span class="we-red">*</span>部门编码
+										</label>
+										<div class="layui-input-inline">
+											<input type="text" id="addDepCode" name="depCode" lay-verify="required|nikename" autocomplete="off" class="layui-input">
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<label  class="layui-form-label">
+											<span class="we-red">*</span>部门名称
+										</label>
+										<div class="layui-input-inline">
+											<input type="text" id="addDepName" name="depName" lay-verify="required|name" autocomplete="" class="layui-input">
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<label class="layui-form-label">
+											<span class="we-red">*</span>部门负责人
+										</label>
+										<div class="layui-input-inline">
+											<input type="text" id="addDepBossCode" name="depBossCode" lay-verify="required|salary" autocomplete="off" class="layui-input">
 
-			</div>
-		<!-- 添加弹窗 -->
-		<div class="modal fade" id="addDepModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-							&times;
-						</button>
-						<h4 class="modal-title" id="myModalLabel">
-							添加
-						</h4>
-					</div>
-					<div class="weadmin-body">
-						<div class="layui-form-item">
-							<label  class="layui-form-label">
-								<span class="we-red">*</span>部门编码
-							</label>
-							<div class="layui-input-inline">
-								<input type="text" id="addDepCode" name="depCode" lay-verify="required|nikename" autocomplete="off" class="layui-input">
-							</div>
-						</div>
-						<div class="layui-form-item">
-							<label  class="layui-form-label">
-								<span class="we-red">*</span>部门名称
-							</label>
-							<div class="layui-input-inline">
-								<input type="text" id="addDepName" name="depName" lay-verify="required|name" autocomplete="" class="layui-input">
-							</div>
-						</div>
-						<div class="layui-form-item">
-							<label class="layui-form-label">
-								<span class="we-red">*</span>部门负责人
-							</label>
-							<div class="layui-input-inline">
-								<input type="text" id="addDepBossCode" name="depBossCode" lay-verify="required|salary" autocomplete="off" class="layui-input">
-
-							</div>
-						</div>
+										</div>
+									</div>
 
 
 						<div class="layui-form-item">
@@ -210,7 +281,7 @@
 			}
 		</script>
 
-		<!--查询员工-->
+		<!--查询部门-->
 		<script th:inline="none">
 			var currentPage = 0;
 
@@ -283,7 +354,7 @@
 
 		</script>
 
-		<!--添加弹窗-->
+		<!--添加部门-->
 		<script type="text/javascript">
 			function addDepAjax() {
 				var addDepCode = document.getElementById('addDepCode').value;
@@ -332,6 +403,87 @@
 
 			};
 		</script>
+
+		<!--编辑功能回显ajax-->
+		<script type="text/javascript">
+			var url = window.location.href;
+			var id  = url.substring(url.lastIndexOf("=")+1,url.length);
+			function clickEdit(data) {
+				var clickId = data.id;
+				$(document).ready(function () {
+					var subUrl = "/dep/getDepById/";
+					var now = subUrl + clickId;
+					$.ajax({
+						type: "get",
+						url: now,
+						success: function (dep) {
+
+							var inputCode = $("#updatedepCode");
+							var inputName = $("#updatedepName");
+							var inputBossCode = $("#updatedepBossCode");
+							var inputJob = $("#updatedepJob");
+							var inputTopId = $("#updatedepTopId");
+
+							inputCode.val(dep.depCode);
+							inputName.val(dep.depName);
+							inputBossCode.attr('value', dep.depBossCode);
+							inputJob.attr('value', dep.depJob);
+							inputTopId.attr('value', dep.depTopId);
+
+						},
+						error: function () {
+							alert("部门编辑回显失败");
+						}
+					})
+
+
+				});
+			}
+		</script>
+
+		<!--编辑确认提交-->
+		<script type="text/javascript">
+			function updatedepConfirm() {
+				alert("进入updateConfirm");
+
+
+				var inputCode = $("#updatedepCode").val();
+				var inputName = $("#updatedepName").val();
+				var inputBossCode = $("#updatedepBossCode").val();
+				var inputJob = $("#updatedepJob").val();
+				var inputTopId = $("#updatedepTopId").val();
+				alert(empName);
+				alert(empAge);
+				alert(empSalary);
+				$.ajax({
+					type : "post",
+					url : "/dep/updateDep",
+					data : {
+
+						empCode : inputCode,
+						empName	:  inputName,
+						empAge	:  inputBossCode,
+						empNation	:  inputJob,
+						empSalary	:  inputTopId,
+
+					},
+					success : function (fallBack) {
+						alert("后端传值成功"+fallBack);
+						if (fallBack === '1') {
+							alert("编辑成功");
+							$("#closeupdatemodel").click();
+							loadData('', 1, 5);
+						} else {
+							alert("出现意外了^_^");
+						}
+					},
+					error : function () {
+						alert("编辑确认error");
+					}
+				});
+			}
+		</script>
+
 	</body>
 
 </html>
