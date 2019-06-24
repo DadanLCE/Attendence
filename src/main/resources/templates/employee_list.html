@@ -14,31 +14,34 @@
 		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="../lib/layui/css/layui.css" th:href="@{/layui/css/layui.css.css}">
         <style type="text/css">
-            .layui-form-label{
-                width: 120px;
-            }
-            .layui-form-item{
-                margin-bottom: 7px;
-            }
-            .layui-input{
-                border-color: #3F3F3F;
-            }
+			.close{
+				width: 100px;
+				height: 50px;
+			}
+			.btn-primary{
+				width: 113px;
+				height: 38px;
+				border-radius: 0;
+				font-size: 14px;
+			}
+			.btn-info{
+				float: left;
+				margin-right: 15px;
+			}
+			#form1{
+				float: left;
+			}
             .close{
                 width: 100px;
                 height: 50px;
             }
+			.content{
+				float: left;
+				padding: 1.875em;
+				width: 100%;
         </style>
 
 	</head>
-	<style>
-		.content{
-			float: left;
-			padding: 1.875em;
-			width: 100%;
-
-		}
-	</style>
-
 	<body>
 
 		<div class="content">
@@ -530,7 +533,7 @@
 									"<button  class=\"btn btn-info btn-sm left\" id="+ list['empId'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
 									"编辑用户"+
 									"</button>"+
-									"<button onclick=\"empDelete(this)\" type=\"submit\" id="+ list['empId'] +
+									"<button class='btn btn-danger btn-sm' onclick=\"empDelete(this)\" type=\"submit\" id="+ list['empId'] +
                                     " >删除</button>"+
 									"</td></tr>";
 
