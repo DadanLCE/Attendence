@@ -124,9 +124,6 @@ public class StationController {
 
     }
 
-    @RequestMapping(value = "/showSta",method = RequestMethod.POST)
-    public String showEmp(){
-        return "station_list";
-    }
+
 
 }

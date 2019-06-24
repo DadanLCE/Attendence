@@ -170,7 +170,6 @@
             </div><!-- /.modal -->
         </div>
 
-        //这是编辑
         <div class="modal fade" id="updateStaPage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true" >
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -281,6 +280,7 @@
 				}
 			}
 		</script>
+
         <!-- 单条删除 -->
         <script type="text/javascript">
 
@@ -308,6 +308,7 @@
             }
             </script>
 
+        <!-- 添加 -->
         <script type="text/javascript">
             function addAjax() {
                 var staCodex = document.getElementById('addStaCode').value;
@@ -316,8 +317,7 @@
                 var staBoss = document.getElementById('addStaBoss').value;
                 var staCate = document.getElementById('addStaCate').value;
                 var staDes = document.getElementById('addStaDes').value;
-                alert("进入addAjax");
-                alert(staCodex);
+
 
                 $.ajax({
                     type : "post",
@@ -333,10 +333,10 @@
 
                     },
                     success : function (fallBack) {
-                        alert("后端传值成功:"+fallBack);
                         if ( fallBack === '1' ) {
-                            alert('恭喜你，添加成功！！！');
+
                             $("#closemodel").click();
+                            loadData('', 1, 5);
                         } else if ( fallBack === '2') {
                             alert ("员工编码已存在，请重来，(✪ω✪)");
                         } else if (fallBack === '3' ) {
@@ -354,7 +354,7 @@
             };
         </script>
 
-        //ajax 编辑功能回显
+        <!-- 数据回显 -->
         <script type="text/javascript">
             var url = window.location.href;
             var id  = url.substring(url.lastIndexOf("=")+1,url.length);
@@ -418,7 +418,6 @@
                                 "<td>" + list['staDep'] + "</td>"+
                                 "<td>" + list['staBoss'] + "</td>"+
                                 "<td>" + list['staCate'] + "</td>"+
-                                "<td>" + list['staDes'] + "</td>"+
                                 "<td class=\"td-manage\">"+
                                 "<button class=\"btn btn-primary btn-lg\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateStaPage\">"+
                                 "编辑用户"+

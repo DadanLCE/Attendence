@@ -75,7 +75,7 @@
 								</a>
 							</li>
 							<li>
-								<a href="javascript:goToStation();" class="iconfont">
+								<a href="javascript:goToDepartment();"  >
 									<i class="iconfont">&#xe6a7;</i>
 									<cite>部门</cite>
 
@@ -101,7 +101,7 @@
 							<li>
 								<a _href="./pages/article/list.html">
 									<i class="iconfont">&#xe6a7;</i>
-									<cite>文章列表</cite>
+									<cite>班次标</cite>
 								</a>
 							</li>
 							<li>
@@ -234,6 +234,7 @@
 				url:"/showEmp",
 				dataType:"html",
 				success: function(data){
+
 					$("#showItem").html(data);
 				},
 				error: function ()
@@ -244,6 +245,25 @@
 					console.log(textStatus);
 				}
 			})
+			}
+
+			function goToDepartment() {
+				$.ajax({
+					type:"POST",
+					url:"/showDep",
+					dataType:"html",
+					success: function(data){
+
+						$("#showItem").html(data);
+					},
+					error: function ()
+					{
+						alert("失败啦")
+						console.log(XMLHttpRequest.status);
+						console.log(XMLHttpRequest.readyState);
+						console.log(textStatus);
+					}
+				})
 			}
 
 		</script>
