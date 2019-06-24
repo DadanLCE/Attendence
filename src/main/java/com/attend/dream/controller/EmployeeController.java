@@ -122,6 +122,7 @@ public class EmployeeController {
 
         String fallBack = employeeService.insertEmployee(emp);
 
+        //也可以直接return fallBack;
         if ( fallBack.equals("1")) {
             //return "redirect:/employee?currentPage="+maxPage;
             return fallBack;
@@ -155,11 +156,13 @@ public class EmployeeController {
 
     }
 
+
     @PostMapping("/emp/updateEmp")
+    @ResponseBody
     public String updateEmployee(Employee e) {
         System.out.println(e.getEmpCode());
-        employeeService.updateEmployee(e);
-        return "redirect:/employee?currentPage=1";
+        String fallBack = employeeService.updateEmployee(e);
+        return fallBack;
     }
 
 }
