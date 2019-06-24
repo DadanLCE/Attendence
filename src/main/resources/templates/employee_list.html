@@ -10,7 +10,7 @@
 		<link rel="stylesheet" href="/css/font.css" >
 		<link rel="stylesheet" href="/css/weadmin.css" >
 		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/layui/css/layui.css.css">
+        <link rel="stylesheet" href="/layui/css/layui.css">
 		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
@@ -328,10 +328,7 @@
 
 <!-- 删除总模块  -->
 		<script type="text/javascript">
-
-			<!-- 单行数据删除 -->
             function empDelete(data) {
-
                     var clickId = data.id;
                     $(document).ready(function () {
                         var subUrl = "/emp/delEmpById/";
@@ -348,11 +345,9 @@
                                 alert("删除失败");
                             }
                         })
-
                     })
             }
 
-            <!--批量删除-->
 			function empsDelete() {
 				if (confirm("确定删除选中的用户？")) {
 					var userList = new Array();
