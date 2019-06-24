@@ -128,6 +128,7 @@ public class StationController {
     @ResponseBody
     public Station getStaById(@PathVariable(value = "id") int staId) {
         //Employee emp = employeeService.getEmpById(empId);
+        System.out.println(staId);
         Station sta = stationService.getStaById(staId);
         return sta;
 

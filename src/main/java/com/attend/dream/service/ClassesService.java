@@ -27,6 +27,7 @@ public class ClassesService {
         PageInfo<Classes> pageInfo = new PageInfo<>(clas);
         return pageInfo;
     }
+
     //查询单个班次
     public Classes getClaById(int id){
         Classes cla = classesMapper.getClassesById(id);

@@ -25,4 +25,7 @@ public class IndexController {
     public String showSta(){
         return "station_list";
     }
+
+    @RequestMapping(value = "/showCla",method = RequestMethod.POST)
+    public String showCla(){ return "classes_list"; }
 }

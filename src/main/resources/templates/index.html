@@ -69,9 +69,8 @@
 						<ul class="sub-menu">
 							<li>
 								<a href="javascript:goToEmployee();" class="iconfont">
-
-									员工
-
+									<i class="iconfont">&#xe6a7;</i>
+									<cite>员工</cite>
 								</a>
 							</li>
 							<li>
@@ -99,15 +98,9 @@
 						</a>
 						<ul class="sub-menu">
 							<li>
-								<a _href="./pages/article/list.html">
+								<a href="javascript:goToClasses();">
 									<i class="iconfont">&#xe6a7;</i>
-									<cite>班次标</cite>
-								</a>
-							</li>
-							<li>
-								<a _href="./pages/article/category.html">
-									<i class="iconfont">&#xe6a7;</i>
-									<cite>分类管理</cite>
+									<cite>班次表</cite>
 								</a>
 							</li>
 						</ul>
@@ -251,6 +244,25 @@
 				$.ajax({
 					type:"POST",
 					url:"/showDep",
+					dataType:"html",
+					success: function(data){
+
+						$("#showItem").html(data);
+					},
+					error: function ()
+					{
+						alert("失败啦")
+						console.log(XMLHttpRequest.status);
+						console.log(XMLHttpRequest.readyState);
+						console.log(textStatus);
+					}
+				})
+			}
+
+			function goToClasses(){
+				$.ajax({
+					type:"POST",
+					url:"/showCla",
 					dataType:"html",
 					success: function(data){
 

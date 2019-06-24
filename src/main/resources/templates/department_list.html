@@ -367,32 +367,31 @@
 				alert(addDepCode);
 				alert(addDepName);
 				alert(addDepBossCode);
+				alert(addDepJob);
+				alert(addDepTopId);
 
 				$.ajax({
 					type : "post",
-					url : "/emp/addEmployee",
+					url : "/dep/addDepartment",
 					data : {
 
 						depCode	:  addDepCode,
-						depJob	:  addDepName,
-						depName	:  addDepBossCode,
-						depBossCard	:  addDepJob,
+						depName	:  addDepName,
+						depBossCode	:  addDepBossCode,
+						depJob	:  addDepJob,
 						depTopId	:  addDepTopId
 
 
 					},
 					success : function (fallBack) {
-						alert("后端传值成功:"+fallBack);
 						if ( fallBack === 1 ) {
-							alert('恭喜你，添加成功！！！');
 							$("#closemodel").click();
+							loadData('', 1, 5);
 							//document.getElementById('addEmpPage').style.display="none";
 						} else if ( fallBack === 2) {
 							alert ("部门已存在，请重来，(✪ω✪)");
 						} else if (fallBack === 3) {
 							alert("并没有这个负责人(✪ω✪)");
-						} else {
-							alert('哎呀，出现意外了！')	;
 						}
 
 					},

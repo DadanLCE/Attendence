@@ -140,15 +140,6 @@ public class EmployeeController {
 
     }
 
-//      请勿删除
-//    @GetMapping("/emp/goToUpdateHtml")
-//    public String gotoUpdateEmployee() {
-//        return "update_employee";
-//    }
-
-
-
-
     @PostMapping("/emp/updateEmp")
     @ResponseBody
     public String updateEmployee(Employee e) {

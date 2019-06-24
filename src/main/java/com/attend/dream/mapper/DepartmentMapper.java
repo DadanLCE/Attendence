@@ -17,7 +17,7 @@ public interface DepartmentMapper {
             "from department where depCode = #{depCode} ")
     Department getDepartmentByDepCode(String depCode);
 
-    @Select("select * from department where depId = #{depId}")
+    @Select("select * from department where id = #{depId}")
     Department findDepById(int depId);
 
     //模糊查询Code

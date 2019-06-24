@@ -253,207 +253,206 @@
 <!--       ************************************************************************  -->
 
 <!--<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>-->
-<script src="../lib/layui/layui.js" charset="utf-8" th:src="@{/layui/layui.js}"></script>
-<script src="../static/js/eleDel.js" type="text/javascript" charset="utf-8" th:src="@{/js/eleDel.js}"></script>
+<script src="/layui/layui.js" charset="utf-8" ></script>
+<script src="/js/eleDel.js" type="text/javascript" charset="utf-8" ></script>
 <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 
-<!--  批量删除  -->
-<script type="text/javascript">
-    function stasDelete() {
-        if (confirm("确定删除选中的用户？")) {
-            var staList = new Array();
-            $("input[name='stasDelete']:checked").each(function () {
-                staList.push($(this).val());
-            });
-            $.ajax({
-                type: "post",
-                url: "/sta/stasDel",
-                data: {staList: staList.toString()},
-                success: function () {
-                    alert("删除成功！");
-                    loadData('', 1, 5);
-                },
-                error: function () {
-                    alert("刪除失败！")
-                }
-            });
-        }
-    }
-</script>
-
-<!-- 单条删除 -->
-<script type="text/javascript">
-
-    function staDelete(data) {
-
-        var clickId = data.id;
-
-        $(document).ready(function () {
-            $.ajax({
-                type: "post",
-                url: "/sta/staDel",
-                data: {
-                    clickId : clickId
-                },
-                success: function () {
-                    alert("删除成功");
-                    loadData('', 1, 5);
-                },
-                error: function () {
-                    alert("删除失败");
-                }
-            })
-
-        })
-    }
-</script>
-
-<!-- 添加 -->
-<script type="text/javascript">
-    function addAjax() {
-        var staCodex = document.getElementById('addStaCode').value;
-        var staName = document.getElementById('addStaName').value;
-        var staDep = document.getElementById('addStaDep').value;
-        var staBoss = document.getElementById('addStaBoss').value;
-        var staCate = document.getElementById('addStaCate').value;
-        var staDes = document.getElementById('addStaDes').value;
-
-
-        $.ajax({
-            type : "post",
-            url : "/sta/addStation",
-            data : {
-
-                staCode	:  staCodex,
-                staName	:  staName,
-                staDep	:  staDep,
-                staBoss	:  staBoss,
-                staCate	: staCate,
-                staDes	:  staDes,
-
-            },
-            success : function (fallBack) {
-                if ( fallBack === '1' ) {
-
-                    $("#closemodel").click();
-                    loadData('', 1, 5);
-                } else if ( fallBack === '2') {
-                    alert ("员工编码已存在，请重来，(✪ω✪)");
-                } else if (fallBack === '3' ) {
-                    alert("暂时还没有这个岗位！！！(✪ω✪)");
-                } else {
-                    alert('哎呀，出现意外了！')	;
-                }
-
-            },
-            error : function () {
-                alert("传值失败");
-            }
-        })
-
-    };
-</script>
-
-<!-- 数据回显 -->
-<script type="text/javascript">
-    var url = window.location.href;
-    var id  = url.substring(url.lastIndexOf("=")+1,url.length);
-    function clickEdit(data) {
-        var clickId = data.id;
-        $(document).ready(function () {
-            var subUrl = "/sta/getStaById/";
-            var now = subUrl + clickId;
-            $.ajax({
-                type: "get",
-                url: now,
-                success: function (sta) {
-                    var staId = sta.id;
-                    //var weaBody = $("weadmin-body");
-                    var inputCode = $("#staCode");
-                    var inputName = $("#staName");
-                    var inputDep = $("#staDep");
-                    var inputBoss = $("#staBoss");
-                    var inputCate = $("#staCate");
-                    var inputDes = $("#staDes");
-                    inputCode.attr('value', sta.staCode);
-                    inputName.attr('value', sta.staName);
-                    inputDep.attr('value', sta.staDep);
-                    inputBoss.attr('value', sta.staBoss);
-                    inputCate.attr('value', sta.staCate);
-                    inputDes.attr('value', sta.staDes);
-                },
-                error: function () {
-                    alert("ajax失败");
-                }
-            })
-
-
-        });
-    }
-</script>
-
-
-
-<script th:inline="none">
-    var currentPage = 0;
-    function loadData(key,page, pageSize) {
-        $.ajax({
-            type: 'POST',
-            url: "/sta",
-            dataType: "json",
-            data: {staCode: key,
-                pageSize:5,
-                currentPage:page},
-            success: function (data) {
-                $("#tbody").html("");
-                // $("#ulList").html("");
-                var tabledata = data['stas'];
-                jQuery.each(tabledata, function (i, list) {
-                    var tr="";
-                    tr+="<tr>"+
-                        "<td><input name=\"stasDelete\" value=" + list['id'] + " type=\"checkbox\" /></td>"+
-                        "<td>" + list['id'] + "</td>"+
-                        "<td>" + list['staCode'] + "</td>"+
-                        "<td>" + list['staName'] + "</td>"+
-                        "<td>" + list['staDep'] + "</td>"+
-                        "<td>" + list['staBoss'] + "</td>"+
-                        "<td>" + list['staCate'] + "</td>"+
-                        "<td class=\"td-manage\">"+
-                        "<button class=\"btn btn-primary btn-lg\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateStaPage\">"+
-                        "编辑用户"+
-                        "</button>"+
-                        "<button onclick=\"staDelete(this)\" type=\"submit\" id="+ list['id'] +
-                        " >删除</button>"+
-                        "</td></tr>";
-                    $("#tbody").append(tr);
-                });
-                $("#ulList").html('');
-                var li="<a class=\"num\" onclick='loadData(\"\","+(currentPage-1)+","+5+")'><<</a>";
-                for (var i = 1; i <= data['pageNum']; i++) {
-                    if (i==currentPage){
-                        li+="<a class=\"current\" class='active' onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
-                    }
-                    else {
-                        li+="<a class=\"num\" onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
+            <!--  批量删除  -->
+            <script type="text/javascript">
+                function stasDelete() {
+                    if (confirm("确定删除选中的用户？")) {
+                        var staList = new Array();
+                        $("input[name='stasDelete']:checked").each(function () {
+                            staList.push($(this).val());
+                        });
+                        $.ajax({
+                            type: "post",
+                            url: "/sta/stasDel",
+                            data: {staList: staList.toString()},
+                            success: function () {
+                                alert("删除成功！");
+                                loadData('', 1, 5);
+                            },
+                            error: function () {
+                                alert("刪除失败！")
+                            }
+                        });
                     }
                 }
-                li+="<a class=\"num\" onclick='loadData(\"\","+(currentPage+1)+","+5+")'>>></a>";
-                $("#ulList").append(li);
-                // console.log(tr);
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                console.log(XMLHttpRequest.status);
-                console.log(XMLHttpRequest.readyState);
-                console.log(textStatus);
-            }
-        });
-    }
+            </script>
 
-    $(document).ready(function () {
-        loadData('', 1, 5);
-    })
+            <!-- 单条删除 -->
+            <script type="text/javascript">
 
-</script>
+                function staDelete(data) {
+
+                    var clickId = data.id;
+
+                    $(document).ready(function () {
+                        $.ajax({
+                            type: "post",
+                            url: "/sta/staDel",
+                            data: {
+                                clickId : clickId
+                            },
+                            success: function () {
+                                alert("删除成功");
+                                loadData('', 1, 5);
+                            },
+                            error: function () {
+                                alert("删除失败");
+                            }
+                        })
+
+                    })
+                }
+            </script>
+
+            <!-- 添加 -->
+            <script type="text/javascript">
+                function addAjax() {
+                    var staCodex = document.getElementById('addStaCode').value;
+                    var staName = document.getElementById('addStaName').value;
+                    var staDep = document.getElementById('addStaDep').value;
+                    var staBoss = document.getElementById('addStaBoss').value;
+                    var staCate = document.getElementById('addStaCate').value;
+                    var staDes = document.getElementById('addStaDes').value;
+
+
+                    $.ajax({
+                        type : "post",
+                        url : "/sta/addStation",
+                        data : {
+
+                            staCode	:  staCodex,
+                            staName	:  staName,
+                            staDep	:  staDep,
+                            staBoss	:  staBoss,
+                            staCate	: staCate,
+                            staDes	:  staDes,
+
+                        },
+                        success : function (fallBack) {
+                            if ( fallBack === '1' ) {
+
+                                $("#closemodel").click();
+                                loadData('', 1, 5);
+                            } else if ( fallBack === '2') {
+                                alert ("员工编码已存在，请重来，(✪ω✪)");
+                            } else if (fallBack === '3' ) {
+                                alert("暂时还没有这个岗位！！！(✪ω✪)");
+                            } else {
+                                alert('哎呀，出现意外了！')	;
+                            }
+
+                        },
+                        error : function () {
+                            alert("传值失败");
+                        }
+                    })
+
+                };
+            </script>
+
+            <!-- 数据回显 -->
+            <script type="text/javascript">
+                var url = window.location.href;
+                var id  = url.substring(url.lastIndexOf("=")+1,url.length);
+                function clickEdit(data) {
+                    var clickId = data.id;
+                    $(document).ready(function () {
+                        var subUrl = "/sta/getStaById/";
+                        var now = subUrl + clickId;
+                        $.ajax({
+                            type: "get",
+                            url: now,
+                            success: function (sta) {
+                                var staId = sta.id;
+                                //var weaBody = $("weadmin-body");
+                                var inputCode = $("#staCode");
+                                var inputName = $("#staName");
+                                var inputDep = $("#staDep");
+                                var inputBoss = $("#staBoss");
+                                var inputCate = $("#staCate");
+                                var inputDes = $("#staDes");
+                                inputCode.attr('value', sta.staCode);
+                                inputName.attr('value', sta.staName);
+                                inputDep.attr('value', sta.staDep);
+                                inputBoss.attr('value', sta.staBoss);
+                                inputCate.attr('value', sta.staCate);
+                                inputDes.attr('value', sta.staDes);
+                            },
+                            error: function () {
+                                alert("ajax失败");
+                            }
+                        })
+
+
+                    });
+                }
+            </script>
+
+            <!-- 查询-->
+            <script th:inline="none">
+                var currentPage = 0;
+                function loadData(key,page, pageSize) {
+                    $.ajax({
+                        type: 'POST',
+                        url: "/sta",
+                        dataType: "json",
+                        data: {staCode: key,
+                            pageSize:5,
+                            currentPage:page},
+                        success: function (data) {
+                            $("#tbody").html("");
+                            // $("#ulList").html("");
+                            var tabledata = data['stas'];
+                            jQuery.each(tabledata, function (i, list) {
+                                var tr="";
+                                tr+="<tr>"+
+                                    "<td><input name=\"stasDelete\" value=" + list['id'] + " type=\"checkbox\" /></td>"+
+                                    "<td>" + list['id'] + "</td>"+
+                                    "<td>" + list['staCode'] + "</td>"+
+                                    "<td>" + list['staName'] + "</td>"+
+                                    "<td>" + list['staDep'] + "</td>"+
+                                    "<td>" + list['staBoss'] + "</td>"+
+                                    "<td>" + list['staCate'] + "</td>"+
+                                    "<td class=\"td-manage\">"+
+                                    "<button class=\"btn btn-primary btn-lg\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateStaPage\">"+
+                                    "编辑用户"+
+                                    "</button>"+
+                                    "<button onclick=\"staDelete(this)\" type=\"submit\" id="+ list['id'] +
+                                    " >删除</button>"+
+                                    "</td></tr>";
+                                $("#tbody").append(tr);
+                            });
+                            $("#ulList").html('');
+                            var li="<a class=\"num\" onclick='loadData(\"\","+(currentPage-1)+","+5+")'><<</a>";
+                            for (var i = 1; i <= data['pageNum']; i++) {
+                                if (i==currentPage){
+                                    li+="<a class=\"current\" class='active' onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
+                                }
+                                else {
+                                    li+="<a class=\"num\" onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
+                                }
+                            }
+                            li+="<a class=\"num\" onclick='loadData(\"\","+(currentPage+1)+","+5+")'>>></a>";
+                            $("#ulList").append(li);
+                            // console.log(tr);
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(XMLHttpRequest.status);
+                            console.log(XMLHttpRequest.readyState);
+                            console.log(textStatus);
+                        }
+                    });
+                }
+
+                $(document).ready(function () {
+                    loadData('', 1, 5);
+                })
+
+            </script>
 </body>
 
 
