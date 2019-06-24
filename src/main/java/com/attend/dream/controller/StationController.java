@@ -44,19 +44,19 @@ public class StationController {
         return empMap;
     }
 
-//    //显示全部岗位列表
-//    @RequestMapping("/station")
-//    public String list(Model model, @RequestParam(value = "currentPage") int currentPage,
-//    @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, @RequestParam(value = "staCode") String staCode){
-//        PageInfo<Station> stasPage = stationService.getStationBystaCodePage(currentPage, pageSize, staCode);
-//        List<Station> stas = stationService.getStationBystaCode(currentPage, pageSize, staCode);
-//
-//        model.addAttribute("stas",stas);
-//        model.addAttribute("stasPage",stasPage);
-//        //传递staCode到station_list 的下一页和上一页
-//        model.addAttribute("staCode",staCode);
-//        return "station_list";
-//    }
+    //显示全部岗位列表
+    @RequestMapping("/station")
+    public String list(Model model, @RequestParam(value = "currentPage") int currentPage,
+    @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, @RequestParam(value = "staCode") String staCode){
+        PageInfo<Station> stasPage = stationService.getStationBystaCodePage(currentPage, pageSize, staCode);
+        List<Station> stas = stationService.getStationBystaCode(currentPage, pageSize, staCode);
+
+        model.addAttribute("stas",stas);
+        model.addAttribute("stasPage",stasPage);
+        //传递staCode到station_list 的下一页和上一页
+        model.addAttribute("staCode",staCode);
+        return "station_list";
+    }
 
 //    //查询岗位
 //    @PostMapping("/sta/get")
@@ -72,20 +72,24 @@ public class StationController {
     }
 
     //删除单行员工信息
-    @DeleteMapping("/sta/{staId}")
-    public String deleteEmployee(@PathVariable(value = "staId") int staId){
-        stationService.deleteStation(staId);
-        return "redirect:/station";
+    @PostMapping("/sta/staDel")
+    @ResponseBody
+    public String deleteEmployee(int clickId){
+        System.out.println(clickId);
+        stationService.deleteStation(clickId);
+        return "null";
     }
 
     //批量删除员工
     @PostMapping("/sta/stasDel")
+    @ResponseBody
     public String stasDelete(String staList){
         String[] strs = staList.split(",");
+        System.out.println(strs[0]);
         for (int i = 0; i < strs.length; i++) {
             stationService.deleteStation(Integer.parseInt(strs[i]));
         }
-        return "station_list";
+        return "null";
 
     }
 

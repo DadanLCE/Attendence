@@ -49,7 +49,7 @@
             </div>
 
 			<div class="weadmin-block">
-					<button class="layui-btn layui-btn-danger" onclick="stasDelete()"><i class="layui-icon"></i>批量删除</button>
+                <button class="layui-btn layui-btn-danger" onclick="stasDelete()"><i class="layui-icon"></i>批量删除</button>
 				    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addStaPage">
 					添加岗位
 				    </button>
@@ -257,10 +257,10 @@
 		<script src="../lib/layui/layui.js" charset="utf-8" th:src="@{/layui/layui.js}"></script>
 		<script src="../static/js/eleDel.js" type="text/javascript" charset="utf-8" th:src="@{/js/eleDel.js}"></script>
 		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-		<script type="text/javascript">
 
-			function stasDelete() {
-
+        <!--  批量删除  -->
+        <script type="text/javascript">
+            function stasDelete() {
 				if (confirm("确定删除选中的用户？")) {
 					var staList = new Array();
 					$("input[name='stasDelete']:checked").each(function () {
@@ -272,7 +272,7 @@
 						data: {staList: staList.toString()},
 						success: function () {
 							alert("删除成功！");
-							location.reload();
+                            loadData('', 1, 5);
 						},
 						error: function () {
 							alert("刪除失败！")
@@ -281,6 +281,32 @@
 				}
 			}
 		</script>
+        <!-- 单条删除 -->
+        <script type="text/javascript">
+
+            function staDelete(data) {
+
+                var clickId = data.id;
+
+                $(document).ready(function () {
+                    $.ajax({
+                        type: "post",
+                        url: "/sta/staDel",
+                        data: {
+                            clickId : clickId
+                        },
+                        success: function () {
+                            alert("删除成功");
+                            loadData('', 1, 5);
+                        },
+                        error: function () {
+                            alert("删除失败");
+                        }
+                    })
+
+                })
+            }
+            </script>
 
         <script type="text/javascript">
             function addAjax() {
@@ -366,31 +392,7 @@
             }
         </script>
 
-        <script type="text/javascript">
 
-            function empsDelete() {
-
-                if (confirm("确定删除选中的用户？")) {
-                    var userList = new Array();
-                    $("input[name='empsDelete']:checked").each(function () {
-                        userList.push($(this).val());
-                    });
-                    $.ajax({
-                        type: "post",
-                        url: "/emp/delEmps",
-                        data: {userList: userList.toString()},
-                        success: function () {
-                            alert("删除成功！");
-                            location.reload();
-                        },
-                        error: function () {
-                            alert("刪除失败！")
-                        }
-                    });
-                }
-            }
-
-        </script>
 
         <script th:inline="none">
             var currentPage = 0;
@@ -421,12 +423,9 @@
                                 "<button class=\"btn btn-primary btn-lg\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateStaPage\">"+
                                 "编辑用户"+
                                 "</button>"+
-                                "<form action=\"/test/" + list['id'] + " method=\"post\" >"+
-                                "<input type=\"hidden\" name=\"_method\" value=\"delete\" />"+
-                                "<button  type=\"submit\" >删除</button>"+
-                                "</form>"+
+                                "<button onclick=\"staDelete(this)\" type=\"submit\" id="+ list['id'] +
+                                " >删除</button>"+
                                 "</td></tr>";
-
                             $("#tbody").append(tr);
                         });
                         $("#ulList").html('');
