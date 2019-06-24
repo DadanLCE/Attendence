@@ -92,11 +92,10 @@
 									&times;
 								</button>
 								<h4 class="modal-title" id="myModalLabel">
-									编辑
+									<strong>编辑</strong>
 								</h4>
 							</div>
 							<div class="weadmin-body">
-									<p style="color:red">更新</p>
 									<div class="layui-form-item">
 										<label class="layui-form-label">
 											<span class="we-red">*</span>部门编码
@@ -105,7 +104,18 @@
 											<input type="text" id="updatedepCode" name="depCode" readonly="readonly" lay-verify="required|nikename" autocomplete="off" class="layui-input">
 										</div>
 										<div class="layui-form-mid layui-word-aux">
-											*不可编辑
+											*无法进行修改
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<label  class="layui-form-label">
+											<span class="we-red">*</span>上级部门
+										</label>
+										<div class="layui-input-inline">
+											<input type="text" id="updatedepTopId" name="depTopId" lay-verify="required|identifycard" autocomplete="off" class="layui-input">
+										</div>
+										<div class="layui-form-mid layui-word-aux">
+											*无法进行修改
 										</div>
 									</div>
 									<div class="layui-form-item">
@@ -131,17 +141,6 @@
 										</label>
 										<div class="layui-input-inline">
 											<input type="text" id="updatedepJob" name="depJob" lay-verify="required|nation" autocomplete="off" class="layui-input">
-										</div>
-									</div>
-									<div class="layui-form-item">
-										<label  class="layui-form-label">
-											<span class="we-red">*</span>上级部门
-										</label>
-										<div class="layui-input-inline">
-											<input type="text" id="updatedepTopId" name="depTopId" lay-verify="required|identifycard" autocomplete="off" class="layui-input">
-										</div>
-										<div class="layui-form-mid layui-word-aux">
-											*不可编辑
 										</div>
 									</div>
 									<div class="layui-form-item">
@@ -317,7 +316,7 @@
 									"<td>" + list['depBossCode'] + "</td>"+
 									"<td>" + list['depTopId'] + "</td>"+
 									"<td class=\"td-manage\">"+
-									"<button class=\"btn btn-primary btn-lg\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateDepModel\">"+
+									"<button class=\"btn btn-info btn-sm left\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateDepModel\">"+
 									"编辑部门"+
 									"</button>"+
 									"<button class='btn btn-danger btn-sm' onclick=\"depDelete(this)\" type=\"submit\" id="+ list['id'] +
@@ -357,16 +356,12 @@
 		<!--添加部门-->
 		<script type="text/javascript">
 			function addDepAjax() {
+
 				var addDepCode = document.getElementById('addDepCode').value;
 				var addDepName = document.getElementById('addDepName').value;
 				var addDepBossCode = document.getElementById('addDepBossCode').value;
 				var addDepJob = document.getElementById('addDepJob').value;
 				var addDepTopId = document.getElementById('addDepTopId').value;
-
-				alert("进入addDepAjax");
-				alert(addDepCode);
-				alert(addDepName);
-				alert(addDepBossCode);
 
 				$.ajax({
 					type : "post",
@@ -379,14 +374,13 @@
 						depJob	:  addDepJob,
 						depTopId	:  addDepTopId
 
-
 					},
 					success : function (fallBack) {
-						alert("后端传值成功:"+fallBack);
+
 						if ( fallBack === '1' ) {
 							alert('恭喜你，添加成功！！！');
 							$("#closemodel").click();
-							//document.getElementById('addEmpPage').style.display="none";
+
 						} else if ( fallBack === '2') {
 							alert ("部门已存在，请重来，(✪ω✪)");
 						} else if (fallBack === '3') {
@@ -397,7 +391,7 @@
 
 					},
 					error : function () {
-						alert("传值失败");
+						alert("添加部门失败了！如仍然出现问题请联系管理员 133-5834-6899 (✿◡‿◡)");
 					}
 				})
 
@@ -432,7 +426,7 @@
 							loadData('', 1, 5);
 						},
 						error: function () {
-							alert("部门编辑回显失败");
+							alert("部门编辑回显失败了！");
 						}
 					})
 
@@ -445,13 +439,11 @@
 		<script type="text/javascript">
 			function updatedepConfirm() {
 
-				alert("进入updateConfirm");
 				var inputCode = $("#updatedepCode").val();
 				var inputName = $("#updatedepName").val();
 				var inputBossCode = $("#updatedepBossCode").val();
 				var inputJob = $("#updatedepJob").val();
 				var inputTopId = $("#updatedepTopId").val();
-				alert(inputCode);
 
 				$.ajax({
 					type : "post",
@@ -476,7 +468,7 @@
 						}
 					},
 					error : function () {
-						alert("编辑确认error");
+						alert("编辑提交出现错误咯");
 					}
 				});
 			}
