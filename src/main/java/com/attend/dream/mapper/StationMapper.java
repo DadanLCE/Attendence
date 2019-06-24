@@ -19,6 +19,10 @@ public interface StationMapper {
             "where staCode=#{staCode}")
     Station getStationByStaCode(String staCode);
 
+    @Select("select id,staCode,staName,staDep,staBoss,staCate,staDes\n" +
+            "        from station " +
+            "where staId=#{staID}")
+    Station findStationById(int staId);
 
     //查询Code的模糊查询
     @Select("select id,staCode,staName,staDep,staBoss,staCate,staDes\n" +
@@ -35,8 +39,8 @@ public interface StationMapper {
     //更新
     @Update("update station set staCode=#{staCode},staName=#{staName},staDep=#{staDep},staBoss=#{staBoss}," +
             "staCate=#{staCate},staDes=#{staDes} \n " +
-            "where id =#{id}")
-    Boolean updateStation(Station station);
+            "where staCode =#{staCode}")
+    void updateStation(Station station);
 
     //删除
     @Delete("delete from station where id = #{id}")

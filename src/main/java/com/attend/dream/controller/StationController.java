@@ -115,4 +115,20 @@ public class StationController {
         return "station_list";
     }
 
+    @GetMapping("/sta/getStaById/{id}")
+    @ResponseBody
+    public Station getStaById(@PathVariable(value = "id") int staId) {
+        //Employee emp = employeeService.getEmpById(empId);
+        Station sta = stationService.getStaById(staId);
+        return sta;
+
+    }
+
+    @PostMapping("/sta/updateSta")
+    @ResponseBody
+    public String updateStation(Station s) {
+        String fallBack = stationService.updateStation(s);
+        return fallBack;
+    }
+
 }

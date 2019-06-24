@@ -17,6 +17,9 @@ public interface DepartmentMapper {
             "from department where depCode = #{depCode} ")
     Department getDepartmentByDepCode(String depCode);
 
+    @Select("select * from department where depId = #{depId}")
+    Department findDepById(int depId);
+
     //模糊查询Code
     @Select("select id,depCode,depJob,depName,depBossCode,depTopId\n" +
             "from department where depCode LIKE CONCAT('%',#{depCode},'%') ")
@@ -47,7 +50,7 @@ public interface DepartmentMapper {
     //更新部门
     @Update("update department set depCode=#{depCode},depName=#{depName},depBossCode=#{depBossCode},\n" +
             "depJob=#{depJob},depTopId=#{depTopId} \n " +
-            "where id = #{id}\n")
+            "where depCode = #{deoCode}\n")
     Boolean updateDepartment(Department department);
 
     //删除
