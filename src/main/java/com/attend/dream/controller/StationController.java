@@ -116,13 +116,13 @@ public class StationController {
 
     }
 
-    @GetMapping("/sta/getStaById/{id}")
-    @ResponseBody
-    public Station getStaById(@PathVariable(value = "id") int id) {
-        Station sta = stationService.getStationById(id);
-        return sta;
-
-    }
+//    @GetMapping("/sta/getStaById/{id}")
+//    @ResponseBody
+//    public Station getStaById(@PathVariable(value = "id") int id) {
+//        Station sta = stationService.getStationById(id);
+//        return sta;
+//
+//    }
 
     @GetMapping("/sta/getStaById/{id}")
     @ResponseBody

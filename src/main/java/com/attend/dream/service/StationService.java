@@ -99,9 +99,9 @@ public class StationService {
         }
     }
 
-    public Station getStationById(int id){
-       //Station sta = stationMapper.getStationById(id);
-        return  sta;
-    }
+//    public Station getStationById(int id){
+//       //Station sta = stationMapper.getStationById(id);
+//        //return  sta;
+//    }
 
 }
