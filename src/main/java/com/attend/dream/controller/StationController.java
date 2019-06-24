@@ -32,10 +32,9 @@ public class StationController {
         int prePage = stasPage.getPrePage();
         int nextPage = stasPage.getNextPage();
         int pageNum = stasPage.getPages();
-        for (Station s:
-            stas ) {
-            System.out.println(s);
-        }
+//        for (Station s: stas ) {
+//            System.out.println(s);
+//        }
         Map<Object, Object> empMap = new HashMap();
         empMap.put("stas", stas);
         empMap.put("nextPage", nextPage);
@@ -92,21 +91,32 @@ public class StationController {
 
     //添加员工
     @PostMapping("/sta/addStation")
+    @ResponseBody
     public String addStation(Station sta, Map<String,Object> map) {
 
         String fallBack = stationService.insertStation(sta);
-
+        System.out.println(sta);
         if ( fallBack.equals("1")) {
-            return "redirect:/station";
+//            return "redirect:/station";
+            return fallBack;
         } else if ( fallBack.equals("2")){
             map.put("msg","岗位已存在");
-            return "add_station";
+            return fallBack;
         } else if (fallBack.equals("3")) {
             map.put("msg","上级部门不存在");
-            return "add_station";
+            return fallBack;
         } else{
-            return "index";
+            return "error";
         }
+
+
+    }
+
+    @GetMapping("/sta/getStaById/{id}")
+    @ResponseBody
+    public Station getStaById(@PathVariable(value = "id") int id) {
+        Station sta = stationService.getStationById(id);
+        return sta;
 
     }
 

@@ -13,6 +13,8 @@ public interface StationMapper {
             "        from station")
     List<Station> getStations();
 
+    @Select("select * from station where id = #{id}")
+    Station getStationById(int id);
     //查询单个
     @Select("select id,staCode,staName,staDep,staBoss,staCate,staDes\n" +
             "        from station " +
