@@ -570,8 +570,7 @@
 				var empCTel = document.getElementById('addEmpCTel').value;
 				var empStaCode = document.getElementById('addEmpStaCode').value;
 				var empNote = document.getElementById('addEmpNote').value;
-				alert("进入addAjax");
-				alert(empCode);
+
 				$.ajax({
 					type : "post",
 					url : "/emp/addEmployee",
@@ -590,10 +589,10 @@
 
 					},
 					success : function (fallBack) {
-						alert("后端传值成功:"+fallBack);
+
 						if ( fallBack === '1' ) {
-							alert('恭喜你，添加成功！！！');
 							$("#closemodel").click();
+							loadData('', 1, 5);
 						} else if ( fallBack === '2') {
 							alert ("员工编码已存在，请重来，(✪ω✪)");
 						} else if (fallBack === '3' ) {

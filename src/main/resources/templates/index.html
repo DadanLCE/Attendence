@@ -82,7 +82,7 @@
 								</a>
 							</li>
 							<li>
-								<a href="station_list.html" th:href="@{/station}">
+								<a href="javascript:goToStation();" class="iconfont">
 									<i class="iconfont">&#xe6a7;</i>
 									<cite>岗位</cite>
 
@@ -267,6 +267,25 @@
 			}
 
 		</script>
+
+        <script type="text/javascript">
+            function goToStation() {
+                $.ajax({
+                    type:"POST",
+                    url:"/showSta",
+                    dataType:"html",
+                    success: function (data) {
+                        $("#showItem").html(data);
+                    },
+                    error: function () {
+                        alert("失败啦")
+                        console.log(XMLHttpRequest.status);
+                        console.log(XMLHttpRequest.readyState);
+                        console.log(textStatus);
+                    }
+                })
+            }
+        </script>
 	</body>
 	<!--Tab菜单右键弹出菜单-->
 	<ul class="rightMenu" id="rightMenu">

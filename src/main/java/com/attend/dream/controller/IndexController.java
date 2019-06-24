@@ -20,4 +20,9 @@ public class IndexController {
 
     @RequestMapping(value= "/showDep",method = RequestMethod.POST)
     public String showDep(){ return "department_list"; }
+
+    @RequestMapping(value = "/showSta",method = RequestMethod.POST)
+    public String showSta(){
+        return "station_list";
+    }
 }
