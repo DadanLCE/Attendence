@@ -23,7 +23,7 @@ public interface StationMapper {
 
     @Select("select id,staCode,staName,staDep,staBoss,staCate,staDes\n" +
             "        from station " +
-            "where staId=#{staID}")
+            "where id=#{staID}")
     Station findStationById(int staId);
 
     //查询Code的模糊查询

@@ -88,7 +88,7 @@
 
 
 
-//添加的motai框
+<!--添加的motai框-->
 <div class="modal fade"  id="addStaPage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div  class="modal-dialog" >
         <div class="modal-content" >
@@ -170,6 +170,7 @@
     </div><!-- /.modal -->
 </div>
 
+<!--编辑模态框-->
 <div class="modal fade" id="updateStaPage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true" >
     <div class="modal-dialog">
         <div class="modal-content">
@@ -182,8 +183,6 @@
                 </h4>
             </div>
             <div class="weadmin-body">
-                还没有方法
-                <form class="layui-form" action="" method="post">
                     <p style="color:red">更新</p>
                     <div class="layui-form-item">
                         <label  class="layui-form-label">
@@ -242,9 +241,12 @@
                     <div class="layui-form-item">
                         <label  class="layui-form-label">
                         </label>
-                        <button class="layui-btn" lay-filter="add" lay-submit="">确定</button>
+                        <button onclick="updateConfirm()" class="layui-btn" lay-filter="add" lay-submit="">确定</button>
+
+                        <!--隐藏button-->
+                        <button type="button" class="btn btn-default" style="display: none" data-dismiss="modal" id="closeupdatemodel">关闭</button>
                     </div>
-                </form>
+
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
@@ -334,7 +336,7 @@
             },
             success : function (fallBack) {
                 if ( fallBack === '1' ) {
-
+                    alert('添加成功')
                     $("#closemodel").click();
                     loadData('', 1, 5);
                 } else if ( fallBack === '2') {
@@ -392,8 +394,52 @@
     }
 </script>
 
+<!--编辑确认提交-->
+<script type="text/javascript">
+    function updateConfirm() {
+        alert("进入updateConfirm");
+        var inputCode = $("#staCode").val();
+        var inputName = $("#staName").val();
+        var inputDep = $("#staDep").val();
+        var staBoss = $("#staBoss").val();
+        var inputCate = $("#staCate").val();
+        var inputDes = $("#staDes").val();
 
 
+        alert(inputCode);
+        alert(inputName);
+
+        $.ajax({
+            type : "post",
+            url : "/sta/updateSta",
+            data : {
+
+                staCode : inputCode,
+                staName	:  inputName,
+                staDep	:  inputDep,
+                staBoss	:  staBoss,
+                staCate	:  inputCate,
+                staDes	:  inputDes
+
+            },
+            success : function (fallBack) {
+                alert("后端传值成功"+fallBack);
+                if (fallBack === '1') {
+                    alert("编辑成功");
+                    $("#closeupdatemodel").click();
+                    loadData('', 1, 5);
+                } else {
+                    alert("出现意外了^_^");
+                }
+            },
+            error : function () {
+                alert("编辑确认error");
+            }
+        });
+    }
+</script>
+
+<!--显示列表-->
 <script th:inline="none">
     var currentPage = 0;
     function loadData(key,page, pageSize) {

@@ -125,7 +125,7 @@ public class DepartmentController {
 
     }
 
-    @PostMapping("/sta/updateDep")
+    @PostMapping("/dep/updateDep")
     @ResponseBody
     public String updateDepartment(Department d) {
         String fallBack = departmentService.updateDepartment(d);
