@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +47,7 @@ public class DepartmentController {
 
     //删除单个部门
     @DeleteMapping("/dep/{depId}")
-    public String deleteEmployee(@PathVariable(value = "depId") int depId){
+    public String deleteDepartment(@PathVariable(value = "depId") int depId){
         departmentService.deleteDepartment(depId);
         return "redirect:/department";
     }
@@ -55,6 +56,27 @@ public class DepartmentController {
     @GetMapping("/dep/goToAddHtml")
     public String gotoAddDepartment() {
         return "add_department";
+    }
+
+
+    //查询，对应前端tbody
+    @RequestMapping(value = "/dep", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<Object, Object> getDepartmentsByName(@RequestParam(value = "currentPage") int currentPage,
+                                                  @RequestParam(value = "pageSize", defaultValue = "5") int pageSize,@RequestParam(value = "depCode") String depCode){
+        PageInfo<Department> depsPage = departmentService.getDepartmentsByDepCodePage(currentPage,pageSize,depCode);
+        List<Department> deps = departmentService.getDepartmentsByDepCode(currentPage,pageSize,depCode);
+        int prePage = depsPage.getPrePage();
+        int nextPage = depsPage.getNextPage();
+        int pageNum = depsPage.getPages();
+
+        Map<Object, Object> depMap = new HashMap();
+        depMap.put("deps", deps);
+        depMap.put("nextPage", nextPage);
+        depMap.put("prePage", prePage);
+        depMap.put("pageNum", pageNum);
+
+        return depMap;
     }
 
     //批量删除

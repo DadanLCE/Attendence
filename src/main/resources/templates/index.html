@@ -22,7 +22,7 @@
 			padding: 1.875em;
 			width: 100%;
             margin-top: -32px;
-            margin-left: 85px;
+            margin-left: 84px;
             height: 100%;
 		}
 	</style>
@@ -163,8 +163,9 @@
 		<!-- <div class="x-slide_left"></div> -->
 		<!-- 左侧菜单结束 -->
 		<!-- 右侧主体开始 -->
-		<div class="content" id="showItem">
-		</div>
+				<div class="content" id="showItem">
+
+				</div>
 		</div>
 		<!-- 右侧主体结束 -->
 		<!-- 中部结束 -->
@@ -206,7 +207,27 @@
 			// });
 
 		</script>
+
+		<!-- 跳转页面 -->
 		<script type="text/javascript">
+
+			function welcome(){
+				$.ajax({
+					type:"post",
+					url:"/showWel",
+					dataType:"html",
+					success: function (data) {
+						$("#showItem").html(data);
+					},
+					error: function () {
+						alert("页面跳转失败，请稍后再试");
+						console.log(XMLHttpRequest.status);
+						console.log(XMLHttpRequest.readyState);
+						console.log(textStatus);
+					}
+				})
+			}
+
 			function goToEmployee() {
 			$.ajax({
 				type:"POST",

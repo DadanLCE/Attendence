@@ -14,42 +14,19 @@
 		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="../lib/layui/css/layui.css" th:href="@{/layui/css/layui.css.css}">
         <style type="text/css">
-			.close{
-				width: 100px;
-				height: 50px;
-			}
-			/*.td-manage{*/
-			/*display: inline-block;*/
-			/*!*float: left;*!*/
-			/*}*/
-			.btn-primary{
-				width: 113px;
-				height: 38px;
-				border-radius: 0;
-				font-size: 14px;
-			}
-			.btn-info{
-				float: left;
-				/*display: inline-block;*/
-				margin-right: 15px;
-			}
-			#form1{
-				float: left;
-			}
-			/*.btn-danger{*/
-			/*float: left;*/
-			/*!*display: inline-block;*!*/
-
-			/*margin: 0;*/
-			/*}*/
+            .layui-form-label{
+                width: 120px;
+            }
+            .layui-form-item{
+                margin-bottom: 7px;
+            }
+            .layui-input{
+                border-color: #3F3F3F;
+            }
             .close{
                 width: 100px;
                 height: 50px;
             }
-			.content{
-				float: left;
-				padding: 1.875em;
-				width: 100%;
         </style>
 
 	</head>
@@ -63,29 +40,18 @@
 	</style>
 
 	<body>
-<!--		<div class="weadmin-nav">-->
-<!--			<span class="layui-breadcrumb">-->
-<!--        <a href="">首页</a>-->
-<!--        <a href="">公司架构</a>-->
-<!--        <a>-->
-<!--          <cite>员工</cite></a>-->
-<!--      </span>-->
-<!--			<a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">-->
-<!--				<i class="layui-icon" style="line-height:30px">&#x1002;</i></a>-->
-<!--		</div>-->
+
 		<div class="content">
 			<div class="layui-row">
-<!--				<form class="layui-form layui-col-md12 we-search" method="post">-->
 					<div class="layui-inline">
 						<input type="text" id="searchId" placeholder="请输入员工名" autocomplete="off" class="layui-input" >
 					</div>
 					<button class="layui-btn" lay-submit="" lay-filter="sreach" onclick="loadData(document.getElementById('searchId').value, 0, 5)"><i class="layui-icon">&#xe615;</i></button>
-<!--				</form>-->
+
 			</div>
 			<div class="weadmin-block">
 				<button class="layui-btn layui-btn-danger" onclick="empsDelete()"><i class="layui-icon"></i>批量删除</button>
-				<!--<form action="" th:action="@{/emp/goToAddHtml}" th:method="get">-->
-				<!--<button class="layui-btn" type="submit"><i class="layui-icon"></i>添加</button>-->
+
 					<button class="btn btn-primary btn-lg" id="addEmpButton"  data-toggle="modal" data-target="#addEmpPage">
 						添加用户
 					</button>
@@ -113,25 +79,7 @@
 					</tr>
 				</thead>
 				<tbody id="tbody" >
-<!--					<tr th:each="emp:${emps}">-->
-<!--						<td><input name="empsDelete" th:value="${emp.empId}" type="checkbox" /></td>-->
-<!--						<td th:text="${emp.empId}"></td>-->
-<!--						<td th:text="${emp.empCode}"></td>-->
-<!--						<td th:text="${emp.empName}"></td>-->
-<!--						<td th:text="${emp.empSex}"></td>-->
-<!--						<td th:text="${emp.empAge}"></td>-->
-<!--						<td th:text="${emp.empNation}"></td>-->
-<!--						<td th:text="${emp.empStaCode}"></td>-->
-<!--						<td class="td-manage">-->
-<!--							<button class="btn btn-primary btn-lg" th:id="${emp.empId}" onclick="clickEdit(this)" data-toggle="modal" data-target="#updateEmpPage">-->
-<!--								编辑用户-->
-<!--							</button>-->
-<!--							<form th:action="@{/emp/}+${emp.empId}" method="post" >-->
-<!--								<input type="hidden" name="_method" value="delete" />-->
-<!--								<button  type="submit" >删除</button>-->
-<!--							</form>-->
-<!--						</td>-->
-<!--					</tr>-->
+
 				</tbody>
 			</table>
 
@@ -385,7 +333,7 @@
 			</div>
 
 
-
+            <!-- 分页 -->
                 <div id='ulList' class="page">
 
                 </div>
@@ -401,6 +349,25 @@
 
 		<!--批量删除-->
 		<script type="text/javascript">
+            function empDelete(data) {
+                    var clickId = data.id;
+                    $(document).ready(function () {
+                        var subUrl = "/emp/delEmpById/";
+                        var now = subUrl + clickId;
+                        $.ajax({
+                            type: "post",
+                            url: now,
+                            data:clickId,
+                            success: function (emp) {
+                                alert("删除成功");
+								loadData('', 1, 5);
+                            },
+                            error: function () {
+                                alert("删除失败");
+                            }
+                        })
+                    })
+            }
 
 			function empsDelete() {
 
@@ -415,7 +382,7 @@
 						data: {userList: userList.toString()},
 						success: function () {
 							alert("删除成功！");
-							location.reload();
+							loadData('', 1, 5);
 						},
 						error: function () {
 							alert("刪除失败！")
@@ -503,7 +470,7 @@
 						empCTel	:  empCTel,
 						empStaCode	:  empStaCode,
 						empNote	:  empNote
-						
+
 					},
 					success : function (fallBack) {
 						alert("后端传值成功"+fallBack);
@@ -563,10 +530,8 @@
 									"<button  class=\"btn btn-info btn-sm left\" id="+ list['empId'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
 									"编辑用户"+
 									"</button>"+
-									"<form action=\"/emp/" + list['empId'] + " method=\"post\" >"+
-									"<input type=\"hidden\" name=\"_method\" value=\"delete\" />"+
-									"<button  type=\"submit\" class='btn btn-danger btn-sm right' >删除</button>"+
-									"</form>"+
+									"<button onclick=\"empDelete(this)\" type=\"submit\" id="+ list['empId'] +
+                                    " >删除</button>"+
 									"</td></tr>";
 
 							$("#tbody").append(tr);

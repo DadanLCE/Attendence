@@ -35,11 +35,8 @@ public class EmployeeController {
 //
 //        return "employee_list";
 //    }
-    @RequestMapping(value = "/showEmp",method = RequestMethod.POST)
-    public String showEmp(){
-        return "employee_list";
-    }
 
+    //查询，对应前端tbody
     @RequestMapping(value = "/emp", method = RequestMethod.POST)
     @ResponseBody
     public Map<Object, Object> getEmployeesByName(@RequestParam(value = "currentPage") int currentPage,
@@ -88,21 +85,21 @@ public class EmployeeController {
         model.addAttribute("isFuzzy",1);
         return "employee_list";
     }
-//
-//    //点击添加跳转到添加页面
-//    @GetMapping("/emp/goToAddHtml")
-//    public String gotoAddEmployee() {
-//        return "add_employee";
-//    }
 
     //删除单行员工信息
-    @DeleteMapping("/emp/{empId}")
-    public String deleteEmployee(@PathVariable(value = "empId") int empId){
+    @PostMapping("/emp/delEmpById/{id}")
+    public String deleteEmployee(@PathVariable(value = "id") int empId){
         employeeService.deleteEmployee(empId);
         return "redirect:/employee?currentPage=1";
     }
 
+    @GetMapping("/emp/getEmpById/{id}")
+    @ResponseBody
+    public Employee getEmpById(@PathVariable(value = "id") int empId) {
+        Employee emp = employeeService.getEmpById(empId);
+        return emp;
 
+    }
     //批量删除员工
     @PostMapping("/emp/delEmps")
     public String empsDelete(String userList){
@@ -148,13 +145,7 @@ public class EmployeeController {
 //        return "update_employee";
 //    }
 
-    @GetMapping("/emp/getEmpById/{id}")
-    @ResponseBody
-    public Employee getEmpById(@PathVariable(value = "id") int empId) {
-        Employee emp = employeeService.getEmpById(empId);
-        return emp;
 
-    }
 
 
     @PostMapping("/emp/updateEmp")
