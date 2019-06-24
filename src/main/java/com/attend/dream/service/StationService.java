@@ -87,10 +87,10 @@ public class StationService {
        Department dep = departmentMapper.getDepartmentByDepCode(inWhichDep);
 
        String topMen = s.getStaBoss();
-       Station stacode = stationMapper.getStationByStaCode(topMen);
+       Employee empCode = employeesMapper.getEmployeesByempCode(topMen);
         if ( dep == null) {
             return "2";
-        } else if (stacode == null) {
+        } else if (empCode == null) {
             return "3";
         }
         else {

@@ -50,7 +50,7 @@ public interface DepartmentMapper {
     //更新部门
     @Update("update department set depCode=#{depCode},depName=#{depName},depBossCode=#{depBossCode},\n" +
             "depJob=#{depJob},depTopId=#{depTopId} \n " +
-            "where depCode = #{deoCode}\n")
+            "where depCode = #{depCode}\n")
     Boolean updateDepartment(Department department);
 
     //删除

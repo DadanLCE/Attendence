@@ -153,7 +153,7 @@
 										<button type="button" class="btn btn-default" style="display:none" data-dismiss="modal" id="closeupdatemodel">关闭</button>
 
 									</div>
-								</form>
+
 							</div>
 						</div><!-- /.modal-content -->
 					</div><!-- /.modal -->
@@ -317,8 +317,8 @@
 									"<td>" + list['depBossCode'] + "</td>"+
 									"<td>" + list['depTopId'] + "</td>"+
 									"<td class=\"td-manage\">"+
-									"<button class=\"btn btn-primary btn-lg\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
-									"编辑用户"+
+									"<button class=\"btn btn-primary btn-lg\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateDepModel\">"+
+									"编辑部门"+
 									"</button>"+
 									"<button class='btn btn-danger btn-sm' onclick=\"depDelete(this)\" type=\"submit\" id="+ list['id'] +
 									" >删除</button>"+
@@ -367,8 +367,6 @@
 				alert(addDepCode);
 				alert(addDepName);
 				alert(addDepBossCode);
-				alert(addDepJob);
-				alert(addDepTopId);
 
 				$.ajax({
 					type : "post",
@@ -384,14 +382,17 @@
 
 					},
 					success : function (fallBack) {
-						if ( fallBack === 1 ) {
+						alert("后端传值成功:"+fallBack);
+						if ( fallBack === '1' ) {
+							alert('恭喜你，添加成功！！！');
 							$("#closemodel").click();
-							loadData('', 1, 5);
 							//document.getElementById('addEmpPage').style.display="none";
-						} else if ( fallBack === 2) {
+						} else if ( fallBack === '2') {
 							alert ("部门已存在，请重来，(✪ω✪)");
-						} else if (fallBack === 3) {
+						} else if (fallBack === '3') {
 							alert("并没有这个负责人(✪ω✪)");
+						} else {
+							alert('哎呀，出现意外了！')	;
 						}
 
 					},
@@ -428,7 +429,7 @@
 							inputBossCode.attr('value', dep.depBossCode);
 							inputJob.attr('value', dep.depJob);
 							inputTopId.attr('value', dep.depTopId);
-
+							loadData('', 1, 5);
 						},
 						error: function () {
 							alert("部门编辑回显失败");
@@ -443,27 +444,25 @@
 		<!--编辑确认提交-->
 		<script type="text/javascript">
 			function updatedepConfirm() {
+
 				alert("进入updateConfirm");
-
-
 				var inputCode = $("#updatedepCode").val();
 				var inputName = $("#updatedepName").val();
 				var inputBossCode = $("#updatedepBossCode").val();
 				var inputJob = $("#updatedepJob").val();
 				var inputTopId = $("#updatedepTopId").val();
-				alert(empName);
-				alert(empAge);
-				alert(empSalary);
+				alert(inputCode);
+
 				$.ajax({
 					type : "post",
 					url : "/dep/updateDep",
 					data : {
 
-						empCode : inputCode,
-						empName	:  inputName,
-						empAge	:  inputBossCode,
-						empNation	:  inputJob,
-						empSalary	:  inputTopId,
+						depCode : inputCode,
+						depName	:  inputName,
+						depBossCode	:  inputBossCode,
+						depJob	:  inputJob,
+						depTopId	:  inputTopId,
 
 					},
 					success : function (fallBack) {

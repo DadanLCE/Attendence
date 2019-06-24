@@ -143,7 +143,6 @@ public class EmployeeController {
     @PostMapping("/emp/updateEmp")
     @ResponseBody
     public String updateEmployee(Employee e) {
-        System.out.println(e.getEmpCode());
         String fallBack = employeeService.updateEmployee(e);
         return fallBack;
     }
