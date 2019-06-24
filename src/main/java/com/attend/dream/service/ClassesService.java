@@ -51,15 +51,10 @@ public class ClassesService {
         return flag;
     }
 
+        //更新，1成功，2重复
     public String updateCla(Classes cla){
-        String code = cla.getClaCode();
-        String flag = "2";
-        if (classesMapper.getClassesByCode(code) == null) {
-            classesMapper.insertClasses(cla);
-            flag = "1";
-        }
-
-        return flag;
+        classesMapper.updateClasses(cla);
+        return "1";
     }
 
 }
