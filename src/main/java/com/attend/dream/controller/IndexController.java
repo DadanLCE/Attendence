@@ -17,4 +17,7 @@ public class IndexController {
 
     @RequestMapping(value = "/showWel",method = RequestMethod.POST)
     public String showWel(){ return "welcome";}
+
+    @RequestMapping(value= "/showDep",method = RequestMethod.POST)
+    public String showDep(){ return "department_list"; }
 }
