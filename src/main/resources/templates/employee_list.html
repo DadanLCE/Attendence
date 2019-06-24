@@ -1,41 +1,23 @@
 <!DOCTYPE html>
 <html>
-
+<html  xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
 		<title>员工-考勤系统</title>
 		<!--<meta name="renderer" content="webkit">-->
 		<!--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">-->
 		<!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">-->
-        <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-<!--        <link rel="stylesheet" href="/css/font.css" >-->
-<!--		<link rel="stylesheet" href="/css/weadmin.css" >-->
-
+		<link rel="stylesheet" href="/css/font.css" >
+		<link rel="stylesheet" href="/css/weadmin.css" >
 		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/layui/css/layui.css.css">
 		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" href="/layui/css/layui.css" >
+        <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+        <script src="/layui/layui.js" charset="utf-8" ></script>
         <script src="/js/eleDel.js" type="text/javascript" charset="utf-8" ></script>
         <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-        <script src="http://code.jquery.com/jquery-3.2.0.min.js"></script>
-        <script type="text/javascript" src="/layui/layui.js" charset="utf-8"></script>
 
-
-        <style type="text/css">
-            .layui-form-label{
-                width: 120px;
-            }
-            .layui-form-item{
-                margin-bottom: 7px;
-            }
-            .layui-input{
-                border-color: #3F3F3F;
-            }
-            .close{
-                width: 100px;
-                height: 50px;
-            }
-        </style>
 
 	</head>
 	<style>
@@ -49,260 +31,17 @@
 
 	<body>
 
-    <div class="modal fade"  id="addEmpPage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div  class="modal-dialog" >
-            <div class="modal-content" >
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h2 class="modal-title" id="myModalLabel">
-                        新增用户
-                    </h2>
-
-                </div>
-                <div class="weadmin-body">
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">
-                            <span class="we-red">*</span>员工编码
-                        </label>
-                        <div class="layui-input-inline">
-                            <input type="text" id="addEmpCode" name="empCode" lay-verify="required|nikename" autocomplete="off" class="layui-input">
-                        </div>
-                        <div class="layui-form-mid layui-word-aux">
-                            将会成为您唯一的登录名
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label  class="layui-form-label">
-                            <span class="we-red">*</span>姓名
-                        </label>
-                        <div class="layui-input-inline">
-                            <input type="text" id="addEmpName" name="empName" lay-verify="required|name" autocomplete="" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label  class="layui-form-label">
-                            <span class="we-red">*</span>年龄
-                        </label>
-                        <div class="layui-input-inline">
-                            <input type="text" id="addEmpAge" name="empAge" autocomplete="off" class="layui-input">
-                        </div>
-
-                    </div>
-                    <div class="layui-form-item">
-                        <label  class="layui-form-label">
-                            <span class="we-red">*</span>民族
-                        </label>
-                        <div class="layui-input-inline">
-                            <input type="text" id="addEmpNation" name="empNation" lay-verify="required|nation" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label  class="layui-form-label">
-                            <span class="we-red">*</span>身份证
-                        </label>
-                        <div class="layui-input-inline">
-                            <input type="text" id="addEmpIdCard" name="empIdCard" lay-verify="required|identifycard" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label  class="layui-form-label">
-                            <span class="we-red">*</span>薪水
-                        </label>
-                        <div class="layui-input-inline">
-                            <input type="text" id="addEmpSalary" name="empSalary" lay-verify="required|salary" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label  class="layui-form-label">
-                            <span class="we-red">*</span>联系电话
-                        </label>
-                        <div class="layui-input-inline">
-                            <input type="text" id="addEmpContact" name="empContact" lay-verify="required|salary" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label  class="layui-form-label">
-                            <span class="we-red">*</span>紧急联系人电话
-                        </label>
-                        <div class="layui-input-inline">
-                            <input type="text" id="addEmpCTel" name="empCTel" lay-verify="required|salary" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label  class="layui-form-label">
-                            <span class="we-red">*</span>岗位
-                        </label>
-                        <div class="layui-input-inline">
-                            <input type="text" id="addEmpStaCode" name="empStaCode" lay-verify="required|salary" autocomplete="off" class="layui-input">-->
-                            <!--												<select>-->
-                            <!--												<option value ="CEO">CEO-总经理</option>-->
-                            <!--												<option value ="KJ">KJ-会计</option>-->
-                            <!--												<option value="QT">QT-前台</option>-->
-                            <!--												<option value="HQ">HQ-后勤</option>-->
-                            <!--												</select>-->
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label  class="layui-form-label">
-                            <span class="we-red">*</span>简介
-                        </label>
-                        <div class="layui-input-inline">
-                            <input type="textarea" id="addEmpNote" name="empNote" lay-verify="required|salary" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label  class="layui-form-label">
-                        </label>
-                        <button class="layui-btn" onclick="addAjax()" id="confirmAdd" lay-filter="add" lay-submit="">确定</button>
-
-                        <!--隐藏button-->
-                        <button type="button" class="btn btn-default" style="display: none" data-dismiss="modal" id="closemodel">关闭</button>
-
-                    </div>
-                    <!--</form>-->
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-    </div>
-    <!--隐藏窗口，点击button弹出编辑页面-->
-    <div class="modal fade" id="updateEmpPage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true" >
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel2">
-                        编辑
-                    </h4>
-                </div>
-                <div class="weadmin-body">
-                    <form class="layui-form" action="/emp/updateEmp" method="post">
-                        <p style="color:red">更新</p>
-                        <div class="layui-form-item">
-                            <label  class="layui-form-label">
-                                <span class="we-red">*</span>员工编码
-                            </label>
-                            <div class="layui-input-inline">
-                                <input type="text" id="empCode" name="empCode" readonly="readonly" lay-verify="required|nikename" autocomplete="off" class="layui-input">
-                            </div>
-                            <div class="layui-form-mid layui-word-aux">
-
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label  class="layui-form-label">
-                                <span class="we-red">*</span>姓名
-                            </label>
-                            <div class="layui-input-inline">
-                                <input type="text" id="empName" name="empName" lay-verify="required|name" autocomplete="" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label  class="layui-form-label">
-                                <span class="we-red">*</span>年龄
-                            </label>
-                            <div class="layui-input-inline">
-                                <input type="text" id="empAge" name="empAge" autocomplete="off" class="layui-input">
-                            </div>
-
-                        </div>
-                        <div class="layui-form-item">
-                            <label  class="layui-form-label">
-                                <span class="we-red">*</span>民族
-                            </label>
-                            <div class="layui-input-inline">
-                                <input type="text" id="empNation" name="empNation" lay-verify="required|nation" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label  class="layui-form-label">
-                                <span class="we-red">*</span>身份证
-                            </label>
-                            <div class="layui-input-inline">
-                                <input type="text"  id="empIdCard" name="empIdCard" lay-verify="required|identifycard" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label  class="layui-form-label">
-                                <span class="we-red">*</span>薪水
-                            </label>
-                            <div class="layui-input-inline">
-                                <input type="text" id="empSalary" name="empSalary" lay-verify="required|salary" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label  class="layui-form-label">
-                                <span class="we-red">*</span>联系电话
-                            </label>
-                            <div class="layui-input-inline">
-                                <input type="text" id="empTel" name="empContact" lay-verify="required|salary" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label  class="layui-form-label">
-                                <span class="we-red">*</span>紧急联系人电话
-                            </label>
-                            <div class="layui-input-inline">
-                                <input type="text" id="empCTel" name="empCTel" lay-verify="required|salary" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label  class="layui-form-label">
-                                <span class="we-red">*</span>岗位
-                            </label>
-                            <div class="layui-input-inline">
-                                <input type="text" id="empStaCode" name="empStaCode" lay-verify="required|salary" autocomplete="off" class="layui-input">
-                                <!--<select>-->
-                                <!--<option value ="CEO">CEO-总经理</option>-->
-                                <!--<option value ="KJ">KJ-会计</option>-->
-                                <!--<option value="QT">QT-前台</option>-->
-                                <!--<option value="HQ">HQ-后勤</option>-->
-                                <!--</select>	-->
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label  class="layui-form-label">
-                                <span class="we-red">*</span>简介
-                            </label>
-                            <div class="layui-input-inline">
-                                <input type="textarea" id="empNote" name="empNote" lay-verify="required|salary" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-
-                        <div class="layui-form-item">
-                            <label  class="layui-form-label">
-                            </label>
-                            <button class="layui-btn" lay-filter="add" lay-submit="">确定</button>
-                        </div>
-                    </form>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-    </div>
-<!--		<div class="weadmin-nav">-->
-<!--			<span class="layui-breadcrumb">-->
-<!--        <a href="">首页</a>-->
-<!--        <a href="">公司架构</a>-->
-<!--        <a>-->
-<!--          <cite>员工</cite></a>-->
-<!--      </span>-->
-<!--			<a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">-->
-<!--				<i class="layui-icon" style="line-height:30px">&#x1002;</i></a>-->
-<!--		</div>-->
 		<div class="content">
 			<div class="layui-row">
-<!--				<form class="layui-form layui-col-md12 we-search" method="post">-->
 					<div class="layui-inline">
 						<input type="text" id="searchId" placeholder="请输入员工名" autocomplete="off" class="layui-input" >
 					</div>
 					<button class="layui-btn" lay-submit="" lay-filter="sreach" onclick="loadData(document.getElementById('searchId').value, 0, 5)"><i class="layui-icon">&#xe615;</i></button>
-<!--				</form>-->
+
 			</div>
 			<div class="weadmin-block">
 				<button class="layui-btn layui-btn-danger" onclick="empsDelete()"><i class="layui-icon"></i>批量删除</button>
+
 					<button class="btn btn-primary btn-lg" id="addEmpButton"  data-toggle="modal" data-target="#addEmpPage">
 						添加用户
 					</button>
@@ -336,27 +75,285 @@
 
 		</div>
 
+		<!--隐藏窗口，点击button弹出编辑页面-->
+		<div class="modal fade" id="updateEmpPage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h4 class="modal-title" id="myModalLabel">
+							编辑
+						</h4>
+					</div>
+					<div class="weadmin-body">
+						<form class="layui-form" action="/emp/updateEmp" method="post">
+							<p style="color:red">更新</p>
+							<div class="layui-form-item">
+								<label class="layui-form-label">
+									<span class="we-red">*</span>员工编码
+								</label>
+								<div class="layui-input-inline">
+									<input type="text" id="empCode" name="empCode" readonly="readonly" lay-verify="required|nikename" autocomplete="off" class="layui-input">
+								</div>
+								<div class="layui-form-mid layui-word-aux">
 
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label  class="layui-form-label">
+									<span class="we-red">*</span>姓名
+								</label>
+								<div class="layui-input-inline">
+									<input type="text" id="empName" name="empName" lay-verify="required|name" autocomplete="" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label  class="layui-form-label">
+									<span class="we-red">*</span>年龄
+								</label>
+								<div class="layui-input-inline">
+									<input type="text" id="empAge" name="empAge" autocomplete="off" class="layui-input">
+								</div>
+
+							</div>
+							<div class="layui-form-item">
+								<label  class="layui-form-label">
+									<span class="we-red">*</span>民族
+								</label>
+								<div class="layui-input-inline">
+									<input type="text" id="empNation" name="empNation" lay-verify="required|nation" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label  class="layui-form-label">
+									<span class="we-red">*</span>身份证
+								</label>
+								<div class="layui-input-inline">
+									<input type="text"  id="empIdCard" name="empIdCard" lay-verify="required|identifycard" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label  class="layui-form-label">
+									<span class="we-red">*</span>薪水
+								</label>
+								<div class="layui-input-inline">
+									<input type="text" id="empSalary" name="empSalary" lay-verify="required|salary" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label  class="layui-form-label">
+									<span class="we-red">*</span>联系电话
+								</label>
+								<div class="layui-input-inline">
+									<input type="text" id="empTel" name="empContact" lay-verify="required|salary" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label  class="layui-form-label">
+									<span class="we-red">*</span>紧急联系人电话
+								</label>
+								<div class="layui-input-inline">
+									<input type="text" id="empCTel" name="empCTel" lay-verify="required|salary" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label  class="layui-form-label">
+									<span class="we-red">*</span>岗位
+								</label>
+								<div class="layui-input-inline">
+									<input type="text" id="empStaCode" name="empStaCode" lay-verify="required|salary" autocomplete="off" class="layui-input">
+									<!--<select>-->
+									<!--<option value ="CEO">CEO-总经理</option>-->
+									<!--<option value ="KJ">KJ-会计</option>-->
+									<!--<option value="QT">QT-前台</option>-->
+									<!--<option value="HQ">HQ-后勤</option>-->
+									<!--</select>	-->
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label  class="layui-form-label">
+									<span class="we-red">*</span>简介
+								</label>
+								<div class="layui-input-inline">
+									<input type="textarea" id="empNote" name="empNote" lay-verify="required|salary" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+
+							<div class="layui-form-item">
+								<label  class="layui-form-label">
+								</label>
+								<button class="layui-btn" lay-filter="add" lay-submit="">确定</button>
+							</div>
+						</form>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal -->
+		</div>
 
 		<!--隐藏窗口，点击button弹出添加页面-->
+		<div class="modal fade" id="addEmpPage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h2 class="modal-title">
+							新增用户
+						</h2>
+<!--						<h4 style="color:red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></h4>-->
+					</div>
+					<div class="weadmin-body">
+<!--						<form class="layui-form" action="/emp/addEmployee" method="post">-->
+<!--							<h1 style="color:red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></h1>-->
+						<!--<form class="layui-form" th:action="@{/emp/addEmployee}" method="post">-->
+
+							<div class="layui-form-item">
+								<label class="layui-form-label">
+									<span class="we-red">*</span>员工编码
+								</label>
+								<div class="layui-input-inline">
+									<input type="text" id="addEmpCode" name="empCode" lay-verify="required|nikename" autocomplete="off" class="layui-input">
+								</div>
+								<div class="layui-form-mid layui-word-aux">
+									将会成为您唯一的登录名
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label  class="layui-form-label">
+									<span class="we-red">*</span>姓名
+								</label>
+								<div class="layui-input-inline">
+									<input type="text" id="addEmpName" name="empName" lay-verify="required|name" autocomplete="" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label  class="layui-form-label">
+									<span class="we-red">*</span>年龄
+								</label>
+								<div class="layui-input-inline">
+									<input type="text" id="addEmpAge" name="empAge" autocomplete="off" class="layui-input">
+								</div>
+
+										</div>
+										<div class="layui-form-item">
+											<label  class="layui-form-label">
+												<span class="we-red">*</span>民族
+											</label>
+											<div class="layui-input-inline">
+												<input type="text" id="addEmpNation" name="empNation" lay-verify="required|nation" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-form-item">
+											<label  class="layui-form-label">
+												<span class="we-red">*</span>身份证
+											</label>
+											<div class="layui-input-inline">
+												<input type="text" id="addEmpIdCard" name="empIdCard" lay-verify="required|identifycard" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-form-item">
+											<label  class="layui-form-label">
+												<span class="we-red">*</span>薪水
+											</label>
+											<div class="layui-input-inline">
+												<input type="text" id="addEmpSalary" name="empSalary" lay-verify="required|salary" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-form-item">
+											<label  class="layui-form-label">
+												<span class="we-red">*</span>联系电话
+											</label>
+											<div class="layui-input-inline">
+												<input type="text" id="addEmpContact" name="empContact" lay-verify="required|salary" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-form-item">
+											<label  class="layui-form-label">
+												<span class="we-red">*</span>紧急联系人电话
+											</label>
+											<div class="layui-input-inline">
+												<input type="text" id="addEmpCTel" name="empCTel" lay-verify="required|salary" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-form-item">
+											<label  class="layui-form-label">
+												<span class="we-red">*</span>岗位
+											</label>
+											<div class="layui-input-inline">
+												<input type="text" id="addEmpStaCode" name="empStaCode" lay-verify="required|salary" autocomplete="off" class="layui-input">-->
+<!--												<select>-->
+<!--												<option value ="CEO">CEO-总经理</option>-->
+<!--												<option value ="KJ">KJ-会计</option>-->
+<!--												<option value="QT">QT-前台</option>-->
+<!--												<option value="HQ">HQ-后勤</option>-->
+<!--												</select>-->
+											</div>
+										</div>
+										<div class="layui-form-item">
+											<label  class="layui-form-label">
+												<span class="we-red">*</span>简介
+											</label>
+											<div class="layui-input-inline">
+												<input type="textarea" id="addEmpNote" name="empNote" lay-verify="required|salary" autocomplete="off" class="layui-input">
+											</div>
+										</div>
+										<div class="layui-form-item">
+											<label  class="layui-form-label">
+											</label>
+											<button class="layui-btn" onclick="addAjax()" id="confirmAdd" lay-filter="add" lay-submit="">确定</button>
+
+                                            <!--隐藏button-->
+											<button type="button" class="btn btn-default" style="display:none" data-dismiss="modal" id="closemodel">关闭</button>
+
+										</div>
+									<!--</form>-->
+								</div>
+							</div><!-- /.modal-content -->
+						</div><!-- /.modal -->
+			</div>
 
 
-
+            <!-- 分页 -->
                 <div id='ulList' class="page">
 
                 </div>
-
+            </div>
+		</div>
 
 
         <!-- ***************************************************************** -->
 
-
-
-		<!--批量删除-->
+<!-- 删除总模块  -->
 		<script type="text/javascript">
 
-			function empsDelete() {
+			<!-- 单行数据删除 -->
+            function empDelete(data) {
 
+                    var clickId = data.id;
+                    $(document).ready(function () {
+                        var subUrl = "/emp/delEmpById/";
+                        var now = subUrl + clickId;
+                        $.ajax({
+                            type: "post",
+                            url: now,
+                            data:clickId,
+                            success: function (emp) {
+                                alert("删除成功");
+								loadData('', 1, 5);
+                            },
+                            error: function () {
+                                alert("删除失败");
+                            }
+                        })
+
+                    })
+            }
+
+            <!--批量删除-->
+			function empsDelete() {
 				if (confirm("确定删除选中的用户？")) {
 					var userList = new Array();
 					$("input[name='empsDelete']:checked").each(function () {
@@ -368,7 +365,7 @@
 						data: {userList: userList.toString()},
 						success: function () {
 							alert("删除成功！");
-							location.reload();
+							loadData('', 1, 5);
 						},
 						error: function () {
 							alert("刪除失败！")
@@ -378,8 +375,6 @@
 			}
 
 		</script>
-		<!--<script type="text/javascript">-->
-
 
 		<!--编辑功能回显ajax-->
 		<script type="text/javascript">
@@ -431,6 +426,7 @@
 			}
 		</script>
 
+        <!-- 查询ajax -->
 		<script th:inline="none">
 			var currentPage = 0;
 
@@ -443,6 +439,16 @@
 						pageSize:5,
 						currentPage:page},
 					success: function (data) {
+						var pageSum=data["pageSum"];
+						if (page<=0){
+							currentPage=1;
+						}
+						else if (page>pageSum){
+							currentPage=pageSum;
+						}
+						else {
+							currentPage=page;
+						}
 						$("#tbody").html("");
 						// $("#ulList").html("");
 						var tabledata = data['emps'];
@@ -461,10 +467,8 @@
 									"<button class=\"btn btn-primary btn-lg\" id="+ list['empId'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
 									"编辑用户"+
 									"</button>"+
-									"<form action=\"/test/" + list['empId'] + " method=\"post\" >"+
-									"<input type=\"hidden\" name=\"_method\" value=\"delete\" />"+
-									"<button  type=\"submit\" >删除</button>"+
-									"</form>"+
+									"<button onclick=\"empDelete(this)\" type=\"submit\" id="+ list['empId'] +
+                                    " >删除</button>"+
 									"</td></tr>";
 
 							$("#tbody").append(tr);

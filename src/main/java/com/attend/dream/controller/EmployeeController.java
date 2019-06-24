@@ -35,11 +35,8 @@ public class EmployeeController {
 //
 //        return "employee_list";
 //    }
-    @RequestMapping(value = "/showEmp",method = RequestMethod.POST)
-    public String showEmp(){
-        return "employee_list";
-    }
 
+    //查询，对应前端tbody
     @RequestMapping(value = "/emp", method = RequestMethod.POST)
     @ResponseBody
     public Map<Object, Object> getEmployeesByName(@RequestParam(value = "currentPage") int currentPage,
@@ -59,23 +56,50 @@ public class EmployeeController {
         return empMap;
     }
 
+    //通过 分页 显示全部员工列表
+    @GetMapping("/employee")
+    public String employeePage(Model model,@RequestParam(value = "currentPage") int currentPage,
+                                @RequestParam(value = "pageSize", defaultValue = "5") int pageSize){
 
 
-//
-//    //点击添加跳转到添加页面
-//    @GetMapping("/emp/goToAddHtml")
-//    public String gotoAddEmployee() {
-//        return "add_employee";
-//    }
+        PageInfo<Employee> employeePage = employeeService.getEmployeesPage(currentPage,pageSize);
+        List<Employee> emps = employeeService.getEmployeesByPage(currentPage,pageSize);
+        model.addAttribute("emps",emps);
+        model.addAttribute("empsPage",employeePage);
+        maxPage = employeePage.getNavigateLastPage();
+
+        return "employee_list";
+    }
+
+    //查询员工通过名字 模糊查询 分页
+    @RequestMapping("/emp/get")
+    public String getEmployeesByName(Model model,@RequestParam(value = "currentPage") int currentPage,
+                                     @RequestParam(value = "pageSize", defaultValue = "5") int pageSize,@RequestParam(value = "empName") String empName){
+        PageInfo<Employee> empsPage = employeeService.getEmployeesPageMsgByName(currentPage,pageSize,empName);
+        List<Employee> emps = employeeService.getEmployeesMsgByName(currentPage,pageSize,empName);
+        model.addAttribute("emps",emps);
+        model.addAttribute("empsPage",empsPage);
+        //模糊查询判断
+        //将模糊查询的empName传入到页面 让上一页和下一页可以获取到empName
+        model.addAttribute("empName",empName);
+        model.addAttribute("isFuzzy",1);
+        return "employee_list";
+    }
 
     //删除单行员工信息
-    @DeleteMapping("/emp/{empId}")
-    public String deleteEmployee(@PathVariable(value = "empId") int empId){
+    @PostMapping("/emp/delEmpById/{id}")
+    public String deleteEmployee(@PathVariable(value = "id") int empId){
         employeeService.deleteEmployee(empId);
         return "redirect:/employee?currentPage=1";
     }
 
+    @GetMapping("/emp/getEmpById/{id}")
+    @ResponseBody
+    public Employee getEmpById(@PathVariable(value = "id") int empId) {
+        Employee emp = employeeService.getEmpById(empId);
+        return emp;
 
+    }
     //批量删除员工
     @PostMapping("/emp/delEmps")
     public String empsDelete(String userList){
@@ -120,13 +144,7 @@ public class EmployeeController {
 //        return "update_employee";
 //    }
 
-    @GetMapping("/emp/getEmpById/{id}")
-    @ResponseBody
-    public Employee getEmpById(@PathVariable(value = "id") int empId) {
-        Employee emp = employeeService.getEmpById(empId);
-        return emp;
 
-    }
 
     @PostMapping("/emp/updateEmp")
     public String updateEmployee(Employee e) {
