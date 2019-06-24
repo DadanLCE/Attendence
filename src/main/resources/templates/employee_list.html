@@ -10,25 +10,38 @@
 		<link rel="stylesheet" href="/css/font.css" >
 		<link rel="stylesheet" href="/css/weadmin.css" >
 		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/layui/css/layui.css.css">
 		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-        <script src="/layui/layui.js" charset="utf-8" ></script>
-        <script src="/js/eleDel.js" type="text/javascript" charset="utf-8" ></script>
-        <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-
+		<link rel="stylesheet" href="../lib/layui/css/layui.css" th:href="@{/layui/css/layui.css.css}">
+        <style type="text/css">
+			.close{
+				width: 100px;
+				height: 50px;
+			}
+			.btn-primary{
+				width: 113px;
+				height: 38px;
+				border-radius: 0;
+				font-size: 14px;
+			}
+			.btn-info{
+				float: left;
+				margin-right: 15px;
+			}
+			#form1{
+				float: left;
+			}
+            .close{
+                width: 100px;
+                height: 50px;
+            }
+			.content{
+				float: left;
+				padding: 1.875em;
+				width: 100%;
+        </style>
 
 	</head>
-	<style>
-		.content{
-			float: left;
-			padding: 1.875em;
-			width: 100%;
-
-		}
-	</style>
-
 	<body>
 
 		<div class="content">
@@ -95,10 +108,10 @@
 									<span class="we-red">*</span>员工编码
 								</label>
 								<div class="layui-input-inline">
-									<input type="text" id="empCode" name="empCode" readonly="readonly" lay-verify="required|nikename" autocomplete="off" class="layui-input">
+									<input type="text" id="updateempCode" name="empCode" readonly="readonly" lay-verify="required|nikename" autocomplete="off" class="layui-input">
 								</div>
 								<div class="layui-form-mid layui-word-aux">
-
+									*不可编辑
 								</div>
 							</div>
 							<div class="layui-form-item">
@@ -106,7 +119,7 @@
 									<span class="we-red">*</span>姓名
 								</label>
 								<div class="layui-input-inline">
-									<input type="text" id="empName" name="empName" lay-verify="required|name" autocomplete="" class="layui-input">
+									<input type="text" id="updateempName" name="empName" lay-verify="required|name" autocomplete="" class="layui-input">
 								</div>
 							</div>
 							<div class="layui-form-item">
@@ -114,7 +127,7 @@
 									<span class="we-red">*</span>年龄
 								</label>
 								<div class="layui-input-inline">
-									<input type="text" id="empAge" name="empAge" autocomplete="off" class="layui-input">
+									<input type="text" id="updateempAge" name="empAge" autocomplete="off" class="layui-input">
 								</div>
 
 							</div>
@@ -123,7 +136,7 @@
 									<span class="we-red">*</span>民族
 								</label>
 								<div class="layui-input-inline">
-									<input type="text" id="empNation" name="empNation" lay-verify="required|nation" autocomplete="off" class="layui-input">
+									<input type="text" id="updateempNation" name="empNation" lay-verify="required|nation" autocomplete="off" class="layui-input">
 								</div>
 							</div>
 							<div class="layui-form-item">
@@ -131,7 +144,10 @@
 									<span class="we-red">*</span>身份证
 								</label>
 								<div class="layui-input-inline">
-									<input type="text"  id="empIdCard" name="empIdCard" lay-verify="required|identifycard" autocomplete="off" class="layui-input">
+									<input type="text" readonly="readonly" id="updateempIdCard" name="empIdCard" lay-verify="required|identifycard" autocomplete="off" class="layui-input">
+								</div>
+								<div class="layui-form-mid layui-word-aux">
+									*不可编辑
 								</div>
 							</div>
 							<div class="layui-form-item">
@@ -139,7 +155,7 @@
 									<span class="we-red">*</span>薪水
 								</label>
 								<div class="layui-input-inline">
-									<input type="text" id="empSalary" name="empSalary" lay-verify="required|salary" autocomplete="off" class="layui-input">
+									<input type="text" id="updateempSalary" name="empSalary" lay-verify="required|salary" autocomplete="off" class="layui-input">
 								</div>
 							</div>
 							<div class="layui-form-item">
@@ -147,7 +163,7 @@
 									<span class="we-red">*</span>联系电话
 								</label>
 								<div class="layui-input-inline">
-									<input type="text" id="empTel" name="empContact" lay-verify="required|salary" autocomplete="off" class="layui-input">
+									<input type="text" id="updateempTel" name="empContact" lay-verify="required|salary" autocomplete="off" class="layui-input">
 								</div>
 							</div>
 							<div class="layui-form-item">
@@ -155,7 +171,7 @@
 									<span class="we-red">*</span>紧急联系人电话
 								</label>
 								<div class="layui-input-inline">
-									<input type="text" id="empCTel" name="empCTel" lay-verify="required|salary" autocomplete="off" class="layui-input">
+									<input type="text" id="updateempCTel" name="empCTel" lay-verify="required|salary" autocomplete="off" class="layui-input">
 								</div>
 							</div>
 							<div class="layui-form-item">
@@ -163,7 +179,7 @@
 									<span class="we-red">*</span>岗位
 								</label>
 								<div class="layui-input-inline">
-									<input type="text" id="empStaCode" name="empStaCode" lay-verify="required|salary" autocomplete="off" class="layui-input">
+									<input type="text" id="updateempStaCode" name="empStaCode" lay-verify="required|salary" autocomplete="off" class="layui-input">
 									<!--<select>-->
 									<!--<option value ="CEO">CEO-总经理</option>-->
 									<!--<option value ="KJ">KJ-会计</option>-->
@@ -177,14 +193,18 @@
 									<span class="we-red">*</span>简介
 								</label>
 								<div class="layui-input-inline">
-									<input type="textarea" id="empNote" name="empNote" lay-verify="required|salary" autocomplete="off" class="layui-input">
+									<input type="textarea" id="updateempNote" name="empNote" lay-verify="required|salary" autocomplete="off" class="layui-input">
 								</div>
 							</div>
 
 							<div class="layui-form-item">
 								<label  class="layui-form-label">
 								</label>
-								<button class="layui-btn" lay-filter="add" lay-submit="">确定</button>
+								<button onclick="updateConfirm()" class="layui-btn" lay-filter="add" lay-submit="">确定</button>
+
+								<!--隐藏button-->
+								<button type="button" class="btn btn-default" style="display:none" data-dismiss="modal" id="closeupdatemodel">关闭</button>
+
 							</div>
 						</form>
 					</div>
@@ -323,15 +343,16 @@
             </div>
 		</div>
 
-
         <!-- ***************************************************************** -->
 
-<!-- 删除总模块  -->
+		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<script src="/layui/layui.js" charset="utf-8" ></script>
+		<script src="/js/eleDel.js" type="text/javascript" charset="utf-8" ></script>
+		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+		<!--批量删除-->
 		<script type="text/javascript">
-
-			<!-- 单行数据删除 -->
             function empDelete(data) {
-
                     var clickId = data.id;
                     $(document).ready(function () {
                         var subUrl = "/emp/delEmpById/";
@@ -348,12 +369,11 @@
                                 alert("删除失败");
                             }
                         })
-
                     })
             }
 
-            <!--批量删除-->
 			function empsDelete() {
+
 				if (confirm("确定删除选中的用户？")) {
 					var userList = new Array();
 					$("input[name='empsDelete']:checked").each(function () {
@@ -379,10 +399,7 @@
 		<!--编辑功能回显ajax-->
 		<script type="text/javascript">
 			var url = window.location.href;
-			//var location = ;
-			//alert(location);
 			var id  = url.substring(url.lastIndexOf("=")+1,url.length);
-			//alert("取id"+id);
 			function clickEdit(data) {
 				var clickId = data.id;
 				$(document).ready(function () {
@@ -392,20 +409,19 @@
 						type: "get",
 						url: now,
 						success: function (emp) {
-							var empId = emp.id;
-							//var weaBody = $("weadmin-body");
-							var inputCode = $("#empCode");
-							var inputName = $("#empName");
-							var inputAge = $("#empAge");
-							var inputNation = $("#empNation");
-							var inputIdCard = $("#empIdCard");
-							var inputSalary = $("#empSalary");
-							var inputTel = $("#empTel");
-							var inputCTel = $("#empCTel");
-							var inputStaCode = $("#empStaCode");
-							var inputNote = $("#empNote");
-							inputCode.attr('value', emp.empCode);
-							inputName.attr('value', emp.empName);
+
+							var inputCode = $("#updateempCode");
+							var inputName = $("#updateempName");
+							var inputAge = $("#updateempAge");
+							var inputNation = $("#updateempNation");
+							var inputIdCard = $("#updateempIdCard");
+							var inputSalary = $("#updateempSalary");
+							var inputTel = $("#updateempTel");
+							var inputCTel = $("#updateempCTel");
+							var inputStaCode = $("#updateempStaCode");
+							var inputNote = $("#updateempNote");
+							inputCode.val(emp.empCode);
+							inputName.val(emp.empName);
 							inputAge.attr('value', emp.empAge);
 							inputNation.attr('value', emp.empNation);
 							inputIdCard.attr('value', emp.empIdCard);
@@ -426,7 +442,57 @@
 			}
 		</script>
 
-        <!-- 查询ajax -->
+		<!--编辑确认提交-->
+		<script type="text/javascript">
+			function updateConfirm() {
+				alert("进入updateConfirm");
+				var empCode = $("#updateempCode").val();
+				var empName = $("#updateempName").val();
+				var empAge = $("#updateempAge").val();
+				var empNation = $("#updateempNation").val();
+				var empSalary = $("#updateempSalary").val();
+				var empContact = $("#updateempContact").val();
+				var empCTel = $("#updateempCTel").val();
+				var empStaCode = $("#updateempStaCode").val();
+				var empNote = $("#updateempNote").val();
+
+				alert(empName);
+				alert(empAge);
+				alert(empSalary);
+				$.ajax({
+					type : "post",
+					url : "/emp/updateEmp",
+					data : {
+
+						empCode : empCode,
+						empName	:  empName,
+						empAge	:  empAge,
+						empNation	:  empNation,
+						empSalary	:  empSalary,
+						empContact	:  empContact,
+						empCTel	:  empCTel,
+						empStaCode	:  empStaCode,
+						empNote	:  empNote
+
+					},
+					success : function (fallBack) {
+						alert("后端传值成功"+fallBack);
+						if (fallBack === '1') {
+							alert("编辑成功");
+							$("#closeupdatemodel").click();
+							loadData('', 1, 5);
+						} else {
+							alert("出现意外了^_^");
+						}
+					},
+					error : function () {
+						alert("编辑确认error");
+					}
+				});
+			}
+		</script>
+
+		<!--获取显示员工-->
 		<script th:inline="none">
 			var currentPage = 0;
 
@@ -464,10 +530,10 @@
 									"<td>" + list['empNation'] + "</td>"+
 									"<td>" + list['empStaCode'] + "</td>"+
 									"<td class=\"td-manage\">"+
-									"<button class=\"btn btn-primary btn-lg\" id="+ list['empId'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
+									"<button  class=\"btn btn-info btn-sm left\" id="+ list['empId'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
 									"编辑用户"+
 									"</button>"+
-									"<button onclick=\"empDelete(this)\" type=\"submit\" id="+ list['empId'] +
+									"<button class='btn btn-danger btn-sm' onclick=\"empDelete(this)\" type=\"submit\" id="+ list['empId'] +
                                     " >删除</button>"+
 									"</td></tr>";
 
@@ -504,7 +570,7 @@
 		<!--添加用户-->
 		<script type="text/javascript">
 			function addAjax() {
-				var empCodex = document.getElementById('addEmpCode').value;
+				var empCode = document.getElementById('addEmpCode').value;
 				var empName = document.getElementById('addEmpName').value;
 				var empAge = document.getElementById('addEmpAge').value;
 				var empNation = document.getElementById('addEmpNation').value;
@@ -515,45 +581,42 @@
 				var empStaCode = document.getElementById('addEmpStaCode').value;
 				var empNote = document.getElementById('addEmpNote').value;
 				alert("进入addAjax");
-				alert(empCodex);
-				alert(empName);
-				alert(empAge);
+				alert(empCode);
+				$.ajax({
+					type : "post",
+					url : "/emp/addEmployee",
+					data : {
 
-					$.ajax({
-						type : "post",
-						url : "/emp/addEmployee",
-						data : {
+						empCode	:  empCode,
+						empName	:  empName,
+						empAge	:  empAge,
+						empNation	:  empNation,
+						empIdCard	:  empIdCard,
+						empSalary	:  empSalary,
+						empContact	:  empContact,
+						empCTel	:  empCTel,
+						empStaCode	:  empStaCode,
+						empNote	:  empNote
 
-							empCode	:  empCodex,
-							empName	:  empName,
-							empAge	:  empAge,
-							empNation	:  empNation,
-							empIdCard	:  empIdCard,
-							empSalary	:  empSalary,
-							empContact	:  empContact,
-							empCTel	:  empCTel,
-							empStaCode	:  empStaCode,
-							empNote	:  empNote
-
-						},
-						success : function (fallBack) {
-							alert("后端传值成功:"+fallBack);
-							if ( fallBack === '1' ) {
-								alert('恭喜你，添加成功！！！');
-								$("#closemodel").click();
-							} else if ( fallBack === '2') {
-								alert ("员工编码已存在，请重来，(✪ω✪)");
-							} else if (fallBack === '3' ) {
-								alert("暂时还没有这个岗位！！！(✪ω✪)");
-							} else {
-								alert('哎呀，出现意外了！')	;
-							}
-
-						},
-						error : function () {
-							alert("传值失败");
+					},
+					success : function (fallBack) {
+						alert("后端传值成功:"+fallBack);
+						if ( fallBack === '1' ) {
+							alert('恭喜你，添加成功！！！');
+							$("#closemodel").click();
+						} else if ( fallBack === '2') {
+							alert ("员工编码已存在，请重来，(✪ω✪)");
+						} else if (fallBack === '3' ) {
+							alert("暂时还没有这个岗位！！！(✪ω✪)");
+						} else {
+							alert('哎呀，出现意外了！')	;
 						}
-					})
+
+					},
+					error : function () {
+						alert("传值失败");
+					}
+				})
 
 			};
 		</script>

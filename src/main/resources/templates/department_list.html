@@ -7,8 +7,8 @@
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-		<link rel="stylesheet" href="../static/css/font.css" th:href="@{/css/font.css}">
-		<link rel="stylesheet" href="../static/css/weadmin.css" th:href="@{/css/weadmin.css}">
+		<link rel="stylesheet" href="/css/font.css" >
+		<link rel="stylesheet" href="/css/weadmin.css" >
 		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -28,21 +28,17 @@
 			.layui-input{
 				border-color: #3F3F3F;
 			}
+			.content{
+				 float: left;
+				 padding: 1.875em;
+				 width: 100%;
+
+			 }
 		</style>
 	</head>
 
 	<body>
-		<div class="weadmin-nav">
-			<span class="layui-breadcrumb">
-        <a href="">首页</a>
-        <a href="">公司架构</a>
-        <a>
-          <cite>部门</cite></a>
-      </span>
-			<a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
-				<i class="layui-icon" style="line-height:30px">&#x1002;</i></a>
-		</div>
-		<div class="weadmin-body">
+		<div class="content">
 			<div class="layui-row">
 				<form class="layui-form layui-col-md12 we-search" method="post" th:action="@{/department?currentPage=1}">
 					<div class="layui-inline">
@@ -72,10 +68,8 @@
 								</h4>
 							</div>
 							<div class="weadmin-body">
-								<!--<form class="layui-form" th:action="@{/dep/addDepartment}" method="post">-->
-									<h1 style="color:red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></h1>
 									<div class="layui-form-item">
-										<label for="L_username" class="layui-form-label">
+										<label  class="layui-form-label">
 											<span class="we-red">*</span>部门编码
 										</label>
 										<div class="layui-input-inline">
@@ -83,7 +77,7 @@
 										</div>
 									</div>
 									<div class="layui-form-item">
-										<label for="L_email" class="layui-form-label">
+										<label  class="layui-form-label">
 											<span class="we-red">*</span>部门名称
 										</label>
 										<div class="layui-input-inline">
@@ -91,7 +85,7 @@
 										</div>
 									</div>
 									<div class="layui-form-item">
-										<label for="L_repass" class="layui-form-label">
+										<label class="layui-form-label">
 											<span class="we-red">*</span>部门负责人
 										</label>
 										<div class="layui-input-inline">
@@ -102,7 +96,7 @@
 
 
 									<div class="layui-form-item">
-										<label for="L_email" class="layui-form-label">
+										<label  class="layui-form-label">
 											<span class="we-red">*</span>部门职责
 										</label>
 										<div class="layui-input-inline">
@@ -111,7 +105,7 @@
 
 									</div>
 									<div class="layui-form-item">
-										<label for="L_pass" class="layui-form-label">
+										<label  class="layui-form-label">
 											<span class="we-red">*</span>上级部门
 										</label>
 										<div class="layui-input-inline">
@@ -124,12 +118,12 @@
 									<!--隐藏button-->
 									<button type="button" class="btn btn-default" style="display: none" data-dismiss="modal" id="closemodel">关闭</button>
 							</div>
-							<!--</form>-->
+
 						</div>
-						</div><!-- /.modal-content -->
-					</div><!-- /.modal -->
+						</div>
+					</div>
 				</div>
-				<!--</form>-->
+
 				<span class="fr" style="line-height:40px">共有数据：88 条</span>
 			</div>
 			<table class="layui-table" id="memberList">
@@ -146,25 +140,8 @@
 						<th>操作</th>
 					</tr>
 				</thead>
-				<tbody>
-				<tr th:each="dep:${deps}">
-					<td><input name="depIds" th:value="${dep.id}" type="checkbox" /></td>
-					<td th:text="${dep.id}"></td>
-					<td th:text="${dep.depCode}"></td>
-					<td th:text="${dep.depName}"></td>
-					<td th:text="${dep.depBossCode}"></td>
-					<td th:text="${dep.depTopId}"></td>
-					<td class="td-manage">
+				<tbody id="tbody">
 
-						<button class="btn btn-primary btn-lg" th:id="${dep.id}" onclick="clickEdit(this)" data-toggle="modal" data-target="#updateEmpPage">
-							编辑用户
-						</button>
-						<form th:action="@{/dep/}+${dep.id}" method="post" >
-							<input type="hidden" name="_method" value="delete" />
-							<button  type="submit" >删除</button>
-						</form>
-					</td>
-				</tr>
 
 				</tbody>
 			</table>
@@ -216,6 +193,82 @@
 					});
 				}
 			}
+		</script>
+
+		<!--查询员工-->
+		<script th:inline="none">
+			var currentPage = 0;
+
+			function loadData(key,page, pageSize) {
+				$.ajax({
+					type: 'POST',
+					url: "/dep",
+					dataType: "json",
+					data: {empName: key,
+						pageSize:5,
+						currentPage:page},
+					success: function (data) {
+						var pageSum=data["pageSum"];
+						if (page<=0){
+							currentPage=1;
+						}
+						else if (page>pageSum){
+							currentPage=pageSum;
+						}
+						else {
+							currentPage=page;
+						}
+						$("#tbody").html("");
+						// $("#ulList").html("");
+						var tabledata = data['deps'];
+						jQuery.each(tabledata, function (i, list) {
+							var tr="";
+							tr+="<tr>"+
+									"<td><input name=\"empsDelete\" value=" + list['depId'] + " type=\"checkbox\" /></td>"+
+									"<td>" + list['depId'] + "</td>"+
+									"<td>" + list['depCode'] + "</td>"+
+									"<td>" + list['depName'] + "</td>"+
+									"<td>" + list['depJob'] + "</td>"+
+									"<td>" + list['depBossCode'] + "</td>"+
+									"<td>" + list['depTopId'] + "</td>"+
+									"<td class=\"td-manage\">"+
+									"<button class=\"btn btn-primary btn-lg\" id="+ list['depId'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
+									"编辑用户"+
+									"</button>"+
+									"<form action=\"/dep/" + list['depId'] + " method=\"post\" >"+
+									"<input type=\"hidden\" name=\"_method\" value=\"delete\" />"+
+									"<button  type=\"submit\" >删除</button>"+
+									"</form>"+
+									"</td></tr>";
+
+							$("#tbody").append(tr);
+						});
+						$("#ulList").html('');
+						var li="<a class=\"num\" onclick='loadData(\"\","+(currentPage-1)+","+5+")'><<</a>";
+						for (var i = 1; i <= data['pageNum']; i++) {
+							if (i==currentPage){
+								li+="<a class=\"current\" class='active' onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
+							}
+							else {
+								li+="<a class=\"num\" onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
+							}
+						}
+						li+="<a class=\"num\" onclick='loadData(\"\","+(currentPage+1)+","+5+")'>>></a>";
+						$("#ulList").append(li);
+						// console.log(tr);
+					},
+					error: function (XMLHttpRequest, textStatus, errorThrown) {
+						console.log(XMLHttpRequest.status);
+						console.log(XMLHttpRequest.readyState);
+						console.log(textStatus);
+					}
+				});
+			}
+
+			$(document).ready(function () {
+				loadData('', 1, 5);
+			})
+
 		</script>
 
 		<!--添加弹窗-->

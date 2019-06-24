@@ -105,8 +105,14 @@ public class EmployeeService {
     }
 
     public String updateEmployee( Employee e) {
-        employeesMapper.updateEmployeeById(e);
-        return "employee_list";
+        String staCode = e.getEmpStaCode();
+        Station station = stationMapper.getStationByStaCode(staCode);
+        if ( station == null) {
+            return "2";
+        } else {
+            employeesMapper.updateEmployeeById(e);
+            return "1";
+        }
     }
 
 
