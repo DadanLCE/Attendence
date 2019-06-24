@@ -21,20 +21,20 @@ public class DepartmentController {
     @Autowired
     DepartmentService departmentService;
 
-    //显示全部部门
-    @RequestMapping("/department")
-    public String list(Model model, @RequestParam(value = "currentPage") int currentPage,
-    @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, @RequestParam(value = "depCode") String depCode){
-//        Collection<Department> departments= departmentService.getDepartments();
-        List<Department> deps = departmentService.getDepartmentsByDepCode(currentPage, pageSize, depCode);
-        PageInfo<Department> depsPage = departmentService.getDepartmentsByDepCodePage(currentPage, pageSize, depCode);
-
-        //传递depCode到department_list 的下一页和上一页
-        model.addAttribute("depCode", depCode);
-        model.addAttribute("deps", deps);
-        model.addAttribute("depsPage", depsPage);
-        return "department_list";
-    }
+//    //显示全部部门
+//    @RequestMapping("/department")
+//    public String list(Model model, @RequestParam(value = "currentPage") int currentPage,
+//    @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, @RequestParam(value = "depCode") String depCode){
+////        Collection<Department> departments= departmentService.getDepartments();
+//        List<Department> deps = departmentService.getDepartmentsByDepCode(currentPage, pageSize, depCode);
+//        PageInfo<Department> depsPage = departmentService.getDepartmentsByDepCodePage(currentPage, pageSize, depCode);
+//
+//        //传递depCode到department_list 的下一页和上一页
+//        model.addAttribute("depCode", depCode);
+//        model.addAttribute("deps", deps);
+//        model.addAttribute("depsPage", depsPage);
+//        return "department_list";
+//    }
 
 
 //    //根据编码查询单个部门
@@ -46,9 +46,11 @@ public class DepartmentController {
 //    }
 
     //删除单个部门
-    @DeleteMapping("/dep/{depId}")
-    public String deleteDepartment(@PathVariable(value = "depId") int depId){
-        departmentService.deleteDepartment(depId);
+    @PostMapping("/dep/delDepById/{id}")
+    @ResponseBody
+    public String deleteDepartment(@PathVariable(value = "id") int id){
+        System.out.println(id);
+        departmentService.deleteDepartment(id);
         return "redirect:/department";
     }
 
@@ -60,7 +62,7 @@ public class DepartmentController {
 
 
     //查询，对应前端tbody
-    @RequestMapping(value = "/dep", method = RequestMethod.POST)
+    @RequestMapping(value = "/department", method = RequestMethod.POST)
     @ResponseBody
     public Map<Object, Object> getDepartmentsByName(@RequestParam(value = "currentPage") int currentPage,
                                                   @RequestParam(value = "pageSize", defaultValue = "5") int pageSize,@RequestParam(value = "depCode") String depCode){

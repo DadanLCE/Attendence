@@ -32,10 +32,9 @@ public class StationController {
         int prePage = stasPage.getPrePage();
         int nextPage = stasPage.getNextPage();
         int pageNum = stasPage.getPages();
-        for (Station s:
-            stas ) {
-            System.out.println(s);
-        }
+//        for (Station s: stas ) {
+//            System.out.println(s);
+//        }
         Map<Object, Object> empMap = new HashMap();
         empMap.put("stas", stas);
         empMap.put("nextPage", nextPage);
@@ -45,19 +44,19 @@ public class StationController {
         return empMap;
     }
 
-//    //显示全部岗位列表
-//    @RequestMapping("/station")
-//    public String list(Model model, @RequestParam(value = "currentPage") int currentPage,
-//    @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, @RequestParam(value = "staCode") String staCode){
-//        PageInfo<Station> stasPage = stationService.getStationBystaCodePage(currentPage, pageSize, staCode);
-//        List<Station> stas = stationService.getStationBystaCode(currentPage, pageSize, staCode);
-//
-//        model.addAttribute("stas",stas);
-//        model.addAttribute("stasPage",stasPage);
-//        //传递staCode到station_list 的下一页和上一页
-//        model.addAttribute("staCode",staCode);
-//        return "station_list";
-//    }
+    //显示全部岗位列表
+    @RequestMapping("/station")
+    public String list(Model model, @RequestParam(value = "currentPage") int currentPage,
+                       @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, @RequestParam(value = "staCode") String staCode){
+        PageInfo<Station> stasPage = stationService.getStationBystaCodePage(currentPage, pageSize, staCode);
+        List<Station> stas = stationService.getStationBystaCode(currentPage, pageSize, staCode);
+
+        model.addAttribute("stas",stas);
+        model.addAttribute("stasPage",stasPage);
+        //传递staCode到station_list 的下一页和上一页
+        model.addAttribute("staCode",staCode);
+        return "station_list";
+    }
 
 //    //查询岗位
 //    @PostMapping("/sta/get")
@@ -73,46 +72,56 @@ public class StationController {
     }
 
     //删除单行员工信息
-    @DeleteMapping("/sta/{staId}")
-    public String deleteEmployee(@PathVariable(value = "staId") int staId){
-        stationService.deleteStation(staId);
-        return "redirect:/station";
+    @PostMapping("/sta/staDel")
+    @ResponseBody
+    public String deleteEmployee(int clickId){
+        System.out.println(clickId);
+        stationService.deleteStation(clickId);
+        return "null";
     }
 
     //批量删除员工
     @PostMapping("/sta/stasDel")
+    @ResponseBody
     public String stasDelete(String staList){
         String[] strs = staList.split(",");
+        System.out.println(strs[0]);
         for (int i = 0; i < strs.length; i++) {
             stationService.deleteStation(Integer.parseInt(strs[i]));
         }
-        return "station_list";
+        return "null";
 
     }
 
     //添加员工
     @PostMapping("/sta/addStation")
+    @ResponseBody
     public String addStation(Station sta, Map<String,Object> map) {
 
         String fallBack = stationService.insertStation(sta);
-
+        System.out.println(sta);
         if ( fallBack.equals("1")) {
-            return "redirect:/station";
+//            return "redirect:/station";
+            return fallBack;
         } else if ( fallBack.equals("2")){
             map.put("msg","岗位已存在");
-            return "add_station";
+            return fallBack;
         } else if (fallBack.equals("3")) {
             map.put("msg","上级部门不存在");
-            return "add_station";
+            return fallBack;
         } else{
-            return "index";
+            return "error";
         }
+
 
     }
 
-    @RequestMapping(value = "/showSta",method = RequestMethod.POST)
-    public String showEmp(){
-        return "station_list";
+    @GetMapping("/sta/getStaById/{id}")
+    @ResponseBody
+    public Station getStaById(@PathVariable(value = "id") int id) {
+        Station sta = stationService.getStationById(id);
+        return sta;
+
     }
 
     @GetMapping("/sta/getStaById/{id}")

@@ -98,4 +98,10 @@ public class StationService {
             return "1";
         }
     }
+
+    public Station getStationById(int id){
+       //Station sta = stationMapper.getStationById(id);
+        return  sta;
+    }
+
 }

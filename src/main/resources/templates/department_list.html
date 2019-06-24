@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
 		<title>会员列表-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
@@ -12,50 +12,76 @@
 		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-		<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
-		<!--[if lt IE 9]>
-	      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
-	      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
-	    <![endif]-->
+		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<script src="/layui/layui.js" charset="utf-8" ></script>
+		<script src="/js/eleDel.js" type="text/javascript" charset="utf-8" ></script>
+		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 		<style type="text/css">
-			.layui-form-label{
-				width: 120px;
+			.close{
+				width: 100px;
+				height: 50px;
 			}
-			.layui-form-item{
-				margin-bottom: 7px;
+			.btn-primary{
+				width: 113px;
+				height: 38px;
+				border-radius: 0;
+				font-size: 14px;
 			}
-			.layui-input{
-				border-color: #3F3F3F;
+			.btn-info{
+				float: left;
+				margin-right: 15px;
+			}
+			#form1{
+				float: left;
+			}
+			.close{
+				width: 100px;
+				height: 50px;
 			}
 			.content{
-				 float: left;
-				 padding: 1.875em;
-				 width: 100%;
-
-			 }
+				float: left;
+				padding: 1.875em;
+				width: 100%;}
 		</style>
 	</head>
 
 	<body>
 		<div class="content">
-			<div class="layui-row">
-				<form class="layui-form layui-col-md12 we-search" method="post" th:action="@{/department?currentPage=1}">
-					<div class="layui-inline">
-						<input type="text" name="depCode" placeholder="请输入部门编码" autocomplete="off" class="layui-input">
-					</div>
-					<button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
-				</form>
-			</div>
-			<div class="weadmin-block">
-				<button class="layui-btn layui-btn-danger" onclick="depsDelete()"><i class="layui-icon"></i>批量删除</button>
-				<!--<form action="" th:action="@{/dep/goToAddHtml}" th:method="get">-->
-					<!--<button class="layui-btn" type="submit"><i class="layui-icon"></i>添加</button>-->
+				<div class="layui-row">
+						<div class="layui-inline">
+							<input type="text" id="searchId" name="depCode" placeholder="请输入部门编码" autocomplete="off" class="layui-input">
+						</div>
+						<button class="layui-btn" onclick="loadData(document.getElementById('searchId').value, 0, 5)" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+
+				</div>
+				<div class="weadmin-block">
+					<button class="layui-btn layui-btn-danger" onclick="depsDelete()"><i class="layui-icon"></i>批量删除</button>
 
 				<!--添加按钮-->
 				<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addDepModel">
 					添加
 				</button>
+
+
+                    <table class="layui-table" id="memberList">
+                        <thead>
+                        <tr>
+                            <th>
+                                <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
+                            </th>
+                            <th>部门编码</th>
+                            <th>部门名称</th>
+                            <th>部门负责人</th>
+                            <th>部门职责</th>
+                            <th>上级部门</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbody">
+
+
+                        </tbody>
+                    </table>
 
 				<!--编辑模态框-->
 				<div class="modal fade" id="updateDepModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -172,66 +198,66 @@
 									</div>
 
 
-									<div class="layui-form-item">
-										<label  class="layui-form-label">
-											<span class="we-red">*</span>部门职责
-										</label>
-										<div class="layui-input-inline">
-											<input type="text" id="addDepJob" name="depJob" autocomplete="off" class="layui-input">
-										</div>
-
-									</div>
-									<div class="layui-form-item">
-										<label  class="layui-form-label">
-											<span class="we-red">*</span>上级部门
-										</label>
-										<div class="layui-input-inline">
-											<input type="text" id="addDepTopId" name="depTopId" lay-verify="required|nation" autocomplete="off" class="layui-input">
-										</div>
-									</div>
-
-									<button onclick="addDepAjax()" class="layui-btn" lay-filter="add" lay-submit="">确定</button>
-
-									<!--隐藏button-->
-									<button type="button" class="btn btn-default" style="display: none" data-dismiss="modal" id="closemodel">关闭</button>
+						<div class="layui-form-item">
+							<label  class="layui-form-label">
+								<span class="we-red">*</span>部门职责
+							</label>
+							<div class="layui-input-inline">
+								<input type="text" id="addDepJob" name="depJob" autocomplete="off" class="layui-input">
 							</div>
 
 						</div>
+						<div class="layui-form-item">
+							<label  class="layui-form-label">
+								<span class="we-red">*</span>上级部门
+							</label>
+							<div class="layui-input-inline">
+								<input type="text" id="addDepTopId" name="depTopId" lay-verify="required|nation" autocomplete="off" class="layui-input">
+							</div>
 						</div>
+
+						<button onclick="addDepAjax()" class="layui-btn" lay-filter="add" lay-submit="">确定</button>
+
+						<!--隐藏button-->
+						<button type="button" class="btn btn-default" style="display: none" data-dismiss="modal" id="closemodel">关闭</button>
 					</div>
+
 				</div>
-
-				<span class="fr" style="line-height:40px">共有数据：88 条</span>
 			</div>
-			<table class="layui-table" id="memberList">
-				<thead>
-					<tr>
-						<th>
-							<div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
-						</th>
-						<th>部门编码</th>
-						<th>部门名称</th>
-						<th>部门负责人</th>
-						<th>部门职责</th>
-						<th>上级部</th>
-						<th>操作</th>
-					</tr>
-				</thead>
-				<tbody id="tbody">
+		</div>
+			<!--分页-->
+				<div id="ulList" class="page">
 
-
-				</tbody>
-			</table>
+				</div>
 
 	<!--       ************************************************************************  -->
 
 		<!--<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>-->
-		<script src="../lib/layui/layui.js" charset="utf-8" th:src="@{/layui/layui.js}"></script>
-		<script src="../static/js/eleDel.js" type="text/javascript" charset="utf-8" th:src="@{/js/eleDel.js}"></script>
-		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 
-		<!--批量删除-->
+
+		<!--删除-->
 		<script type="text/javascript">
+
+			function depDelete(data) {
+				var clickId = data.id;
+				$(document).ready(function () {
+					var subUrl = "/dep/delDepById/";
+					var now = subUrl + clickId;
+					$.ajax({
+						type: "post",
+						url: now,
+						data:clickId,
+						success: function () {
+							alert("删除成功");
+							loadData('', 1, 5);
+						},
+						error: function () {
+							alert("删除失败");
+						}
+					})
+				})
+			}
+
 			function depsDelete() {
 
 				if (confirm("确定删除选中的用户？")) {
@@ -245,7 +271,7 @@
 						data: {depList: depList.toString()},
 						success: function () {
 							alert("删除成功！");
-							location.reload();
+							loadData('', 1, 5);
 						},
 						error: function () {
 							alert("刪除失败！")
@@ -262,9 +288,9 @@
 			function loadData(key,page, pageSize) {
 				$.ajax({
 					type: 'POST',
-					url: "/dep",
+					url: "/department",
 					dataType: "json",
-					data: {empName: key,
+					data: {depCode: key,
 						pageSize:5,
 						currentPage:page},
 					success: function (data) {
@@ -284,21 +310,18 @@
 						jQuery.each(tabledata, function (i, list) {
 							var tr="";
 							tr+="<tr>"+
-									"<td><input name=\"empsDelete\" value=" + list['depId'] + " type=\"checkbox\" /></td>"+
-									"<td>" + list['depId'] + "</td>"+
+									"<td><input name=\"depIds\" value=" + list['id'] + " type=\"checkbox\" /></td>"+
 									"<td>" + list['depCode'] + "</td>"+
 									"<td>" + list['depName'] + "</td>"+
 									"<td>" + list['depJob'] + "</td>"+
 									"<td>" + list['depBossCode'] + "</td>"+
 									"<td>" + list['depTopId'] + "</td>"+
 									"<td class=\"td-manage\">"+
-									"<button class=\"btn btn-primary btn-lg\" id="+ list['depId'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
+									"<button class=\"btn btn-primary btn-lg\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
 									"编辑用户"+
 									"</button>"+
-									"<form action=\"/dep/" + list['depId'] + " method=\"post\" >"+
-									"<input type=\"hidden\" name=\"_method\" value=\"delete\" />"+
-									"<button  type=\"submit\" >删除</button>"+
-									"</form>"+
+									"<button class='btn btn-danger btn-sm' onclick=\"depDelete(this)\" type=\"submit\" id="+ list['id'] +
+									" >删除</button>"+
 									"</td></tr>";
 
 							$("#tbody").append(tr);
@@ -307,7 +330,7 @@
 						var li="<a class=\"num\" onclick='loadData(\"\","+(currentPage-1)+","+5+")'><<</a>";
 						for (var i = 1; i <= data['pageNum']; i++) {
 							if (i==currentPage){
-								li+="<a class=\"current\" class='active' onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
+								li+="<a class=\"current\"  onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
 							}
 							else {
 								li+="<a class=\"num\" onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
