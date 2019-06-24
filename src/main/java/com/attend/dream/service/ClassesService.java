@@ -27,16 +27,38 @@ public class ClassesService {
         PageInfo<Classes> pageInfo = new PageInfo<>(clas);
         return pageInfo;
     }
-    //单个删除
+    //查询单个班次
     public Classes getClaById(int id){
         Classes cla = classesMapper.getClassesById(id);
         return  cla;
     }
 
     //删除单个班次
-    public boolean deleteCla(int id){
+    public Boolean deleteCla(int id){
         classesMapper.deleteClasses(id);
         return true;
+    }
+    //1 插入成功 2有相同的calCode编码 失败
+    public String insertCla(Classes cla){
+        String code = cla.getClaCode();
+        String flag = "2";
+        if (classesMapper.getClassesByCode(code) == null) {
+            classesMapper.insertClasses(cla);
+            flag = "1";
+        }
+
+        return flag;
+    }
+
+    public String updateCla(Classes cla){
+        String code = cla.getClaCode();
+        String flag = "2";
+        if (classesMapper.getClassesByCode(code) == null) {
+            classesMapper.insertClasses(cla);
+            flag = "1";
+        }
+
+        return flag;
     }
 
 }
