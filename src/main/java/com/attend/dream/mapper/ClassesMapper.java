@@ -21,10 +21,17 @@ public interface ClassesMapper {
             "where id = #{id}")
     Classes getClassesById(int id);
 
+    //根据calCode查询
+    @Select("select id,claCode,claName,claMorTime,claEveTime,claNote \n" +
+            "from classes " +
+            "where claCode = #{claCode}")
+    Classes getClassesByCode(String claCode);
+
+
     //插入
     @Insert("insert into classes(claCode, claName,claMorTime, claEveTime, claNote) " +
             "values(#{claCode}, #{claName}, #{claMorTime}, #{claEveTime}, #{claNote})")
-    @Options(useGeneratedKeys = true, keyProperty = "empId")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
     Boolean insertClasses(Classes classes);
 
     //更新
