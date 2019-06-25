@@ -13,6 +13,7 @@ public class Card {
     private String name;
     //打卡人日期
     private Date date;
-    //是否要补卡
-    private String isRepair;
+    //备注
+    private String note;
+
 }

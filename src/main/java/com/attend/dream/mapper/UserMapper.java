@@ -9,4 +9,5 @@ public interface UserMapper {
 
     @Select("select * from login where userName=#{userName}")
     User findUserByUsername(String userName);
+
 }

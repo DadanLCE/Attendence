@@ -12,8 +12,20 @@ import java.util.Map;
 @Controller
 public class LoginController {
 
+
     @Autowired
     UserService userService;
+
+    public String getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(String currentUser) {
+        this.currentUser = currentUser;
+    }
+
+    //当前登录的用户名
+    private String currentUser;
 
     @GetMapping("/index")
     public String goToIndex(){
@@ -39,6 +51,7 @@ public class LoginController {
         String pwd = user.getPassword();
         if ( pwd.equals(password)) {
             session.setAttribute("usersHadLogin", username);
+            setCurrentUser(username);
             return "redirect:/index.html";
             //return "redirect:/index.html";
         } else {
