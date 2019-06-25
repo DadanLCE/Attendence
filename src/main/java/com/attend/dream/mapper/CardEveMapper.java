@@ -13,7 +13,7 @@ public interface CardEveMapper {
 
     //通过id来查询 打卡单
     @Select("select id, cardCode, name, date, note " +
-            "from cardEve where id = #{id} and flag = 'true' ")
+            "from cardEve where id = #{id} and flag = 'false' ")
     CardEve getCardEveById(int id);
 
 //    //用于结算当天的出勤情况
@@ -25,26 +25,32 @@ public interface CardEveMapper {
 //    在打卡单  通过cardCode的 模糊查询
     @Select("select id, cardCode, name, date , note  " +
             "from cardEve where cardCode like concat('%',#{cardCode},'%') " +
-            " and flag = 'true'")
+            " and flag = 'false'")
     List<CardEve> getCardEvesByCode(String cardCode);
 
-    //通过id来查询 打卡单
+    //通过id来查询 补卡单
     @Select("select id, cardCode, name, date, note " +
-            "from cardEve where id = #{id} and flag = 'false' ")
+            "from cardEve where id = #{id} and flag = 'true' ")
     CardEve getCardEveByIdFlag(int id);
 
     //    在补卡单  通过cardCode的 模糊查询
     @Select("select id, cardCode, name, date , note  " +
             "from cardEve where cardCode like concat('%',#{cardCode},'%') " +
-            " and flag = 'false'")
+            " and flag = 'true'")
     List<CardEve> getCardEvesByCodeFlag(String cardCode);
 
 
-
+    //查询早上和下午的人员
     @Select("SELECT id,cardCode,date FROM cardEve where cardCode like concat('%',#{cardCode},'%')\n" +
             "UNION\n" +
             "SELECT id,cardCode,date FROM cardMor where cardCode like concat('%',#{cardCode},'%')")
     List<CardEve> getCardAllByCode(String cardCode);
+
+    //查询早上和下午的人员补卡单
+    @Select("SELECT id,cardCode,date FROM cardEve where cardCode like concat('%',#{cardCode},'%') and flag = 'true' \n" +
+            "UNION\n" +
+            "SELECT id,cardCode,date FROM cardMor where cardCode like concat('%',#{cardCode},'%') and flag = 'true' ")
+    List<CardEve> getCardAllByCodeFlag(String cardCode);
 
     //插入数据
     @Insert("insert into cardEve (cardCode, name, date ,note, flag ) " +

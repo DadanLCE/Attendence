@@ -13,7 +13,7 @@ public interface CardMorMapper {
 
     //通过id来查询 打卡单
     @Select("select id, cardCode, name, date, note " +
-            "from cardMor where id = #{id}")
+            "from cardMor where id = #{id} and flag = 'false' ")
     CardMor getCardMorById(int id);
 
 //    //用于结算当天的出勤情况
@@ -25,25 +25,25 @@ public interface CardMorMapper {
     //在打卡单  通过cardCode的 模糊查询
     @Select("select id, cardCode, name, date , note  " +
             "from cardMor where cardCode like concat('%',#{cardCode},'%')" +
-            " and flag = 'true' ")
+            " and flag = 'false' ")
     List<CardMor> getCardsMorByCode(String cardCode);
 
     //在打卡单  通过cardCode的 单个查询
     @Select("select id, cardCode, name, date , note  " +
             "from cardMor where cardCode =#{cardCode} " +
-            " and flag = 'true' ")
+            " and flag = 'false' ")
     CardMor getCardMorByCode(String cardCode);
 
     //在补卡单  通过cardCode的 模糊查询
     @Select("select id, cardCode, name, date , note  " +
             "from cardMor where cardCode like concat('%',#{cardCode},'%') " +
-            " and flag = 'false' ")
+            " and flag = 'true' ")
     List<CardMor> getCardsMorByCodeFlag(String cardCode);
 
-    //在打卡单  通过cardCode的 单个查询
+    //在补卡单  通过cardCode的 单个查询
     @Select("select id, cardCode, name, date , note  " +
             "from cardMor where cardCode =#{cardCode} " +
-            " and flag = 'false' ")
+            " and flag = 'true' ")
     CardMor getCardMorByCodeFlag(String cardCode);
 
 //    //在考勤表 获得两个日期之间的查询内容 通过cardCode的 模糊查询
