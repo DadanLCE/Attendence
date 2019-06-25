@@ -20,11 +20,16 @@ public interface CardEveMapper {
 //    List<Card> getCardsToday(String cardCode);
 
 
-    //在打卡单  通过cardCode的 模糊查询
+//    在打卡单  通过cardCode的 模糊查询
     @Select("select id, cardCode, name, date , note  " +
             "from cardEve where cardCode like concat('%',#{cardCode},'%') ")
     List<CardEve> getCardEvesByCode(String cardCode);
 
+
+    @Select("SELECT id,cardCode,date FROM cardEve where cardCode like concat('%',#{cardCode},'%')\n" +
+            "UNION\n" +
+            "SELECT id,cardCode,date FROM cardMor where cardCode like concat('%',#{cardCode},'%')")
+    List<CardEve> getCardAllByCode(String cardCode);
 
 //    //在考勤表 获得两个日期之间的查询内容 通过cardCode的 模糊查询
 //    @Select("select id, cardCode, name, date, isRepair " +
