@@ -114,14 +114,14 @@
                                 </h4>
                             </div>
                             <div class="weadmin-body">
-                                <form class="layui-form" action="/emp/updateEmp" method="post">
+
                                     <p style="color:red">更新</p>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">
                                             <span class="we-red">*</span>班次编码
                                         </label>
                                         <div class="layui-input-inline">
-                                            <input type="text" id="empCode" name="empCode" readonly="readonly" lay-verify="required|nikename" autocomplete="off" class="layui-input">
+                                            <input type="text" id="updateclaCode" name="claCode" readonly="readonly" lay-verify="required|nikename" autocomplete="off" class="layui-input">
                                         </div>
                                         <div class="layui-form-mid layui-word-aux">
 
@@ -132,7 +132,7 @@
                                             <span class="we-red">*</span>班次名称
                                         </label>
                                         <div class="layui-input-inline">
-                                            <input type="text" id="empName" name="empName" lay-verify="required|name" autocomplete="" class="layui-input">
+                                            <input type="text" id="updateclaName" name="claName" lay-verify="required|name" autocomplete="" class="layui-input">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
@@ -140,7 +140,7 @@
                                             <span class="we-red">*</span>早上上班时间
                                         </label>
                                         <div class="layui-input-inline">
-                                            <input type="text" id="empAge" name="empAge" autocomplete="off" class="layui-input">
+                                            <input type="text" id="updateclaMorTime" name="claMorTime" autocomplete="off" class="layui-input">
                                         </div>
 
                                     </div>
@@ -149,7 +149,7 @@
                                             <span class="we-red">*</span>下午下班时间
                                         </label>
                                         <div class="layui-input-inline">
-                                            <input type="text" id="empNation" name="empNation" lay-verify="required|nation" autocomplete="off" class="layui-input">
+                                            <input type="text" id="updateclaEveTime" name="claEveTime" lay-verify="required|nation" autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
@@ -157,16 +157,20 @@
                                             <span class="we-red">*</span>备注
                                         </label>
                                         <div class="layui-input-inline">
-                                            <input type="text"  id="empIdCard" name="empIdCard" lay-verify="required|identifycard" autocomplete="off" class="layui-input">
+                                            <input type="text"  id="updateclaNote" name="claNote" lay-verify="required|identifycard" autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
 
-                                    <div class="layui-form-item">
-                                        <label  class="layui-form-label">
-                                        </label>
-                                        <button class="layui-btn" lay-filter="add" lay-submit="">确定</button>
-                                    </div>
-                                </form>
+                                <div class="layui-form-item">
+                                    <label  class="layui-form-label">
+                                    </label>
+                                    <button onclick="updateConfirm()" class="layui-btn" lay-filter="add" lay-submit="">确定</button>
+
+                                    <!--隐藏button-->
+                                    <button type="button" class="btn btn-default" style="display:none" data-dismiss="modal" id="closeupdatemodel">关闭</button>
+
+                                </div>
+
                             </div>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal -->
@@ -183,12 +187,8 @@
                                 <h2 class="modal-title" id="myModalLabel">
                                     新增班次
                                 </h2>
-                                <!--						<h4 style="color:red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></h4>-->
                             </div>
                             <div class="weadmin-body">
-                                <!--						<form class="layui-form" action="/emp/addEmployee" method="post">-->
-                                <!--							<h1 style="color:red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></h1>-->
-                                <!--<form class="layui-form" th:action="@{/emp/addEmployee}" method="post">-->
 
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">
@@ -302,8 +302,6 @@
 
     </script>
 
-
-
     <!--编辑功能回显ajax-->
     <script type="text/javascript">
         var url = window.location.href;
@@ -314,35 +312,24 @@
         function clickEdit(data) {
             var clickId = data.id;
             $(document).ready(function () {
-                var subUrl = "/emp/getEmpById/";
+                var subUrl = "/cla/getClaById/";
                 var now = subUrl + clickId;
                 $.ajax({
                     type: "get",
                     url: now,
-                    success: function (emp) {
-                        var empId = emp.id;
+                    success: function (cla) {
+                        var claId = cla.id;
                         //var weaBody = $("weadmin-body");
-                        var inputCode = $("#empCode");
-                        var inputName = $("#empName");
-                        var inputAge = $("#empAge");
-                        var inputNation = $("#empNation");
-                        var inputIdCard = $("#empIdCard");
-                        var inputSalary = $("#empSalary");
-                        var inputTel = $("#empTel");
-                        var inputCTel = $("#empCTel");
-                        var inputStaCode = $("#empStaCode");
-                        var inputNote = $("#empNote");
-                        inputCode.attr('value', emp.empCode);
-                        inputName.attr('value', emp.empName);
-                        inputAge.attr('value', emp.empAge);
-                        inputNation.attr('value', emp.empNation);
-                        inputIdCard.attr('value', emp.empIdCard);
-                        inputSalary.attr('value', emp.empSalary);
-                        inputTel.attr('value', emp.empTel);
-                        inputCTel.attr('value',emp.empCTel);
-                        inputStaCode.attr('value', emp.empStaCode);
-                        inputNote.attr('value', emp.empNote);
-
+                        var inputCode = $("#updateclaCode");
+                        var inputName = $("#updateclaName");
+                        var inputMorTime = $("#updateclaMorTime");
+                        var inputEveTime = $("#updateclaEveTime");
+                        var inputNote = $("#updateclaNote");
+                        inputCode.attr('value', cla.claCode);
+                        inputName.attr('value', cla.claName);
+                        inputMorTime.attr('value', cla.claMorTime);
+                        inputEveTime.attr('value', cla.claEveTime);
+                        inputNote.attr('value', cla.claNote);
                     },
                     error: function () {
                         alert("ajax失败");
@@ -350,6 +337,46 @@
                 })
 
 
+            });
+        }
+    </script>
+
+    <!-- 编辑确认 -->
+    <script>
+        function updateConfirm() {
+
+            var claCode = $("#updateclaCode").val();
+            var claName = $("#updateclaName").val();
+            var claMorTime = $("#updateclaMorTime").val();
+            var claEveTime = $("#updateclaEveTime").val();
+            var claNote = $("#updateclaNote").val();
+
+            $.ajax({
+                type : "post",
+                url : "/cla/updateCla",
+                data : {
+                    claCode : claCode,
+                    claName : claName,
+                    claMorTime : claMorTime,
+                    claEveTime : claEveTime,
+                    claNote : claNote
+
+                },
+                success : function (fallBack) {
+                    alert("后端传值成功"+fallBack+claEveTime);
+                    if (fallBack === '1') {
+                        alert("编辑成功");
+                        $("#closeupdatemodel").click();
+                        loadData('', 1, 5);
+                    } else if(fallBack === '2'){
+                        alert("输入的班次编码已存在！")
+                    } else {
+                        alert("出现意外了^_^");
+                    }
+                },
+                error : function () {
+                    alert("编辑确认error");
+                }
             });
         }
     </script>
@@ -419,7 +446,6 @@
     <!--添加用户-->
     <script type="text/javascript">
         function addAjax() {
-            alert("进来了")
             var claCode = document.getElementById('addClaCode').value;
             var claName = document.getElementById('addClaName').value;
             var claMorTime = document.getElementById('addClaMorTime').value;

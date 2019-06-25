@@ -36,7 +36,7 @@ public interface ClassesMapper {
 
     //更新
     @Update("update classes set claCode=#{claCode}, claName=#{claName}, claMorTime=#{claMorTime},claEveTime=#{claEveTime}," +
-            " claNote=#{claNote} where id=#{id}" )
+            " claNote=#{claNote} where claCode=#{claCode}" )
     Boolean updateClasses(Classes classes);
 
     //删除
