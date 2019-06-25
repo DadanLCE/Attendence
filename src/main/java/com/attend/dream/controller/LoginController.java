@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
@@ -15,6 +16,9 @@ public class LoginController {
 
     @Autowired
     UserService userService;
+
+    @GetMapping("/")
+    public String indexControl() { return "login"; }
 
     public String getCurrentUser() {
         return currentUser;
@@ -45,17 +49,39 @@ public class LoginController {
         //System.out.println(username+"adfads");
         User user = userService.findUserByUsername(username);
         if (user == null) {
-            map.put("warning","请输入正确的用户名和密码");
+
             return "login";
         }
         String pwd = user.getPassword();
         if ( pwd.equals(password)) {
-            session.setAttribute("usersHadLogin", username);
+            session.setAttribute("userLogined", username);
             setCurrentUser(username);
-            return "redirect:/index.html";
+            map.put("user",username);
             //return "redirect:/index.html";
+            return "index";
         } else {
-            map.put("warning","密码错误");
+
+            return "login";
+        }
+
+    }
+
+    @GetMapping("/user/getSession")
+    @ResponseBody
+    public Object getUser(HttpSession session) {
+        Object u = session.getAttribute("userLogined");
+        System.out.println(u);
+        return u;
+
+    }
+
+    @GetMapping("/user/logout")
+    public String logout(HttpSession session) {
+
+        if ( session.getAttribute("userLogined") == null ) {
+            return "login";
+        } else {
+            session.invalidate();
             return "login";
         }
 
