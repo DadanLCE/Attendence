@@ -15,5 +15,6 @@ public class CardEve {
     //备注
     private String note;
 
+    //CardMor
     private CardMor cardMor;
 }
