@@ -17,4 +17,7 @@ public class CardEve {
 
     //CardMor
     private CardMor cardMor;
+
+    //true要补卡 false不要
+    private String flag;
 }

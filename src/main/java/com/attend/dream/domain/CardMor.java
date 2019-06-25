@@ -14,4 +14,6 @@ public class CardMor {
     private Date date;
     //备注
     private String note;
+    //true要补卡 false不要
+    private String flag;
 }
