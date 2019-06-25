@@ -12,7 +12,7 @@ public interface CardMorMapper {
 
 
     //通过id来查询 打卡单
-    @Select("select id, cardCode, name, date, note " +
+    @Select("select id, cardCode, name, date, note, flag  " +
             "from cardMor where id = #{id}  ")
     CardMor getCardMorById(int id);
 
@@ -23,18 +23,18 @@ public interface CardMorMapper {
 
 
     //在打卡单  通过cardCode的 模糊查询
-    @Select("select id, cardCode, name, date , note  " +
+    @Select("select id, cardCode, name, date , note, flag  " +
             "from cardMor where cardCode like concat('%',#{cardCode},'%')" +
             " and flag = 'false' ")
     List<CardMor> getCardsMorByCode(String cardCode);
 
-    // 通过cardCode的 单个查询
-    @Select("select id, cardCode, name, date , note  " +
+    // 通过cardCode的 单个查询  用于Eve的一对一查询
+    @Select("select id, cardCode, name, date , note, flag  " +
             "from cardMor where cardCode =#{cardCode} ")
     CardMor getCardMorByCode(String cardCode);
 
     //在补卡单  通过cardCode的 模糊查询
-    @Select("select id, cardCode, name, date , note  " +
+    @Select("select id, cardCode, name, date , note, flag  " +
             "from cardMor where cardCode like concat('%',#{cardCode},'%') " +
             " and flag = 'true' ")
     List<CardMor> getCardsMorByCodeFlag(String cardCode);
