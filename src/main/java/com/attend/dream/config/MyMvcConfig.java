@@ -1,6 +1,9 @@
 package com.attend.dream.config;
 
+import com.attend.dream.component.LoginHandlerInterceptor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -13,14 +16,13 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
         //访问localhost:8080默认访问页面
         //registry.addViewController("/").setViewName("index");
         //进入主页后，用于防止刷新页面表单重复提交，设置重定向
-        registry.addViewController("/index.html").setViewName("index");
+        //registry.addViewController("/index.html").setViewName("index");
 //        registry.addViewController("/employee_list.html").setViewName("employee_list");
     }
 
-    /*@Override
+    @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        //super.addInterceptors(registry);
-        registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**")
-                .excludePathPatterns("/nihao","/user/login","/user/register");
-    }*/
+        InterceptorRegistration res = registry.addInterceptor(new LoginHandlerInterceptor());
+        res.addPathPatterns("/**").excludePathPatterns("/login","/user/login","/");
+    }
 }
