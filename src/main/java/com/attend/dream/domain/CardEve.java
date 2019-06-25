@@ -1,7 +1,9 @@
 package com.attend.dream.domain;
 
-import java.util.Date;
+import lombok.Data;
 
+import java.util.Date;
+@Data
 public class CardEve {
     private int id;
     //打卡人编码
