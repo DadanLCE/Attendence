@@ -48,4 +48,9 @@ public interface CardEveMapper {
     //删除数据 打卡单
     @Delete("delete from cardEve where id=#{id}")
     Boolean deleteCard(int id);
+
+    @Select("SELECT id,name,cardCode,date FROM cardEve where cardCode like concat('%',#{cardCode},'%')\n" +
+            "UNION\n" +
+            "SELECT id,name,cardCode,date FROM cardMor where cardCode like concat('%',#{cardCode},'%')")
+    List<CardEve> getCardAllByCode(String cardCode);
 }

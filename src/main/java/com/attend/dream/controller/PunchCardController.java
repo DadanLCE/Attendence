@@ -1,6 +1,8 @@
 package com.attend.dream.controller;
 
 import com.attend.dream.domain.Card;
+import com.attend.dream.domain.CardEve;
+import com.attend.dream.domain.CardMor;
 import com.attend.dream.domain.Current;
 import com.attend.dream.service.PunchCardService;
 import com.attend.dream.service.UserService;
@@ -33,11 +35,12 @@ public class PunchCardController {
     public Map<Object, Object> getEmployeesByName(@RequestParam(value = "currentPage") int currentPage,
                                                   @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, @RequestParam(value = "cardCode") String cardCode){
        // PageInfo<Card> punsPage = punchCardService.employeeService.getEmployeesPageMsgByName(currentPage,pageSize,cardCode));
-        List<Card> puns = punchCardService.getCardsByCode(cardCode);
+        List<CardEve> puns = punchCardService.getCardAllByCode(cardCode);
+
 //        int prePage = punsPage.getPrePage();
 //        int nextPage = punsPage.getNextPage();
 //        int pageNum = punsPage.getPages();
-
+        System.out.println(puns);
         Map<Object, Object> punMap = new HashMap();
         punMap.put("puns", puns);
 
@@ -60,11 +63,18 @@ public class PunchCardController {
         return info;
     }
 
-    @RequestMapping("/pun/addPunchCard")
+    @RequestMapping("/pun/addPunchCardMor")
     @ResponseBody
-    public void addPunchCard(Card card){
+    public void addPunchCardMor(CardMor card){
 
-        punchCardService.insertCard(card);
+        punchCardService.insertCardMor(card);
+    }
+
+    @RequestMapping("/pun/addPunchCardEve")
+    @ResponseBody
+    public void addPunchCardEve(CardEve card){
+
+        punchCardService.insertCardEve(card);
     }
 
 }
