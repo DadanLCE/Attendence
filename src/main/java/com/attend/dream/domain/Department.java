@@ -8,7 +8,6 @@ public class Department {
 
     private String depCode;
 
-
     private String depJob;
 
     private String depName;

@@ -2,7 +2,9 @@ package com.attend.dream.mapper;
 
 import com.attend.dream.domain.CardEve;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.mapping.FetchType;
 
+import java.util.Date;
 import java.util.List;
 
 public interface CardEveMapper {
@@ -31,13 +33,6 @@ public interface CardEveMapper {
             "SELECT id,cardCode,date FROM cardMor where cardCode like concat('%',#{cardCode},'%')")
     List<CardEve> getCardAllByCode(String cardCode);
 
-//    //在考勤表 获得两个日期之间的查询内容 通过cardCode的 模糊查询
-//    @Select("select id, cardCode, name, date, isRepair " +
-//            "from card where cardCode like concat('%',#{cardCode},'%') " +
-//            "and date between #{preDate} and #{nextDate}")
-//    List<Card> getCardsByCodeByDate(@Param("cardCode") String cardCode,@Param("preDate") Date preDate,@Param("nextDate") Date nextDate);
-
-
     //插入数据打卡单
     @Insert("insert into cardEve (cardCode, name, date ,note ) " +
             "values(#{cardCode}, #{name}, #{date}, #{note}) ")
@@ -53,4 +48,22 @@ public interface CardEveMapper {
     //删除数据 打卡单
     @Delete("delete from cardEve where id=#{id}")
     Boolean deleteCard(int id);
+
+
+    @Select("select id, cardCode, name, date , note, cardCodeMor " +
+            "from cardEve where cardCode like concat('%',#{cardCode},'%') " +
+            "and date between #{preDate} and #{nextDate}")
+    @Results({
+            @Result(id=true, column = "id", property = "id"),
+            @Result(column = "cardCode", property = "cardCode"),
+            @Result(column = "name", property = "name"),
+            @Result(column = "date", property = "date"),
+            @Result(column = "note", property = "note"),
+//            @Result(column = "cardCodeMor", property = "cardMor", one = @One(select = "com.attend.dream.mapper.getCardMorByCode",fetchType = FetchType.EAGER))
+            @Result(column = "cardCodeMor", property = "cardMor", one = @One(select = "com.attend.dream.mapper.CardMorMapper.getCardMorByCode",fetchType = FetchType.EAGER))
+    })
+    List<CardEve> getAll(@Param("cardCode")String cardCode, @Param("preDate") Date preDate, @Param("nextDate") Date nextDate);
+
+
+
 }

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
+@Mapper
 public interface CardMorMapper {
 
 
@@ -24,8 +25,12 @@ public interface CardMorMapper {
     //在打卡单  通过cardCode的 模糊查询
     @Select("select id, cardCode, name, date , note  " +
             "from cardMor where cardCode like concat('%',#{cardCode},'%') ")
-    List<CardMor> getCardMorByCode(String cardCode);
+    List<CardMor> getCardsMorByCode(String cardCode);
 
+    //在打卡单  通过cardCode的 单个查询
+    @Select("select id, cardCode, name, date , note  " +
+            "from cardMor where cardCode =#{cardCode} ")
+    CardMor getCardMorByCode(String cardCode);
 
 //    //在考勤表 获得两个日期之间的查询内容 通过cardCode的 模糊查询
 //    @Select("select id, cardCode, name, date, isRepair " +
