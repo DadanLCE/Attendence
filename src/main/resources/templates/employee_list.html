@@ -63,8 +63,6 @@
 						添加用户
 					</button>
 
-
-				<!--</form>-->
 				<span class="fr" style="line-height:40px"></span>
 			</div>
             <!--显示员工-->
@@ -101,12 +99,10 @@
 							&times;
 						</button>
 						<h4 class="modal-title" id="myModalLabel">
-							编辑
+							<strong>编辑员工信息</strong>
 						</h4>
 					</div>
 					<div class="weadmin-body">
-						<form class="layui-form" action="/emp/updateEmp" method="post">
-							<p style="color:red">更新</p>
 							<div class="layui-form-item">
 								<label class="layui-form-label">
 									<span class="we-red">*</span>员工编码
@@ -115,7 +111,18 @@
 									<input type="text" id="updateempCode" name="empCode" readonly="readonly" lay-verify="required|nikename" autocomplete="off" class="layui-input">
 								</div>
 								<div class="layui-form-mid layui-word-aux">
-									*不可编辑
+									*无法进行修改
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label  class="layui-form-label">
+									<span class="we-red">*</span>身份证
+								</label>
+								<div class="layui-input-inline">
+									<input type="text" readonly="readonly" id="updateempIdCard" name="empIdCard" lay-verify="required|identifycard" autocomplete="off" class="layui-input">
+								</div>
+								<div class="layui-form-mid layui-word-aux">
+									*无法进行修改
 								</div>
 							</div>
 							<div class="layui-form-item">
@@ -141,17 +148,6 @@
 								</label>
 								<div class="layui-input-inline">
 									<input type="text" id="updateempNation" name="empNation" lay-verify="required|nation" autocomplete="off" class="layui-input">
-								</div>
-							</div>
-							<div class="layui-form-item">
-								<label  class="layui-form-label">
-									<span class="we-red">*</span>身份证
-								</label>
-								<div class="layui-input-inline">
-									<input type="text" readonly="readonly" id="updateempIdCard" name="empIdCard" lay-verify="required|identifycard" autocomplete="off" class="layui-input">
-								</div>
-								<div class="layui-form-mid layui-word-aux">
-									*不可编辑
 								</div>
 							</div>
 							<div class="layui-form-item">
@@ -227,12 +223,8 @@
 						<h2 class="modal-title">
 							新增用户
 						</h2>
-<!--						<h4 style="color:red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></h4>-->
 					</div>
 					<div class="weadmin-body">
-<!--						<form class="layui-form" action="/emp/addEmployee" method="post">-->
-<!--							<h1 style="color:red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></h1>-->
-						<!--<form class="layui-form" th:action="@{/emp/addEmployee}" method="post">-->
 
 							<div class="layui-form-item">
 								<label class="layui-form-label">
@@ -242,7 +234,7 @@
 									<input type="text" id="addEmpCode" name="empCode" lay-verify="required|nikename" autocomplete="off" class="layui-input">
 								</div>
 								<div class="layui-form-mid layui-word-aux">
-									将会成为您唯一的登录名
+									将会成为您唯一的登录名且无法进行修改
 								</div>
 							</div>
 							<div class="layui-form-item">
@@ -307,7 +299,7 @@
 												<span class="we-red">*</span>岗位
 											</label>
 											<div class="layui-input-inline">
-												<input type="text" id="addEmpStaCode" name="empStaCode" lay-verify="required|salary" autocomplete="off" class="layui-input">-->
+												<input type="text" id="addEmpStaCode" name="empStaCode" lay-verify="required|salary" autocomplete="off" class="layui-input">
 <!--												<select>-->
 <!--												<option value ="CEO">CEO-总经理</option>-->
 <!--												<option value ="KJ">KJ-会计</option>-->
@@ -432,7 +424,7 @@
 
 						},
 						error: function () {
-							alert("ajax失败");
+							alert("编辑回显出现错误了！(✿◡‿◡)");
 						}
 					})
 
@@ -455,9 +447,6 @@
 				var empStaCode = $("#updateempStaCode").val();
 				var empNote = $("#updateempNote").val();
 
-				alert(empName);
-				alert(empAge);
-				alert(empSalary);
 				$.ajax({
 					type : "post",
 					url : "/emp/updateEmp",
@@ -475,17 +464,19 @@
 
 					},
 					success : function (fallBack) {
-						alert("后端传值成功"+fallBack);
+
 						if (fallBack === '1') {
 							alert("编辑成功");
 							$("#closeupdatemodel").click();
 							loadData('', 1, 5);
+						} else if ( fallBack === '2') {
+							alert ("没有这个岗位啊！(✪ω✪)");
 						} else {
-							alert("出现意外了^_^");
+							alert('哎呀，出现意外了！')	;
 						}
 					},
 					error : function () {
-						alert("编辑确认error");
+						alert("出现错误了！不好意思(✿◡‿◡)");
 					}
 				});
 			}
@@ -500,9 +491,12 @@
 					type: 'POST',
 					url: "/emp",
 					dataType: "json",
-					data: {empName: key,
+					data: {
+
+						empName: key,
 						pageSize:5,
 						currentPage:page},
+
 					success: function (data) {
 
 						$("#tbody").html("");
@@ -591,6 +585,7 @@
 					success : function (fallBack) {
 
 						if ( fallBack === '1' ) {
+							alert('添加成功(#^.^#)');
 							$("#closemodel").click();
 							loadData('', 1, 5);
 						} else if ( fallBack === '2') {

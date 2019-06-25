@@ -24,9 +24,6 @@ public class ClassesController {
                                                   @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, @RequestParam(value = "claCode") String claCode){
         PageInfo<Classes> clasPage = classesService.getClassesByCodePage(currentPage,pageSize,claCode);
         List<Classes> clas = classesService.getClassesByCode(currentPage,pageSize,claCode);
-        System.out.println(clas);
-        System.out.println(clasPage);
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         int prePage = clasPage.getPrePage();
         int nextPage = clasPage.getNextPage();
         int pageNum = clasPage.getPages();
@@ -43,7 +40,6 @@ public class ClassesController {
     //批量删除
     @PostMapping("/cla/delClas")
     public String empsDelete(String claList){
-        System.out.println(claList);
 
         String[] strs = claList.split(",");
         for (int i = 0; i < strs.length; i++) {
@@ -68,7 +64,24 @@ public class ClassesController {
         String fallBack = classesService.insertCla(cla);
         //也可以直接return fallBack;
        return fallBack; //1是成功，2是班次已存在
-
     }
+
+    //编辑回显
+    @GetMapping("/cla/getClaById/{id}")
+    @ResponseBody
+    public Classes getClaById(@PathVariable(value = "id") int empId) {
+        Classes cla = classesService.getClaById(empId);
+        return cla;
+    }
+
+    //编辑确认，1成功，2编码重复
+    @PostMapping("/cla/updateCla")
+    @ResponseBody
+    public String updateClass(Classes e) {
+        String fallBack = classesService.updateCla(e);
+
+        return fallBack;
+    }
+
 
 }
