@@ -37,12 +37,29 @@ public class RepairCardController {
         return repMap;
     }
 
-
+    //添加补卡记录
     @PostMapping("/rep/addRepairCard")
     @ResponseBody
     public String addRepairCard(RepairCard rep, Map<String,Object> map) {
 
         String fallBack = repairCardService.inserRepairCard(rep);
         return fallBack;
+    }
+
+    //删除
+    @PostMapping("/rep/delete")
+    @ResponseBody
+    public void deleteEmployee(int id){
+        repairCardService.deleteRepairCard(id);
+    }
+
+    //批量删除
+    @PostMapping("/rep/delReps")
+    @ResponseBody
+    public void repsDelete(String repList){
+        String[] strs = repList.split(",");
+        for (int i = 0; i < strs.length; i++) {
+            repairCardService.deleteRepairCard(Integer.parseInt(strs[i]));
+        }
     }
 }

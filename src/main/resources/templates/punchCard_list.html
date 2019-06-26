@@ -85,7 +85,7 @@
                     <th>打卡人编码</th>
                     <th>打卡人姓名</th>
                     <th>打卡日期</th>
-                    <th>操作</th>
+<!--                    <th>操作</th>-->
                 </tr>
                 </thead>
                 <tbody id="tbody" >
@@ -217,11 +217,11 @@
                                     "<td>" + list['name'] + "</td>"+
                                     "<td>" + yd+ "&nbsp;" + hour + ":"+ min + "</td>"+
                                     "<td class=\"td-manage\">"+
-                                    "<button class=\"btn btn-info btn-sm left\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
-                                    "编 辑"+
-                                    "</button>"+
-                                    "<button  type=\"submit\"  class=\"btn btn-danger btn-sm right\">删 除</button>"+
-                                    "</td></tr>";
+                                    // "<button class=\"btn btn-info btn-sm left\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
+                                    // "编 辑"+
+                                    // "</button>"+
+                                    // "<button  type=\"submit\"  class=\"btn btn-danger btn-sm right\">删 除</button>"+
+                                    "</tr>";
                                 $("#tbody").append(tr);
                             }
                             if(list['eveTime'] != null) {
@@ -238,12 +238,12 @@
                                     "<td>" + list['cardCode'] + "</td>"+
                                     "<td>" + list['name'] + "</td>"+
                                     "<td>" + eyd+ "&nbsp;" + ehour + ":"+ emin + "</td>"+
-                                    "<td class=\"td-manage\">"+
-                                    "<button class=\"btn btn-info btn-sm left\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
-                                    "编 辑"+
-                                    "</button>"+
-                                    "<button  type=\"submit\"  class=\"btn btn-danger btn-sm right\">删 除</button>"+
-                                    "</td></tr>";
+                                    // "<td class=\"td-manage\">"+
+                                    // "<button class=\"btn btn-info btn-sm left\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
+                                    // "编 辑"+
+                                    // "</button>"+
+                                    // "<button  type=\"submit\"  class=\"btn btn-danger btn-sm right\">删 除</button>"+
+                                    "</tr>";
                                 $("#tbody").append(tre);
                             }
 
