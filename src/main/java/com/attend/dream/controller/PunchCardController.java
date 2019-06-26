@@ -34,14 +34,14 @@ public class PunchCardController {
     public Map<Object, Object> getEmployeesByName(@RequestParam(value = "currentPage") int currentPage,
                                                   @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, @RequestParam(value = "cardCode") String cardCode){
        // PageInfo<Card> punsPage = punchCardService.employeeService.getEmployeesPageMsgByName(currentPage,pageSize,cardCode));
-//        List<CardEve> puns = punchCardService.getCardAllByCode(cardCode);
+        List<Card> puns = punchCardService.getCardAllByCode(cardCode);
 
 //        int prePage = punsPage.getPrePage();
 //        int nextPage = punsPage.getNextPage();
 //        int pageNum = punsPage.getPages();
 //        System.out.println(puns);
         Map<Object, Object> punMap = new HashMap();
-//        punMap.put("puns", puns);
+        punMap.put("puns", puns);
 
 
 //        punMap.put("nextPage", nextPage);
@@ -66,14 +66,16 @@ public class PunchCardController {
     @ResponseBody
     public void addPunchCardMor(Card card){
 
-//        punchCardService.insertCardMor(card);
+        punchCardService.insertCardMor(card);
     }
 
     @RequestMapping("/pun/addPunchCardEve")
     @ResponseBody
     public void addPunchCardEve(Card card){
-
-//        punchCardService.insertCardEve(card);
+//        System.out.println(card.getMorTime());
+       String fallback = punchCardService.insertCardEve(card);
+       //0是没有对应的,1是有对应的
+//       return fallback;
     }
 
 

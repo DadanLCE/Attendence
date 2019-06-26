@@ -36,4 +36,7 @@ public class IndexController {
 
     @RequestMapping(value = "/showPay",method = RequestMethod.POST)
     public String showPay(){ return "paySalary"; }
+
+    @RequestMapping(value = "/showChec",method = RequestMethod.POST)
+    public String showChec(){ return "checkReport_list"; }
 }

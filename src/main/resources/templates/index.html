@@ -117,7 +117,7 @@
 								</a>
 							</li>
 							<li>
-								<a href="javascript:goToClasses();">
+								<a href="javascript:gotoCheckReport()">
 									<i class="iconfont">&#xe6a7;</i>
 									<cite>考勤表</cite>
 								</a>
@@ -301,6 +301,25 @@
 				$.ajax({
 					type:"POST",
 					url:"/showPay",
+					dataType:"html",
+					success: function(data){
+
+						$("#showItem").html(data);
+					},
+					error: function ()
+					{
+						alert("失败啦")
+						console.log(XMLHttpRequest.status);
+						console.log(XMLHttpRequest.readyState);
+						console.log(textStatus);
+					}
+				})
+			}
+
+			function gotoCheckReport(){
+				$.ajax({
+					type:"POST",
+					url:"/showChec",
 					dataType:"html",
 					success: function(data){
 
