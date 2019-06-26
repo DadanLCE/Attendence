@@ -97,58 +97,58 @@
             </div>
 
             <!--隐藏窗口，点击button弹出编辑页面-->
-            <div class="modal fade" id="updateEmpPage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                &times;
-                            </button>
-                            <h4 class="modal-title" id="myModalLabel">
-                                编辑
-                            </h4>
-                        </div>
-                        <div class="weadmin-body">
-                            <form class="layui-form" action="/emp/updateEmp" method="post">
-                                <p style="color:red">更新</p>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">
-                                        <span class="we-red">*</span>补卡人
-                                    </label>
-                                    <div class="layui-input-inline">
-                                        <input type="text" id="empCode" name="empCode" readonly="readonly" lay-verify="required|nikename" autocomplete="off" class="layui-input">
-                                    </div>
-                                    <div class="layui-form-mid layui-word-aux">
+<!--            <div class="modal fade" id="updateEmpPage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
+<!--                <div class="modal-dialog">-->
+<!--                    <div class="modal-content">-->
+<!--                        <div class="modal-header">-->
+<!--                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">-->
+<!--                                &times;-->
+<!--                            </button>-->
+<!--                            <h4 class="modal-title" id="myModalLabel">-->
+<!--                                编辑-->
+<!--                            </h4>-->
+<!--                        </div>-->
+<!--                        <div class="weadmin-body">-->
+<!--                            <form class="layui-form" action="/emp/updateEmp" method="post">-->
+<!--                                <p style="color:red">更新</p>-->
+<!--                                <div class="layui-form-item">-->
+<!--                                    <label class="layui-form-label">-->
+<!--                                        <span class="we-red">*</span>补卡人-->
+<!--                                    </label>-->
+<!--                                    <div class="layui-input-inline">-->
+<!--                                        <input type="text" id="empCode" name="empCode" readonly="readonly" lay-verify="required|nikename" autocomplete="off" class="layui-input">-->
+<!--                                    </div>-->
+<!--                                    <div class="layui-form-mid layui-word-aux">-->
 
-                                    </div>
-                                </div>
-                                <div class="layui-form-item">
-                                    <label  class="layui-form-label">
-                                        <span class="we-red">*</span>补卡时间
-                                    </label>
-                                    <div class="layui-input-inline">
-                                        <input type="text" id="empName" name="empName" lay-verify="required|name" autocomplete="" class="layui-input">
-                                    </div>
-                                </div>
-                                <div class="layui-form-item">
-                                    <label  class="layui-form-label">
-                                        <span class="we-red">*</span>补卡原因
-                                    </label>
-                                    <div class="layui-input-inline">
-                                        <input type="textarea" id="empNote" name="empNote" lay-verify="required|salary" autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="layui-form-item">-->
+<!--                                    <label  class="layui-form-label">-->
+<!--                                        <span class="we-red">*</span>补卡时间-->
+<!--                                    </label>-->
+<!--                                    <div class="layui-input-inline">-->
+<!--                                        <input type="text" id="empName" name="empName" lay-verify="required|name" autocomplete="" class="layui-input">-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="layui-form-item">-->
+<!--                                    <label  class="layui-form-label">-->
+<!--                                        <span class="we-red">*</span>补卡原因-->
+<!--                                    </label>-->
+<!--                                    <div class="layui-input-inline">-->
+<!--                                        <input type="textarea" id="empNote" name="empNote" lay-verify="required|salary" autocomplete="off" class="layui-input">-->
+<!--                                    </div>-->
+<!--                                </div>-->
 
-                                <div class="layui-form-item">
-                                    <label  class="layui-form-label">
-                                    </label>
-                                    <button class="layui-btn" lay-filter="add" lay-submit="">确定</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal -->
-            </div>
+<!--                                <div class="layui-form-item">-->
+<!--                                    <label  class="layui-form-label">-->
+<!--                                    </label>-->
+<!--                                    <button class="layui-btn" lay-filter="add" lay-submit="">确定</button>-->
+<!--                                </div>-->
+<!--                            </form>-->
+<!--                        </div>-->
+<!--                    </div>&lt;!&ndash; /.modal-content &ndash;&gt;-->
+<!--                </div>&lt;!&ndash; /.modal &ndash;&gt;-->
+<!--            </div>-->
 
             <!--隐藏窗口，点击button弹出添加页面-->
             <div class="modal fade" id="addEmpPage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -161,28 +161,23 @@
                             <h2 class="modal-title" id="myModalLabel">
                                 新增补卡
                             </h2>
-                            <!--						<h4 style="color:red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></h4>-->
                         </div>
                         <div class="weadmin-body">
-                            <!--						<form class="layui-form" action="/emp/addEmployee" method="post">-->
-                            <!--							<h1 style="color:red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></h1>-->
-                            <!--<form class="layui-form" th:action="@{/emp/addEmployee}" method="post">-->
-
 
                             <div class="layui-form-item">
                                 <label  class="layui-form-label">
                                     <span class="we-red">*</span>补卡人
                                 </label>
                                 <div class="layui-input-inline">
-                                    <input type="text" id="addEmpName" name="empName" lay-verify="required|name" autocomplete="" class="layui-input">
+                                    <input type="text" id="addName" name="name" lay-verify="required|name" autocomplete="" class="layui-input">
                                 </div>
                             </div>
-                            <div class="layui-form-item">
+                            <div class="layui-form-item" >
                                 <label  class="layui-form-label">
                                     <span class="we-red">*</span>补卡日期
                                 </label>
                                 <div class="layui-input-inline">
-                                    <input type="text" id="addEmpAge" name="empAge" autocomplete="off" class="layui-input">
+                                    <input type="text" id="addTime" placeholder="时间格式:2019/06/26 15:00" name="time" autocomplete="off" class="layui-input">
                                 </div>
 
                             </div>
@@ -191,7 +186,7 @@
                                     <span class="we-red">*</span>补卡原因
                                 </label>
                                 <div class="layui-input-inline">
-                                    <input type="textarea" id="addEmpNote" name="empNote" lay-verify="required|salary" autocomplete="off" class="layui-input">
+                                    <input type="textarea" id="addNote" name="note" lay-verify="required|salary" autocomplete="off" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item">
@@ -314,36 +309,16 @@
                             // $("#ulList").html("");
                             var tabledata = data['reps'];
                             jQuery.each(tabledata, function (i, list) {
-                                //早上时间格式
-                                if(list['morTime']) {
-                                    var time = list['morTime'].toString();
+
+                                    var time = list['time'].toString();
                                     var atime = time.split("T");
                                     var yd = atime[0];
                                     var btime = atime[1].split(".");
                                     var ctime = btime[0].split(":");
-                                    var hour = ctime[0];
+                                    var hour = parseInt(ctime[0])+8;
                                     var min = ctime[1];
                                     var mh = ":";
-                                }else{
-                                    var yd = null;
-                                    var hour = null;
-                                    var min = null;
-                                    var mh = ":";
-                                }
-                                //下午时间格式
-                                if(list['eveTime']) {
-                                    var timea = list['eveTime'].toString();
-                                    var dtime = timea.split("T");
-                                    var yde = dtime[0];
-                                    var etime = dtime[1].split(".");
-                                    var ftime = etime[0].split(":");
-                                    var houre = ftime[0];
-                                    var mine = ftime[1];
-                                }else{
-                                    var yde = "";
-                                    var houre = "";
-                                    var mine = "";
-                                }
+
                                 var tr="";
                                 tr+="<tr>"+
                                     "<td><input name=\"empsDelete\" value=" + list['id'] + " type=\"checkbox\" /></td>"+
@@ -351,7 +326,6 @@
                                     "<td>" + list['cardCode'] + "</td>"+
                                     "<td>" + list['name'] + "</td>"+
                                     "<td>" + yd+ "&nbsp;" + hour + ":"+ min + "</td>"+
-                                    "<td>" + yde+ "&nbsp;" + houre + ":"+ mine + "</td>"+
                                     "<td class=\"td-manage\">"+
                                     "<button class=\"btn btn-info btn-sm left\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
                                     "编 辑"+
@@ -392,50 +366,29 @@
             <!--添加用户-->
             <script type="text/javascript">
                 function addAjax() {
-                    var empCodex = document.getElementById('addEmpCode').value;
-                    var empName = document.getElementById('addEmpName').value;
-                    var empAge = document.getElementById('addEmpAge').value;
-                    var empNation = document.getElementById('addEmpNation').value;
-                    var empIdCard = document.getElementById('addEmpIdCard').value;
-                    var empSalary = document.getElementById('addEmpSalary').value;
-                    var empContact = document.getElementById('addEmpContact').value;
-                    var empCTel = document.getElementById('addEmpCTel').value;
-                    var empStaCode = document.getElementById('addEmpStaCode').value;
-                    var empNote = document.getElementById('addEmpNote').value;
+                    var name = document.getElementById('addName').value;
+                    var time = document.getElementById('addTime').value;
+                    var note = document.getElementById('addNote').value;
                     alert("进入addAjax");
-                    alert(empCodex);
-                    alert(empName);
-                    alert(empAge);
-
+                    alert("输入的用户名"+name);
                     $.ajax({
                         type : "post",
-                        url : "/emp/addEmployee",
+                        url : "/rep/addRepairCard",
                         data : {
-
-                            empCode	:  empCodex,
-                            empName	:  empName,
-                            empAge	:  empAge,
-                            empNation	:  empNation,
-                            empIdCard	:  empIdCard,
-                            empSalary	:  empSalary,
-                            empContact	:  empContact,
-                            empCTel	:  empCTel,
-                            empStaCode	:  empStaCode,
-                            empNote	:  empNote
-
+                            name	:  name,
+                            time	:  time,
+                            note	:  note,
                         },
                         success : function (fallBack) {
                             alert("后端传值成功:"+fallBack);
-                            if ( fallBack === 1 ) {
+                            if ( fallBack === '1' ) {
                                 alert('恭喜你，添加成功！！！');
                                 $("#closemodel").click();
-                                //document.getElementById('addEmpPage').style.display="none";
-                            } else if ( fallBack === 2) {
-                                alert ("员工编码已存在，请重来，(?ω?)");
-                            } else if (fallBack === 3) {
-                                alert("暂时还没有这个岗位！！！(?ω?)");
+                                loadData('',0,5);
+                            } else if ( fallBack === '2') {
+                                alert ("补卡人不存在！");
                             } else {
-                                alert('哎呀，出现意外了！')	;
+                                alert('时间格式错误！')	;
                             }
 
                         },
