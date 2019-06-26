@@ -4,6 +4,7 @@ import com.attend.dream.domain.RepairCard;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface RepairCardMapper {
     //通过id来查询 打卡单
@@ -28,6 +29,10 @@ public interface RepairCardMapper {
     //删除数据
     @Delete("delete from repairCard where id=#{id}")
     Boolean deleteCard(int id);
+
+    @Select("select cardCode, COUNT(*) sum from punchCard\n" +
+            "group by cardCode;")
+    List<Map> checkCardSum();
 //    //插入数据mor
 //    @Insert("insert into repairCard ( cardCode, name, morTime, note) " +
 //            "values(#{cardCode}, #{name}, #{morTime}, #{note} ) ")

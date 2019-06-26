@@ -1,0 +1,175 @@
+package com.attend.dream.controller;
+
+import com.attend.dream.domain.Card;
+import com.attend.dream.domain.RepairCard;
+import com.attend.dream.service.CheckCardService;
+import com.attend.dream.service.CheckReportService;
+import com.attend.dream.service.PunchCardService;
+import com.attend.dream.service.RepairCardService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import sun.java2d.pipe.SpanShapeRenderer;
+
+import javax.xml.crypto.Data;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+@Controller
+public class CheckReportController {
+
+    @Autowired
+    CheckCardService checkCardService;
+    @Autowired
+    PunchCardService punchCardService;
+    @Autowired
+    RepairCardService repairCardService;
+    @Autowired
+    CheckReportService checkReportService;
+
+    @GetMapping("/get/cardSumByGroup")
+    @ResponseBody
+    public List<Map> cardSum() {
+        List<Map> cardSum = checkCardService.getEveryDayCard();
+        System.out.println(cardSum);
+        return cardSum;
+    }
+
+    @GetMapping("/get/getAllCards")
+    @ResponseBody
+    public List<Card> allCards() {
+        List<Card> allCards = punchCardService.getGetAllCards();
+        System.out.println(allCards.size());
+        SimpleDateFormat sdf = new SimpleDateFormat("HH");
+        for (int i = 0; i<allCards.size();i++) {
+            Card  card = allCards.get(i);
+            Date morTime = card.getMorTime();
+            String hour = sdf.format(morTime);
+            System.out.println(hour);
+            //System.out.println(card);
+        }
+        return allCards;
+    }
+
+    @GetMapping("/get/getRepairedCard")
+    @ResponseBody
+    public List<RepairCard> allRepairedCard() {
+
+        List<RepairCard> repairCards = repairCardService.getCardsByCode("");
+        return repairCards;
+    }
+
+    @GetMapping("/finalMvp")
+    @ResponseBody
+    public List<Card> adjust() throws ParseException {
+
+        List<Map> cardSum = checkCardService.getEveryDayCard();
+        List<Card> allCards = punchCardService.getGetAllCards();
+        List<RepairCard> repairCards = repairCardService.getCardsByCode("");
+        //List<Card> adjust = new ArrayList<Card>();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat fds = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        //打卡单状态标记
+        for (int i = 0; i<allCards.size();i++) {
+            Card  card = allCards.get(i);
+            Date morTime = card.getMorTime();
+            Date eveTime = card.getEveTime();
+            //早上缺卡
+            if (morTime == null) {
+                card.setNote("旷工");
+            }
+            //晚上缺卡
+            if (eveTime == null) {
+//                String secondNote = card.getNote()+"旷工";
+//                card.setNote(secondNote);
+                card.setNote("旷工");
+            }
+
+            String finalNote = card.getNote();
+            if ( finalNote == null || finalNote.length() <= 0 ){
+                String morHour = sdf.format(morTime);
+                String eveHour = sdf.format(eveTime);
+                int x = morHour.compareTo("09");
+                System.out.println(x);
+                if (morHour.compareTo("09") == 1) {
+                    card.setNote("不正常");
+                    System.out.println(card.getNote());
+                    //System.out.println(card.getNote());
+                }
+                if(eveHour.compareTo("21") != 1) {
+                    //String n = card.getNote()+"早退";
+                    card.setNote("不正常");
+                }
+            }
+            System.out.println("第一次");
+            System.out.println(card);
+            checkReportService.insetAllDayTime(card);
+
+            //checkReportService.updateCard(card);
+            //System.out.println(card);
+        }
+
+        //补卡单状态补全
+        for (int i = 0; i < repairCards.size(); i++) {
+            System.out.println("补卡更新");
+            RepairCard repairCard = repairCards.get(i);
+            String name = repairCard.getCardCode();
+            Date time = repairCard.getTime();
+
+            String day = sdf2.format(time);
+            String dayTime = day + " 01:00:00";
+            String dayTime2 = day + " 23:23:23";
+
+            Date date1 = fds.parse(dayTime);
+            Date date2 = fds.parse(dayTime2);
+
+            System.out.println(date1);
+            System.out.println(date2);
+
+            List<Card> card = checkReportService.getSpecialRecord(name, date1, date2);
+            System.out.println(card);
+            if (null == card || card.size() ==0) {
+
+                //Card nullCard = checkReportService.getCardBycardCode(name);
+                //checkReportService.insetAllDayTime();
+            } else {
+
+                Card x = card.get(0);
+                Date mTime = x.getMorTime();
+                Date eTime = x.getEveTime();
+                String t = sdf.format(time);
+                if (mTime == null) {
+                    if (t.compareTo("09") != 1) {
+                        x.setMorTime(mTime);
+                        x.setNote("正常");
+                        checkReportService.updateMorCard(x);
+
+                    }
+                }
+                if (eTime == null) {
+                    if (t.compareTo("22") == 1) {
+                        x.setEveTime(eTime);
+                        x.setNote("正常");
+                        checkReportService.updateEveCard(x);
+
+                    }
+                }
+
+                //checkReportService.updateCard(x);
+
+            }
+        }
+
+        return allCards;
+    }
+
+
+
+}
