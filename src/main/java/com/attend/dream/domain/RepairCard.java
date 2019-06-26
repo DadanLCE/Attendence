@@ -13,12 +13,9 @@ public class RepairCard {
 
     private String name;
 
-    private Date morTime;
-
-    private Date eveTime;
+    private Date time;
 
     private String note;
-
 
 
 }

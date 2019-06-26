@@ -4,6 +4,7 @@ package com.attend.dream.mapper;
 import com.attend.dream.domain.Card;
 import org.apache.ibatis.annotations.*;
 
+import java.util.Date;
 import java.util.List;
 
 public interface PunchCardMapper {
@@ -30,6 +31,11 @@ public interface PunchCardMapper {
             "from punchCard where cardCode like concat('%',#{cardCode},'%')")
     List<Card> getCardsByCode(String cardCode);
 
+    //开始时间和结束时间的模糊查询
+    @Select("select *" +
+            "from punchCard where cardCode like concat('%',#{cardCode},'%')" +
+            " and date between #{preDate} and #{nextDate}")
+    List<Card> getCardsByCodeTime(@Param("cardCode")String cardCode, @Param("preDate") Date preDate, @Param("nextDate") Date nextDate);
 //
 //    //更新数据
 //    @Update("update cardMor set cardCode=#{cardCode}, name=#{name}, date=#{date}, note=#{note} " +
