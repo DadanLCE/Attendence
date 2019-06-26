@@ -14,4 +14,7 @@ public class CardEve {
     private Date date;
     //备注
     private String note;
+
+    //CardMor
+    private CardMor cardMor;
 }
