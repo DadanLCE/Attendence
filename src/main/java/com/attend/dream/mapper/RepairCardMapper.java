@@ -1,11 +1,8 @@
 package com.attend.dream.mapper;
 
-import com.attend.dream.domain.CardEve;
 import com.attend.dream.domain.RepairCard;
 import org.apache.ibatis.annotations.*;
-import org.apache.ibatis.mapping.FetchType;
 
-import java.util.Date;
 import java.util.List;
 
 public interface RepairCardMapper {
