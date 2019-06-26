@@ -18,5 +18,4 @@ public class RepairCard {
     private String note;
 
 
-
 }

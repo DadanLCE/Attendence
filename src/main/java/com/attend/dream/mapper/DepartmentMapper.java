@@ -17,6 +17,7 @@ public interface DepartmentMapper {
             "from department where depCode = #{depCode} ")
     Department getDepartmentByDepCode(String depCode);
 
+
     @Select("select * from department where id = #{depId}")
     Department findDepById(int depId);
 
@@ -24,22 +25,6 @@ public interface DepartmentMapper {
     @Select("select id,depCode,depJob,depName,depBossCode,depTopId\n" +
             "from department where depCode LIKE CONCAT('%',#{depCode},'%') ")
     List<Department> getDepartmentsByDepCode(String depCode);
-
-
-
-
-    //模糊查询CodeMax
-//    @Select("<script>"+
-//            "select id,depCode,depJob,depName,depBossCode,depTopId from department" +
-//            "<where>"+
-//             "<if test='depCode != null'>"+
-//             "and depCode LIKE '%${depCode}%'" +
-//             "</if>"+
-//            "</where>"+
-//            "</script>")
-//    List<Department> getDepartmentsByDepCodeMax(@Param("depCode") String depCode);
-//    @Select("select id,depCode,depJob,depName,depBossCode,depTopId\n" +
-//            "from department where depCode LIKE CONCAT('%',#{depCode},'%') ")
 
     //添加 部门
     @Insert("insert into department (depCode,depName,depBossCode,depJob,depTopId)\n" +

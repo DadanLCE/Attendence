@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class Employee {
+
     private int empId;//序号
     private String empCode;//职工编码
     private String empName;//职工姓名
@@ -17,4 +18,5 @@ public class Employee {
     private String empCTel;//紧急联系人电话
     private String empStaCode;//工作编号
     private String empNote;//简介
+
 }
