@@ -6,13 +6,13 @@ import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
-public interface payMapper {
+//public interface PayMapper {
 
-    @Select("select id, empCode, name, salary, starDay, endDay " +
-            "from pay where empCode LIKE CONCAT('%',#{empCode},'%') ")
-    List<Pay> getPayByCode(String empCode);
-
-    @Insert("insert into pay(empCode, name, salary, starDay, endDay) " +
-            "values(#{empCode}, #{name}, #{salary}, #{starDay}, #{endDay}) ")
-    Boolean insertPay(Pay pay);
-}
+//    @Select("select id, empCode, name, salary, startDay, endDay " +
+//            "from pay where empCode LIKE CONCAT('%',#{empCode},'%') ")
+//    List<Pay> getPayByCode(String empCode);
+//
+//    @Insert("insert into pay(empCode, name, salary, startDay, endDay) " +
+//            "values(#{empCode}, #{name}, #{salary}, #{startDay}, #{endDay}) ")
+//    Boolean insertPay(Pay pay);
+//}
