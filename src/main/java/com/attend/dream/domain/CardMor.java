@@ -15,5 +15,5 @@ public class CardMor {
     //备注
     private String note;
     //true要补卡 false不要
-    private boolean flag;
+    private String flag;
 }
