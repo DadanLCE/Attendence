@@ -48,7 +48,7 @@ public interface CardEveMapper {
 
     //插入数据
     @Insert("insert into cardEve (cardCode, name, date ,note, flag ) " +
-            "values(#{cardCode}, #{name}, #{date}, #{note}), flag=#{flag} ")
+            "values(#{cardCode}, #{name}, #{date}, #{note}, flag=#{flag}) ")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     Boolean insertCardEve(CardEve card);
 
