@@ -1,12 +1,11 @@
 package com.attend.dream.domain;
 
-
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-public class Card {
+public class RepairCard {
 
     private int id;
 
@@ -19,6 +18,7 @@ public class Card {
     private Date eveTime;
 
     private String note;
+
 
 
 }
