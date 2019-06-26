@@ -28,4 +28,7 @@ public class IndexController {
 
     @RequestMapping(value = "/showCla",method = RequestMethod.POST)
     public String showCla(){ return "classes_list"; }
+
+    @RequestMapping(value = "/showPun",method = RequestMethod.POST)
+    public String showPun(){ return "punchCard_list"; }
 }

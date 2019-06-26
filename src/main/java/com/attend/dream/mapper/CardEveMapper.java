@@ -50,7 +50,7 @@ public interface CardEveMapper {
 
     //插入数据 补卡单和打卡单共用一个
     @Insert("insert into cardEve (cardCode, name, date ,note, flag ) " +
-            "values(#{cardCode}, #{name}, #{date}, #{note}), flag=#{flag} ")
+            "values(#{cardCode}, #{name}, #{date}, #{note}, flag=#{flag}) ")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     Boolean insertCardEve(CardEve card);
 
@@ -82,4 +82,9 @@ public interface CardEveMapper {
 
 
 
+
+//    @Select("SELECT id,name,cardCode,date FROM cardEve where cardCode like concat('%',#{cardCode},'%')\n" +
+////            "UNION\n" +
+////            "SELECT id,name,cardCode,date FROM cardMor where cardCode like concat('%',#{cardCode},'%')")
+////    List<CardEve> getCardAllByCode(String cardCode);
 }
