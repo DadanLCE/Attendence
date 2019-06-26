@@ -34,7 +34,7 @@ public interface PunchCardMapper {
     //开始时间和结束时间的模糊查询
     @Select("select *" +
             "from punchCard where cardCode like concat('%',#{cardCode},'%')" +
-            " and date between #{preDate} and #{nextDate}")
+            " and morTime between #{preDate} and #{nextDate}")
     List<Card> getCardsByCodeTime(@Param("cardCode")String cardCode, @Param("preDate") Date preDate, @Param("nextDate") Date nextDate);
 //
 //    //更新数据

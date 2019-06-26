@@ -4,10 +4,6 @@ import com.attend.dream.domain.*;
 import com.attend.dream.mapper.*;
 import com.attend.dream.service.ClassesService;
 import com.attend.dream.service.DepartmentService;
-import com.attend.dream.service.RepairCardService;
-import com.attend.dream.service.StationService;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.annotation.MapperScan;
@@ -117,20 +113,63 @@ public class DreamApplicationTests {
 
     }
 
-    @Autowired
-    private CardMorMapper cardMorMapper;
+
 
     @Test
     public void cardT(){
+//        List<RepairCard> c = repairCardMapper.getCardsByCode("b");
 
-        CardMor card = cardMorMapper.getCardMorById(1);
-        List<CardMor> list = cardMorMapper.getCardMorByCode("A");
+//        Date date = null;
+//        Date date2 = null;
+////        注意format的格式要与日期String的格式相匹配
+//        String dateStr = "2019-08-01 00:00:00";
+//        String dateStr2 = "2019-08-20 00:00:00";
+//        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        try {
+//            date = sdf.parse(dateStr);
+//            date2 = sdf.parse(dateStr2);
+//            System.out.println(date2.toString());
+//            System.out.println(date.toString());
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        List<CardEve> list = cardEveMapper.getAll("",date,date2);
+//        System.out.println(list);
+//        for (int i =0; i < list.size();i++){
+//            System.out.println(list.get(i));
+//        }
+//        cardMorMapper.insertCardMor(card);
+//        System.out.println(list);
+//        CardMor card1 = cardMorMapper.getCardMorById(2);
+//        System.out.println(card1);
+//        card1.setName("哇啦啦");
+//        cardMorMapper.updateCard(card1);
+//        CardMor cardMor = cardMorMapper.getCardMorByCode("AA");
 
+    }
+    @Autowired
+    private  CheckCardMapper checkCardMapper;
+    @Test
+    public void rCard(){
+                Date date = null;
+        Date date2 = null;
+//        注意format的格式要与日期String的格式相匹配
+        String dateStr = "2019-08-01 00:00:00";
+        String dateStr2 = "2019-08-20 00:00:00";
+        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            date = sdf.parse(dateStr);
+            date2 = sdf.parse(dateStr2);
+            System.out.println(date2.toString());
+            System.out.println(date.toString());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        List<Card> list = checkCardMapper.getCardsByCodeTime("",date, date2);
         System.out.println(list);
-
-
-
-
     }
 
 
