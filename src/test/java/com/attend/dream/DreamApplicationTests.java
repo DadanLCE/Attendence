@@ -149,12 +149,20 @@ public class DreamApplicationTests {
 //        CardMor cardMor = cardMorMapper.getCardMorByCode("AA");
 
     }
+
+    public static int countTime(Date preDate, Date nextDate)
+    {
+        int days = (int) ((nextDate.getTime() - preDate.getTime()) / (1000*3600*24));
+        return days;
+    }
+
     @Autowired
     private  CheckCardMapper checkCardMapper;
     @Test
     public void rCard(){
                 Date date = null;
         Date date2 = null;
+
 //        注意format的格式要与日期String的格式相匹配
         String dateStr = "2019-08-01 00:00:00";
         String dateStr2 = "2019-08-20 00:00:00";
@@ -162,14 +170,11 @@ public class DreamApplicationTests {
         try {
             date = sdf.parse(dateStr);
             date2 = sdf.parse(dateStr2);
-            System.out.println(date2.toString());
-            System.out.println(date.toString());
-
+            int days = countTime(date,date2);
+            System.out.println(days);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        List<Card> list = checkCardMapper.getCardsByCodeTime("",date, date2);
-        System.out.println(list);
     }
 
 
