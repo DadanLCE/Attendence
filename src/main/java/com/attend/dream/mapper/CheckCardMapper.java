@@ -34,4 +34,11 @@ public interface CheckCardMapper {
             "from checkCard where cardCode like concat('%',#{cardCode},'%')" +
             " and morTime between #{preDate} and #{nextDate}")
     List<Card> getCardsByCodeTime(@Param("cardCode")String cardCode, @Param("preDate") Date preDate, @Param("nextDate") Date nextDate);
+
+
+    //开始时间和结束时间的模糊查询
+    @Select("select *" +
+            "from checkCard where cardCode like concat('%',#{cardCode},'%')" +
+            " and morTime between #{preDate} and #{nextDate}")
+    List<Card> TestTest(@Param("cardCode")String cardCode, @Param("preDate") Date preDate, @Param("nextDate") Date nextDate);
 }

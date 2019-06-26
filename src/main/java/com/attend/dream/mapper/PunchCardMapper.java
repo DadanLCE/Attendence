@@ -36,11 +36,12 @@ public interface PunchCardMapper {
             "from punchCard where cardCode like concat('%',#{cardCode},'%')" +
             " and morTime between #{preDate} and #{nextDate}")
     List<Card> getCardsByCodeTime(@Param("cardCode")String cardCode, @Param("preDate") Date preDate, @Param("nextDate") Date nextDate);
-//
-//    //更新数据
-//    @Update("update cardMor set cardCode=#{cardCode}, name=#{name}, date=#{date}, note=#{note} " +
-//            "where id = #{id}")
-//    Boolean updateCard(CardMor card);
+
+
+//    更新数据
+    @Update("update punchCard set eveTime=#{eveTime} " +
+            "where id = #{id} ")
+    Boolean updateCard(Card card);
 //
 //    //删除数据
 //    @Delete("delete from cardMor where id=#{id}")
