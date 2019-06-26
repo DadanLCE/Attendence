@@ -7,19 +7,19 @@ import java.util.List;
 
 public interface RepairCardMapper {
     //通过id来查询 打卡单
-    @Select("select id, cardCode, name, morTime, eveTime, note  " +
+    @Select("select id, cardCode, name, time, note  " +
             "from repairCard where id = #{id}  ")
     RepairCard getCardById(int id);
 
-    @Select("select id, cardCode, name, morTime, eveTime, note  " +
+    @Select("select id, cardCode, name, time , note  " +
             "from repairCard where cardCode like concat('%',#{cardCode},'%')")
     List<RepairCard> getCardsByCode(String cardCode);
 
 
 
 
-    @Insert("insert into repairCard ( cardCode, name, morTime, eveTime, note) " +
-            "values(#{cardCode}, #{name}, #{morTime},#{eveTime}, #{note} ) ")
+    @Insert("insert into repairCard ( cardCode, name,time, note) " +
+            "values(#{cardCode}, #{name}, #{time} , #{note} ) ")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     Boolean insertAll(RepairCard card);
 
