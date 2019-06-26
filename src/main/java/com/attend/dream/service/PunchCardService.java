@@ -1,6 +1,5 @@
 package com.attend.dream.service;
 
-import com.attend.dream.domain.Card;
 import com.attend.dream.domain.CardEve;
 import com.attend.dream.domain.CardMor;
 import com.attend.dream.mapper.CardEveMapper;

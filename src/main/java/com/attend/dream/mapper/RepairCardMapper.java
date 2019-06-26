@@ -17,24 +17,15 @@ public interface RepairCardMapper {
     List<RepairCard> getCardsByCode(String cardCode);
 
 
-    //插入数据mor
-    @Insert("insert into repairCard ( cardCode, name, morTime, note) " +
-            "values(#{cardCode}, #{name}, #{morTime}, #{note} ) ")
+    @Insert("insert into repairCard ( cardCode, name, morTime, eveTime, note) " +
+            "values(#{cardCode}, #{name}, #{morTime},#{eveTime}, #{note} ) ")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    Boolean insertMor(RepairCard card);
+    Boolean insertAll(RepairCard card);
 
-    //插入数据eve
-    @Insert("insert into repairCard ( cardCode, name, eveTime, note) " +
-            "values(#{cardCode}, #{name}, #{eveTime}, #{note} ) ")
-    @Options(useGeneratedKeys = true, keyProperty = "id")
-    Boolean insertEve(RepairCard card);
-
-//    //更新数据
-//    @Update("update repairCard set cardCode=#{cardCode}, name=#{name}, date=#{date}, note=#{note} " +
-//            "where id = #{id}")
-//    Boolean updateCard(CardMor card);
 
     //删除数据
     @Delete("delete from repairCard where id=#{id}")
     Boolean deleteCard(int id);
+
+
 }

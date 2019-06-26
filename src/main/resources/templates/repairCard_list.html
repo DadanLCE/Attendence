@@ -295,6 +295,7 @@
                 }
             </script>
 
+            <!-- 查询 -->
             <script th:inline="none">
                 var currentPage = 0;
                 function loadData(key,page, pageSize) {
@@ -303,59 +304,75 @@
                         url: "/rep",
                         dataType: "json",
                         data: {
-                            empCode: key,
+                            cardCode: key,
                             pageSize:5,
                             currentPage:page
                         },
                         success: function (data) {
-                            var pageSum=data["pageSum"];
-                            if (page<=0){
-                                currentPage=1;
-                            }
-                            else if (page>pageSum){
-                                currentPage=pageSum;
-                            }
-                            else {
-                                currentPage=page;
-                            }
+
                             $("#tbody").html("");
                             // $("#ulList").html("");
-                            var tabledata = data['emps'];
+                            var tabledata = data['reps'];
                             jQuery.each(tabledata, function (i, list) {
+                                //早上时间格式
+                                if(list['morTime']) {
+                                    var time = list['morTime'].toString();
+                                    var atime = time.split("T");
+                                    var yd = atime[0];
+                                    var btime = atime[1].split(".");
+                                    var ctime = btime[0].split(":");
+                                    var hour = ctime[0];
+                                    var min = ctime[1];
+                                    var mh = ":";
+                                }else{
+                                    var yd = null;
+                                    var hour = null;
+                                    var min = null;
+                                    var mh = ":";
+                                }
+                                //下午时间格式
+                                if(list['eveTime']) {
+                                    var timea = list['eveTime'].toString();
+                                    var dtime = timea.split("T");
+                                    var yde = dtime[0];
+                                    var etime = dtime[1].split(".");
+                                    var ftime = etime[0].split(":");
+                                    var houre = ftime[0];
+                                    var mine = ftime[1];
+                                }else{
+                                    var yde = "";
+                                    var houre = "";
+                                    var mine = "";
+                                }
                                 var tr="";
                                 tr+="<tr>"+
-                                    "<td><input name=\"empsDelete\" value=" + list['empId'] + " type=\"checkbox\" /></td>"+
-                                    "<td>" + list['empId'] + "</td>"+
-                                    "<td>" + list['empCode'] + "</td>"+
-                                    "<td>" + list['empName'] + "</td>"+
-                                    "<td>" + list['empSex'] + "</td>"+
-                                    "<td>" + list['empAge'] + "</td>"+
-                                    "<td>" + list['empNation'] + "</td>"+
-                                    "<td>" + list['empStaCode'] + "</td>"+
+                                    "<td><input name=\"empsDelete\" value=" + list['id'] + " type=\"checkbox\" /></td>"+
+                                    "<td>" + list['id'] + "</td>"+
+                                    "<td>" + list['cardCode'] + "</td>"+
+                                    "<td>" + list['name'] + "</td>"+
+                                    "<td>" + yd+ "&nbsp;" + hour + ":"+ min + "</td>"+
+                                    "<td>" + yde+ "&nbsp;" + houre + ":"+ mine + "</td>"+
                                     "<td class=\"td-manage\">"+
-                                    "<button class=\"btn btn-info btn-sm left\" id="+ list['empId'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
+                                    "<button class=\"btn btn-info btn-sm left\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
                                     "编 辑"+
                                     "</button>"+
-                                    "<form id=\"form1\" action=\"/test/" + list['empId'] + " method=\"post\" >"+
-                                    "<input type=\"hidden\" name=\"_method\" value=\"delete\" />"+
                                     "<button  type=\"submit\"  class=\"btn btn-danger btn-sm right\">删 除</button>"+
-                                    "</form>"+
                                     "</td></tr>";
 
                                 $("#tbody").append(tr);
                             });
-                            $("#ulList").html('');
-                            var li="<a class=\"num\" onclick='loadData(\"\","+(currentPage-1)+","+5+")'><<</a>";
-                            for (var i = 1; i <= data['pageNum']; i++) {
-                                if (i==currentPage){
-                                    li+="<a class=\"current\" class='active' onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
-                                }
-                                else {
-                                    li+="<a class=\"num\" onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
-                                }
-                            }
-                            li+="<a class=\"num\" onclick='loadData(\"\","+(currentPage+1)+","+5+")'>>></a>";
-                            $("#ulList").append(li);
+                            // $("#ulList").html('');
+                            // var li="<a class=\"num\" onclick='loadData(\"\","+(currentPage-1)+","+5+")'><<</a>";
+                            // for (var i = 1; i <= data['pageNum']; i++) {
+                            //     if (i==currentPage){
+                            //         li+="<a class=\"current\" class='active' onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
+                            //     }
+                            //     else {
+                            //         li+="<a class=\"num\" onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
+                            //     }
+                            // }
+                            // li+="<a class=\"num\" onclick='loadData(\"\","+(currentPage+1)+","+5+")'>>></a>";
+                            // $("#ulList").append(li);
                             // console.log(tr);
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
