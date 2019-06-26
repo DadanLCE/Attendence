@@ -73,7 +73,7 @@ public class PunchCardController {
     @RequestMapping("/pun/addPunchCardEve")
     @ResponseBody
     public void addPunchCardEve(CardEve card){
-        card.setFlag(true);
+        card.setFlag("false");
         punchCardService.insertCardEve(card);
     }
 

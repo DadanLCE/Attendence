@@ -1,0 +1,434 @@
+            <!DOCTYPE html>
+            <html>
+            <html  xmlns:th="http://www.thymeleaf.org">
+            <head>
+                <meta charset="UTF-8">
+                <title>补卡单-考勤系统</title>
+                <!--<meta name="renderer" content="webkit">-->
+                <!--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">-->
+                <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">-->
+                <link rel="stylesheet" href="/css/font.css" >
+                <link rel="stylesheet" href="/css/weadmin.css" >
+                <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+                <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+                <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+                <link rel="stylesheet" href="../lib/layui/css/layui.css" th:href="@{/layui/css/layui.css.css}">
+                <style type="text/css">
+                    .layui-form-label{
+                        width: 120px;
+                    }
+                    .layui-form-item{
+                        margin-bottom: 7px;
+                    }
+                    .layui-input{
+                        border-color: #3F3F3F;
+                    }
+                    .close{
+                        width: 100px;
+                        height: 50px;
+                    }
+
+                    .btn-primary{
+                        width: 113px;
+                        height: 38px;
+                        border-radius: 0;
+                        font-size: 14px;
+                    }
+                    .btn-info{
+                        float: left;
+                        /*display: inline-block;*/
+                        margin-right: 15px;
+                    }
+                    .content{
+                        float: left;
+                        padding: 1.875em;
+                        width: 100%;
+                    }
+
+                </style>
+
+            </head>
+
+            <body>
+
+            <div class="content">
+                <div class="layui-row">
+
+                    <div class="layui-inline">
+                        <input type="text" id="searchId" placeholder="请输入人员编码或名称" autocomplete="off" class="layui-input" >
+                    </div>
+                    <button class="layui-btn" lay-submit="" lay-filter="sreach" onclick="loadData(document.getElementById('searchId').value, 0, 5)"><i class="layui-icon">&#xe615;</i></button>
+
+                </div>
+                <div class="weadmin-block">
+                    <button class="layui-btn layui-btn-danger" onclick="empsDelete()"><i class="layui-icon"></i>批量删除</button>
+
+                    <button class="btn btn-primary btn-lg" id="addEmpButton"  data-toggle="modal" data-target="#addEmpPage">
+                        添加补卡
+                    </button>
+
+                    <span class="fr" style="line-height:40px"></span>
+                </div>
+                <!--显示补卡单-->
+                <table class="layui-table" id="memberList" >
+                    <thead>
+                    <tr>
+
+                        <th>
+                            <input type="checkbox" />
+                        </th>
+                        <th>ID</th>
+                        <th>补卡人编码</th>
+                        <th>补卡人姓名</th>
+                        <th>补卡日期</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tbody" >
+
+                    </tbody>
+                </table>
+
+            </div>
+
+
+            <div id='ulList' class="page">
+
+            </div>
+
+            <!--隐藏窗口，点击button弹出编辑页面-->
+            <div class="modal fade" id="updateEmpPage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                编辑
+                            </h4>
+                        </div>
+                        <div class="weadmin-body">
+                            <form class="layui-form" action="/emp/updateEmp" method="post">
+                                <p style="color:red">更新</p>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">
+                                        <span class="we-red">*</span>补卡人
+                                    </label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" id="empCode" name="empCode" readonly="readonly" lay-verify="required|nikename" autocomplete="off" class="layui-input">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux">
+
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label  class="layui-form-label">
+                                        <span class="we-red">*</span>补卡时间
+                                    </label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" id="empName" name="empName" lay-verify="required|name" autocomplete="" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label  class="layui-form-label">
+                                        <span class="we-red">*</span>补卡原因
+                                    </label>
+                                    <div class="layui-input-inline">
+                                        <input type="textarea" id="empNote" name="empNote" lay-verify="required|salary" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <label  class="layui-form-label">
+                                    </label>
+                                    <button class="layui-btn" lay-filter="add" lay-submit="">确定</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+
+            <!--隐藏窗口，点击button弹出添加页面-->
+            <div class="modal fade" id="addEmpPage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h2 class="modal-title" id="myModalLabel">
+                                新增补卡
+                            </h2>
+                            <!--						<h4 style="color:red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></h4>-->
+                        </div>
+                        <div class="weadmin-body">
+                            <!--						<form class="layui-form" action="/emp/addEmployee" method="post">-->
+                            <!--							<h1 style="color:red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></h1>-->
+                            <!--<form class="layui-form" th:action="@{/emp/addEmployee}" method="post">-->
+
+
+                            <div class="layui-form-item">
+                                <label  class="layui-form-label">
+                                    <span class="we-red">*</span>补卡人
+                                </label>
+                                <div class="layui-input-inline">
+                                    <input type="text" id="addEmpName" name="empName" lay-verify="required|name" autocomplete="" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label  class="layui-form-label">
+                                    <span class="we-red">*</span>补卡日期
+                                </label>
+                                <div class="layui-input-inline">
+                                    <input type="text" id="addEmpAge" name="empAge" autocomplete="off" class="layui-input">
+                                </div>
+
+                            </div>
+                            <div class="layui-form-item">
+                                <label  class="layui-form-label">
+                                    <span class="we-red">*</span>补卡原因
+                                </label>
+                                <div class="layui-input-inline">
+                                    <input type="textarea" id="addEmpNote" name="empNote" lay-verify="required|salary" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label  class="layui-form-label">
+                                </label>
+                                <button class="layui-btn" onclick="addAjax()" id="confirmAdd" lay-filter="add" lay-submit="">确定</button>
+
+                                <!--隐藏button-->
+                                <button type="button" class="btn btn-default" style="display: none" data-dismiss="modal" id="closemodel">关闭</button>
+
+                            </div>
+                            <!--</form>-->
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+
+            <!-- ***************************************************************** -->
+
+            <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+            <script src="/layui/layui.js" charset="utf-8" ></script>
+            <script src="/js/eleDel.js" type="text/javascript" charset="utf-8" ></script>
+            <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+            <!--批量删除-->
+            <script type="text/javascript">
+
+                function empsDelete() {
+
+                    if (confirm("确定删除选中的用户？")) {
+                        var userList = new Array();
+                        $("input[name='empsDelete']:checked").each(function () {
+                            userList.push($(this).val());
+                        });
+                        $.ajax({
+                            type: "post",
+                            url: "/emp/delEmps",
+                            data: {userList: userList.toString()},
+                            success: function () {
+                                alert("删除成功！");
+                                location.reload();
+                            },
+                            error: function () {
+                                alert("刪除失败！")
+                            }
+                        });
+                    }
+                }
+
+            </script>
+            <!--<script type="text/javascript">-->
+
+
+            <!--编辑功能回显ajax-->
+            <script type="text/javascript">
+                var url = window.location.href;
+                //var location = ;
+                //alert(location);
+                var id  = url.substring(url.lastIndexOf("=")+1,url.length);
+                //alert("取id"+id);
+                function clickEdit(data) {
+                    var clickId = data.id;
+                    $(document).ready(function () {
+                        var subUrl = "/emp/getEmpById/";
+                        var now = subUrl + clickId;
+                        $.ajax({
+                            type: "get",
+                            url: now,
+                            success: function (emp) {
+                                var empId = emp.id;
+                                //var weaBody = $("weadmin-body");
+                                var inputCode = $("#empCode");
+                                var inputName = $("#empName");
+                                var inputAge = $("#empAge");
+                                var inputNation = $("#empNation");
+                                var inputIdCard = $("#empIdCard");
+                                var inputSalary = $("#empSalary");
+                                var inputTel = $("#empTel");
+                                var inputCTel = $("#empCTel");
+                                var inputStaCode = $("#empStaCode");
+                                var inputNote = $("#empNote");
+                                inputCode.attr('value', emp.empCode);
+                                inputName.attr('value', emp.empName);
+                                inputAge.attr('value', emp.empAge);
+                                inputNation.attr('value', emp.empNation);
+                                inputIdCard.attr('value', emp.empIdCard);
+                                inputSalary.attr('value', emp.empSalary);
+                                inputTel.attr('value', emp.empTel);
+                                inputCTel.attr('value',emp.empCTel);
+                                inputStaCode.attr('value', emp.empStaCode);
+                                inputNote.attr('value', emp.empNote);
+
+                            },
+                            error: function () {
+                                alert("ajax失败");
+                            }
+                        })
+
+
+                    });
+                }
+            </script>
+
+            <script th:inline="none">
+                var currentPage = 0;
+                function loadData(key,page, pageSize) {
+                    $.ajax({
+                        type: 'POST',
+                        url: "/rep",
+                        dataType: "json",
+                        data: {
+                            empCode: key,
+                            pageSize:5,
+                            currentPage:page
+                        },
+                        success: function (data) {
+                            var pageSum=data["pageSum"];
+                            if (page<=0){
+                                currentPage=1;
+                            }
+                            else if (page>pageSum){
+                                currentPage=pageSum;
+                            }
+                            else {
+                                currentPage=page;
+                            }
+                            $("#tbody").html("");
+                            // $("#ulList").html("");
+                            var tabledata = data['emps'];
+                            jQuery.each(tabledata, function (i, list) {
+                                var tr="";
+                                tr+="<tr>"+
+                                    "<td><input name=\"empsDelete\" value=" + list['empId'] + " type=\"checkbox\" /></td>"+
+                                    "<td>" + list['empId'] + "</td>"+
+                                    "<td>" + list['empCode'] + "</td>"+
+                                    "<td>" + list['empName'] + "</td>"+
+                                    "<td>" + list['empSex'] + "</td>"+
+                                    "<td>" + list['empAge'] + "</td>"+
+                                    "<td>" + list['empNation'] + "</td>"+
+                                    "<td>" + list['empStaCode'] + "</td>"+
+                                    "<td class=\"td-manage\">"+
+                                    "<button class=\"btn btn-info btn-sm left\" id="+ list['empId'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
+                                    "编 辑"+
+                                    "</button>"+
+                                    "<form id=\"form1\" action=\"/test/" + list['empId'] + " method=\"post\" >"+
+                                    "<input type=\"hidden\" name=\"_method\" value=\"delete\" />"+
+                                    "<button  type=\"submit\"  class=\"btn btn-danger btn-sm right\">删 除</button>"+
+                                    "</form>"+
+                                    "</td></tr>";
+
+                                $("#tbody").append(tr);
+                            });
+                            $("#ulList").html('');
+                            var li="<a class=\"num\" onclick='loadData(\"\","+(currentPage-1)+","+5+")'><<</a>";
+                            for (var i = 1; i <= data['pageNum']; i++) {
+                                if (i==currentPage){
+                                    li+="<a class=\"current\" class='active' onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
+                                }
+                                else {
+                                    li+="<a class=\"num\" onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
+                                }
+                            }
+                            li+="<a class=\"num\" onclick='loadData(\"\","+(currentPage+1)+","+5+")'>>></a>";
+                            $("#ulList").append(li);
+                            // console.log(tr);
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(XMLHttpRequest.status);
+                            console.log(XMLHttpRequest.readyState);
+                            console.log(textStatus);
+                        }
+                    });
+                }
+
+                $(document).ready(function () {
+                    loadData('', 1, 5);
+                })
+
+            </script>
+
+            <!--添加用户-->
+            <script type="text/javascript">
+                function addAjax() {
+                    var empCodex = document.getElementById('addEmpCode').value;
+                    var empName = document.getElementById('addEmpName').value;
+                    var empAge = document.getElementById('addEmpAge').value;
+                    var empNation = document.getElementById('addEmpNation').value;
+                    var empIdCard = document.getElementById('addEmpIdCard').value;
+                    var empSalary = document.getElementById('addEmpSalary').value;
+                    var empContact = document.getElementById('addEmpContact').value;
+                    var empCTel = document.getElementById('addEmpCTel').value;
+                    var empStaCode = document.getElementById('addEmpStaCode').value;
+                    var empNote = document.getElementById('addEmpNote').value;
+                    alert("进入addAjax");
+                    alert(empCodex);
+                    alert(empName);
+                    alert(empAge);
+
+                    $.ajax({
+                        type : "post",
+                        url : "/emp/addEmployee",
+                        data : {
+
+                            empCode	:  empCodex,
+                            empName	:  empName,
+                            empAge	:  empAge,
+                            empNation	:  empNation,
+                            empIdCard	:  empIdCard,
+                            empSalary	:  empSalary,
+                            empContact	:  empContact,
+                            empCTel	:  empCTel,
+                            empStaCode	:  empStaCode,
+                            empNote	:  empNote
+
+                        },
+                        success : function (fallBack) {
+                            alert("后端传值成功:"+fallBack);
+                            if ( fallBack === 1 ) {
+                                alert('恭喜你，添加成功！！！');
+                                $("#closemodel").click();
+                                //document.getElementById('addEmpPage').style.display="none";
+                            } else if ( fallBack === 2) {
+                                alert ("员工编码已存在，请重来，(?ω?)");
+                            } else if (fallBack === 3) {
+                                alert("暂时还没有这个岗位！！！(?ω?)");
+                            } else {
+                                alert('哎呀，出现意外了！')	;
+                            }
+
+                        },
+                        error : function () {
+                            alert("传值失败");
+                        }
+                    })
+
+                };
+            </script>
+            </body>
+
+            </html>
