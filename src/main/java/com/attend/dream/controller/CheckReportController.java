@@ -1,24 +1,22 @@
 package com.attend.dream.controller;
 
 import com.attend.dream.domain.Card;
+import com.attend.dream.domain.Employee;
 import com.attend.dream.domain.RepairCard;
 import com.attend.dream.service.CheckCardService;
 import com.attend.dream.service.CheckReportService;
 import com.attend.dream.service.PunchCardService;
 import com.attend.dream.service.RepairCardService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import sun.java2d.pipe.SpanShapeRenderer;
 
 import javax.xml.crypto.Data;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class CheckReportController {
@@ -66,6 +64,7 @@ public class CheckReportController {
 
     @GetMapping("/finalMvp")
     @ResponseBody
+    //String cardCode,Date preDate,Date nextDate
     public List<Card> adjust() throws ParseException {
         checkReportService.delete();
         List<Map> cardSum = checkCardService.getEveryDayCard();
@@ -229,8 +228,49 @@ public class CheckReportController {
 
             }
         }
+        //List<Card> searchCard = checkReportService.getAll(cardCode,preDate,nextDate);
 
+        //List<Card> searchCard = checkReportService.getAll("",dx,dy);
+        //return searchCard;
         return allCards;
+    }
+
+    @PostMapping("/get/allCheckCard")
+    @ResponseBody
+    public List<Card> getAllCard(String cardCode,Date preDate,Date nextDate,@RequestParam(value = "currentPage") int currentPage) throws ParseException{
+        SimpleDateFormat fds = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dayTimex = "2019-06-01 01:00:00";
+        String dayTimey = "2019-06-30 23:00:00";
+        Date dx = fds.parse(dayTimex);
+        Date dy = fds.parse(dayTimey);
+        List<Card> cr = checkReportService.getAll("",dx,dy);
+        return cr;
+    }
+
+
+    @RequestMapping(value = "/get/all", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<Object, Object> getCardsByCodeAndDate(@RequestParam(value = "currentPage") int currentPage,
+                                                  @RequestParam(value = "pageSize", defaultValue = "5") int pageSize,@RequestParam(value = "cardCode") String cardCode,
+                                                     @RequestParam(value = "preDate") Date preDate,@RequestParam(value = "nextDate") Date nextDate){
+        PageInfo<Card> cardPage = checkReportService.getCardsByCodeTimePage(currentPage,pageSize,cardCode,preDate,nextDate);
+        List<Card> cards = checkReportService.getCardsByCodeTime(currentPage,pageSize,cardCode,preDate,nextDate);
+        int prePage = cardPage.getPrePage();
+        int nextPage = cardPage.getNextPage();
+        int pageNum = cardPage.getPages();
+
+        for (Card c: cards
+             ) {
+            System.out.println(c);
+        }
+
+        Map<Object, Object> cardMap = new HashMap();
+        cardMap.put("cards", cards);
+        cardMap.put("nextPage", nextPage);
+        cardMap.put("prePage", prePage);
+        cardMap.put("pageNum", pageNum);
+
+        return cardMap;
     }
 
 
