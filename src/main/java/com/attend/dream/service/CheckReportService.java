@@ -36,16 +36,22 @@ public class CheckReportService {
     }
 
     public int insetMorTime(Card card) {
-        return checkCardMapper.insertMorCard(card);
+        return punchCardMapper.insertMorCard(card);
     }
 
     public int insetEveTime(Card card) {
-        return checkCardMapper.insertEveCard(card);
+        return punchCardMapper.insertEveCard(card);
     }
 
     public int insetAllDayTime(Card card) {
         return checkCardMapper.insertAllDayCard(card);
     }
+
+    public boolean updatepunCard(Card card) {
+        punchCardMapper.updateCard(card);
+        return true;
+    }
+
     public boolean updateCard(Card card) {
         checkCardMapper.updateCard(card);
         return true;
@@ -59,5 +65,9 @@ public class CheckReportService {
     public boolean updateEveCard(Card card) {
         checkCardMapper.updateEveCard(card);
         return true;
+    }
+
+    public void delete(){
+        checkCardMapper.delete();
     }
 }

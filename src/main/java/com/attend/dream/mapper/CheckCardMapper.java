@@ -60,12 +60,15 @@ public interface CheckCardMapper {
 
     //更新早上数据
     @Update("update checkCard set morTime=#{morTime}, note=#{note} " +
-            "where cardCode = #{cardCode}")
+            "where cardCode = #{cardCode} and eveTime =#{eveTime}")
     Boolean updateMorCard(Card card);
 
     //更新数据
-    @Update("update checkCard set  eveTime=#{eveTime}, note=#{note} " +
-            "where cardCode = #{cardCode}")
+    @Update("update checkCard set eveTime=#{eveTime}, note=#{note} " +
+            "where cardCode = #{cardCode} and morTime=#{morTime} ")
     Boolean updateEveCard(Card card);
 
+    //清空表
+    @Update("truncate table checkCard")
+    Boolean delete();
 }

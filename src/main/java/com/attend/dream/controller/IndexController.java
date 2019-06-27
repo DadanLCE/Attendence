@@ -31,4 +31,7 @@ public class IndexController {
 
     @RequestMapping(value = "/showPun",method = RequestMethod.POST)
     public String showPun(){ return "punchCard_list"; }
+
+    @RequestMapping(value = "/showCheck",method = RequestMethod.POST)
+    public String showCheck(){ return "checkReport_list"; }
 }

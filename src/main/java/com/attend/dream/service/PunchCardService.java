@@ -12,10 +12,15 @@ public class PunchCardService {
 
     @Autowired(required = false)
     PunchCardMapper punchCardMapper;
+
     public List<Card> getGetAllCards() {
 
         List<Card> cards = punchCardMapper.getCardsByCode("");
         return cards;
     }
+
+
+
+
 
 }
