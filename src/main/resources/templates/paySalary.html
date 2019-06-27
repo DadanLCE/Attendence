@@ -1,0 +1,316 @@
+        <!DOCTYPE html>
+        <html>
+        <html  xmlns:th="http://www.thymeleaf.org">
+        <head>
+            <meta charset="UTF-8">
+            <title>派薪单</title>
+            <!--<meta name="renderer" content="webkit">-->
+            <!--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">-->
+            <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">-->
+            <link rel="stylesheet" href="/css/font.css" >
+            <link rel="stylesheet" href="/css/weadmin.css" >
+            <link rel="stylesheet" href="/layui/css/layui.css" >
+            <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+            <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+            <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+            <script src="/layui/layui.js" charset="utf-8" ></script>
+            <script src="/js/eleDel.js" type="text/javascript" charset="utf-8" ></script>
+            <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+            <style type="text/css">
+                .close{
+                    width: 100px;
+                    height: 50px;
+                }
+                .btn-primary{
+                    width: 113px;
+                    height: 38px;
+                    border-radius: 0;
+                    font-size: 14px;
+                }
+                .btn-info{
+                    float: left;
+                    margin-right: 15px;
+                }
+                #form1{
+                    float: left;
+                }
+                .close{
+                    width: 100px;
+                    height: 50px;
+                }
+                .content{
+                    float: left;
+                    padding: 1.875em;
+                    width: 100%;}
+            </style>
+
+        </head>
+        <body>
+
+        <div class="content">
+            <div class="layui-row">
+                <div class="layui-inline">
+                    <input type="text" id="searchId" placeholder="请输入人员编码" autocomplete="off" class="layui-input" >
+                </div>
+                <button class="layui-btn" lay-submit="" lay-filter="sreach" onclick="loadData(document.getElementById('searchId').value, 0, 5)"><i class="layui-icon">&#xe615;</i></button>
+
+            </div>
+            <div class="weadmin-block">
+                <button class="layui-btn layui-btn-danger" onclick="empsDelete()"><i class="layui-icon"></i>批量删除</button>
+
+                <button class="btn btn-primary btn-lg" id="addEmpButton"  data-toggle="modal" data-target="#addEmpPage">
+                    添加用户
+                </button>
+
+
+
+                <span class="fr" style="line-height:40px"></span>
+            </div>
+            <!--显示员工-->
+            <table class="layui-table" id="memberList" >
+                <thead>
+                <tr>
+
+                    <th>
+                        <input type="checkbox" />
+                    </th>
+                    <th>ID</th>
+                    <th>领薪人编码</th>
+                    <th>领薪人姓名</th>
+                    <th>薪水</th>
+                    <th>计算开始日期</th>
+                    <th>计算结束日期</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody id="tbody" >
+
+                </tbody>
+            </table>
+
+        </div>
+
+        <!--隐藏窗口，点击button弹出编辑页面-->
+        <div class="modal fade" id="updateEmpPage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            编辑
+                        </h4>
+                    </div>
+                    <div class="weadmin-body">
+                        <form class="layui-form" action="/emp/updateEmp" method="post">
+                            <p style="color:red">更新</p>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">
+                                    <span class="we-red">*</span>领薪人
+                                </label>
+                                <div class="layui-input-inline">
+                                    <input type="text" id="updateempCode" name="empCode" readonly="readonly" lay-verify="required|nikename" autocomplete="off" class="layui-input">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">
+                                    *不可编辑
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label  class="layui-form-label">
+                                    <span class="we-red">*</span>领薪时间
+                                </label>
+                                <div class="layui-input-inline">
+                                    <input type="text" id="updateempName" name="empName" lay-verify="required|name" autocomplete="" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label  class="layui-form-label">
+                                    <span class="we-red">*</span>领薪区间
+                                </label>
+                                <div class="layui-input-inline">
+                                    <input type="text" id="updateempAge" name="empAge" autocomplete="off" class="layui-input" placeholder="开始日期"></br>
+                                    <input type="text" id="updateempAge1" name="empAge" autocomplete="off" class="layui-input" placeholder="结束日期">
+                                </div>
+
+                            </div>
+                            <div class="layui-form-item">
+                                <label  class="layui-form-label">
+                                    <span class="we-red">*</span>薪水
+                                </label>
+                                <div class="layui-input-inline">
+                                    <input type="text" id="updateempNation" name="empNation" lay-verify="required|nation" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label  class="layui-form-label">
+                                </label>
+                                <button onclick="updateConfirm()" class="layui-btn" lay-filter="add" lay-submit="">确定</button>
+
+                                <!--隐藏button-->
+                                <button type="button" class="btn btn-default" style="display:none" data-dismiss="modal" id="closeupdatemodel">关闭</button>
+
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
+        <!--隐藏窗口，点击button弹出添加页面-->
+        <div class="modal fade" id="addEmpPage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h2 class="modal-title">
+                            新增用户
+                        </h2>
+
+                    </div>
+                    <div class="weadmin-body">
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">
+                                <span class="we-red">*</span>领薪人
+                            </label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="addEmpCode" name="empCode" lay-verify="required|nikename" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label  class="layui-form-label">
+                                <span class="we-red">*</span>领薪时间
+                            </label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="addEmpName" name="empName" lay-verify="required|name" autocomplete="" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label  class="layui-form-label">
+                                <span class="we-red">*</span>领薪区间
+                            </label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="addEmpAge" name="empAge" autocomplete="off" class="layui-input" placeholder="开始日期"></br>
+                                <input type="text" id="addEmpAge" name="empAge" autocomplete="off" class="layui-input" placeholder="结束日期">
+                            </div>
+
+                        </div>
+                        <div class="layui-form-item">
+                            <label  class="layui-form-label">
+                                <span class="we-red">*</span>薪水
+                            </label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="addEmpNation" name="empNation" lay-verify="required|nation" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label  class="layui-form-label">
+                            </label>
+                            <button class="layui-btn" onclick="addAjax()" id="confirmAdd" lay-filter="add" lay-submit="">确定</button>
+
+                            <!--隐藏button-->
+                            <button type="button" class="btn btn-default" style="display:none" data-dismiss="modal" id="closemodel">关闭</button>
+
+                        </div>
+                        <!--</form>-->
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
+
+        <!-- 分页 -->
+        <div id='ulList' class="page">
+
+        </div>
+
+
+        <!-- ***************************************************************** -->
+
+            <!--获取显示员工-->
+            <script th:inline="none">
+                var currentPage = 0;
+                function loadData(key,page, pageSize) {
+                    $.ajax({
+                        type: 'POST',
+                        url: "/pay",
+                        dataType: "json",
+                        data: {empCode: key,
+                            pageSize:5,
+                            currentPage:page},
+                        success: function (data) {
+
+                            $("#tbody").html("");
+                            // $("#ulList").html("");
+                            var tabledata = data['pays'];
+                            jQuery.each(tabledata, function (i, list) {
+                                var time = list['startDay'].toString();
+                                var atime = time.split("T");
+                                var yd = atime[0];
+                                var btime = atime[1].split(".");
+                                var ctime = btime[0].split(":");
+                                var hour = parseInt(ctime[0])+8;
+                                var min = ctime[1];
+
+                                var etime = list['endDay'].toString();
+                                var eatime = etime.split("T");
+                                var eyd = eatime[0];
+                                var ebtime = eatime[1].split(".");
+                                var ectime = ebtime[0].split(":");
+                                var ehour = parseInt(ectime[0])+8;
+                                var emin = ectime[1];
+
+                                var tr="";
+                                tr+="<tr>"+
+                                    "<td><input name=\"empsDelete\" value=" + list['id'] + " type=\"checkbox\" /></td>"+
+                                    "<td>" + list['id'] + "</td>"+
+                                    "<td>" + list['empCode'] + "</td>"+
+                                    "<td>" + list['name'] + "</td>"+
+                                    "<td>" + list['salary'] + "</td>"+
+                                    "<td>" + yd+ "&nbsp;" + hour + ":"+ min + "</td>"+
+                                    "<td>" + eyd+ "&nbsp;" + ehour + ":"+ emin + "</td>"+
+                                    "<td class=\"td-manage\">"+
+                                    "<button  class=\"btn btn-info btn-sm left\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
+                                    "编辑用户"+
+                                    "</button>"+
+                                    "<button class='btn btn-danger btn-sm' onclick=\"empDelete(this)\" type=\"submit\" id="+ list['id'] +
+                                    " >删除</button>"+
+                                    "</td></tr>";
+
+                                $("#tbody").append(tr);
+                            });
+                            $("#ulList").html('');
+                            var li="<a class=\"num\" onclick='loadData(\"\","+(currentPage-1)+","+5+")'><<</a>";
+                            for (var i = 1; i <= data['pageNum']; i++) {
+                                if (i==currentPage){
+                                    li+="<a class=\"current\" class='active' onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
+                                }
+                                else {
+                                    li+="<a class=\"num\" onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
+                                }
+                            }
+                            li+="<a class=\"num\" onclick='loadData(\"\","+(currentPage+1)+","+5+")'>>></a>";
+                            $("#ulList").append(li);
+                            // console.log(tr);
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(XMLHttpRequest.status);
+                            console.log(XMLHttpRequest.readyState);
+                            console.log(textStatus);
+                        }
+                    });
+                }
+
+                $(document).ready(function () {
+                    loadData('', 1, 5);
+                })
+
+            </script>
+        </body>
+
+        </html>

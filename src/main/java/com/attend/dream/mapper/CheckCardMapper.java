@@ -1,10 +1,7 @@
 package com.attend.dream.mapper;
 
 import com.attend.dream.domain.Card;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.Date;
 import java.util.List;
@@ -15,6 +12,11 @@ public interface CheckCardMapper {
     @Select("select id, cardCode, name, eveTime,morTime, note " +
             "from checkCard where id = #{id}  ")
     Card getCardById(int id);
+
+    //通过cardCode来查询 打卡单 单条数据
+    @Select("select id, cardCode, name, eveTime,morTime, note " +
+            "from checkCard where cardCode = #{cardCode}  ")
+    List<Card> getCardByCode(String cardCode);
 
 
 
@@ -35,10 +37,14 @@ public interface CheckCardMapper {
             " and morTime between #{preDate} and #{nextDate}")
     List<Card> getCardsByCodeTime(@Param("cardCode")String cardCode, @Param("preDate") Date preDate, @Param("nextDate") Date nextDate);
 
-
     //开始时间和结束时间的模糊查询
     @Select("select *" +
             "from checkCard where cardCode like concat('%',#{cardCode},'%')" +
             " and morTime between #{preDate} and #{nextDate}")
     List<Card> TestTest(@Param("cardCode")String cardCode, @Param("preDate") Date preDate, @Param("nextDate") Date nextDate);
+
+    @Update("update checkCard set morTime=#{morTime}, note=#{note} " +
+            "where cardCode = #{cardCode} and eveTime =#{eveTime}")
+    Boolean updateMorCard(Card card);
+
 }

@@ -85,7 +85,7 @@
                     <th>打卡人编码</th>
                     <th>打卡人姓名</th>
                     <th>打卡日期</th>
-                    <th>操作</th>
+<!--                    <th>操作</th>-->
                 </tr>
                 </thead>
                 <tbody id="tbody" >
@@ -150,7 +150,7 @@
                         data: {
                             cardCode: code,
                             name: name,
-                            date: year + "/" + month + "/" + date + " " + hour + ":" + min
+                            morTime: year + "/" + month + "/" + date + " " + hour + ":" + min
                         },
                         success: function () {
                             alert("早上打卡成功");
@@ -168,7 +168,7 @@
                         data: {
                             cardCode: code,
                             name: name,
-                            date: year + "/" + month + "/" + date + " " + hour + ":" + min
+                            eveTime: year + "/" + month + "/" + date + " " + hour + ":" + min
                         },
                         success: function () {
                             alert("下午打卡成功");
@@ -200,31 +200,55 @@
                         // $("#ulList").html("");
                         var tabledata = data['puns'];
                         jQuery.each(tabledata, function (i, list) {
-                            var time = list['date'].toString();
-                            var atime = time.split("T");
-                            var yd = atime[0];
-                            var btime = atime[1].split(".");
-                            var ctime = btime[0].split(":");
-                            var hour = ctime[0];
-                            var min = ctime[1];2
                             var tr="";
-                            tr+="<tr>"+
-                                "<td><input name=\"\" value=" + list['id'] + " type=\"checkbox\" /></td>"+
-                                "<td>" + list['id'] + "</td>"+
-                                "<td>" + list['cardCode'] + "</td>"+
-                                "<td>" + list['name'] + "</td>"+
-                                "<td>" + yd+ "&nbsp;" + hour + ":"+ min + "</td>"+
-                                "<td class=\"td-manage\">"+
-                                "<button class=\"btn btn-info btn-sm left\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
-                                "编 辑"+
-                                "</button>"+
-                                "<form id=\"form1\" action=\"/test/" + list['id'] + " method=\"post\" >"+
-                                "<input type=\"hidden\" name=\"_method\" value=\"delete\" />"+
-                                "<button  type=\"submit\"  class=\"btn btn-danger btn-sm right\">删 除</button>"+
-                                "</form>"+
-                                "</td></tr>";
+                            var tre="";
+                            if(list['morTime'] !=null ) {
+                                var time = list['morTime'].toString();
+                                var atime = time.split("T");
+                                var yd = atime[0];
+                                var btime = atime[1].split(".");
+                                var ctime = btime[0].split(":");
+                                var hour = parseInt(ctime[0])+8;
+                                var min = ctime[1];
+                                tr+="<tr>"+
+                                    "<td><input name=\"\" value=" + list['id'] + " type=\"checkbox\" /></td>"+
+                                    "<td>" + list['id'] + "</td>"+
+                                    "<td>" + list['cardCode'] + "</td>"+
+                                    "<td>" + list['name'] + "</td>"+
+                                    "<td>" + yd+ "&nbsp;" + hour + ":"+ min + "</td>"+
+                                    "<td class=\"td-manage\">"+
+                                    // "<button class=\"btn btn-info btn-sm left\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
+                                    // "编 辑"+
+                                    // "</button>"+
+                                    // "<button  type=\"submit\"  class=\"btn btn-danger btn-sm right\">删 除</button>"+
+                                    "</tr>";
+                                $("#tbody").append(tr);
+                            }
+                            if(list['eveTime'] != null) {
+                                var etime = list['eveTime'].toString();
+                                var eatime = etime.split("T");
+                                var eyd = eatime[0];
+                                var ebtime = eatime[1].split(".");
+                                var ectime = ebtime[0].split(":");
+                                var ehour = parseInt(ectime[0])+8;
+                                var emin = ectime[1];
+                                tre+="<tr>"+
+                                    "<td><input name=\"\" value=" + list['id'] + " type=\"checkbox\" /></td>"+
+                                    "<td>" + list['id'] + "</td>"+
+                                    "<td>" + list['cardCode'] + "</td>"+
+                                    "<td>" + list['name'] + "</td>"+
+                                    "<td>" + eyd+ "&nbsp;" + ehour + ":"+ emin + "</td>"+
+                                    // "<td class=\"td-manage\">"+
+                                    // "<button class=\"btn btn-info btn-sm left\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
+                                    // "编 辑"+
+                                    // "</button>"+
+                                    // "<button  type=\"submit\"  class=\"btn btn-danger btn-sm right\">删 除</button>"+
+                                    "</tr>";
+                                $("#tbody").append(tre);
+                            }
 
-                            $("#tbody").append(tr);
+
+
                         });
                         // $("#ulList").html('');
                         // var li="<a class=\"num\" onclick='loadData(\"\","+(currentPage-1)+","+5+")'><<</a>";
