@@ -30,10 +30,10 @@ public class CheckReportService {
         List<Card> specialRecord = punchCardMapper.getCardsByCodeTime(cardCode,preDate,nextDate);
         return specialRecord;
     }
-
-    public Card getCardBycardCode(String cardCode) {
-        return punchCardMapper.getCardByCardCode(cardCode);
-    }
+//
+//    public Card getCardBycardCode(String cardCode) {
+//        return punchCardMapper.getCardByCardCode(cardCode);
+//    }
 
     public int insetMorTime(Card card) {
         return punchCardMapper.insertMorCard(card);
