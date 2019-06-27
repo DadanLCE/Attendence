@@ -142,97 +142,45 @@
 <!--<script type="text/javascript">-->
 
 
-<!--编辑功能回显ajax-->
-<script type="text/javascript">
-    var url = window.location.href;
-    //var location = ;
-    //alert(location);
-    var id  = url.substring(url.lastIndexOf("=")+1,url.length);
-    //alert("取id"+id);
-    function clickEdit(data) {
-        var clickId = data.id;
-        $(document).ready(function () {
-            var subUrl = "/emp/getEmpById/";
-            var now = subUrl + clickId;
-            $.ajax({
-                type: "get",
-                url: now,
-                success: function (emp) {
-                    var empId = emp.id;
-                    //var weaBody = $("weadmin-body");
-                    var inputCode = $("#empCode");
-                    var inputName = $("#empName");
-                    var inputAge = $("#empAge");
-                    var inputNation = $("#empNation");
-                    var inputIdCard = $("#empIdCard");
-                    var inputSalary = $("#empSalary");
-                    var inputTel = $("#empTel");
-                    var inputCTel = $("#empCTel");
-                    var inputStaCode = $("#empStaCode");
-                    var inputNote = $("#empNote");
-                    inputCode.attr('value', emp.empCode);
-                    inputName.attr('value', emp.empName);
-                    inputAge.attr('value', emp.empAge);
-                    inputNation.attr('value', emp.empNation);
-                    inputIdCard.attr('value', emp.empIdCard);
-                    inputSalary.attr('value', emp.empSalary);
-                    inputTel.attr('value', emp.empTel);
-                    inputCTel.attr('value',emp.empCTel);
-                    inputStaCode.attr('value', emp.empStaCode);
-                    inputNote.attr('value', emp.empNote);
-
-                },
-                error: function () {
-                    alert("ajax失败");
-                }
-            })
-
-
-        });
-    }
-</script>
 
 <script th:inline="none">
     var currentPage = 0;
     alert("checkreport");
-    function loadData(key,page, pageSize) {
+    function loadData(key,page, pageSize, preDate, nextDate) {
         $.ajax({
             type: 'POST',
-            url: "/emp",
+            url: "/get/all",
             dataType: "json",
-            data: {empName: key,
+            data: {
+                cardCode: key,
                 pageSize:5,
-                currentPage:page},
+                currentPage:page,
+                preDate:preDate,
+                nextDate:nextDate
+
+            }
+
+                ,
             success: function (data) {
-                var pageSum=data["pageSum"];
-                if (page<=0){
-                    currentPage=1;
-                }
-                else if (page>pageSum){
-                    currentPage=pageSum;
-                }
-                else {
-                    currentPage=page;
-                }
+
                 $("#tbody").html("");
                 // $("#ulList").html("");
-                var tabledata = data['emps'];
+                var tabledata = data['cards'];
                 jQuery.each(tabledata, function (i, list) {
                     var tr="";
                     tr+="<tr>"+
-                        "<td><input name=\"empsDelete\" value=" + list['empId'] + " type=\"checkbox\" /></td>"+
-                        "<td>" + list['empId'] + "</td>"+
-                        "<td>" + list['empCode'] + "</td>"+
-                        "<td>" + list['empName'] + "</td>"+
-                        "<td>" + list['empSex'] + "</td>"+
-                        "<td>" + list['empAge'] + "</td>"+
-                        "<td>" + list['empNation'] + "</td>"+
-                        "<td>" + list['empStaCode'] + "</td>"+
+                        "<td><input name=\"cardsDelete\" value=" + list['id'] + " type=\"checkbox\" /></td>"+
+                        "<td>" + list['id'] + "</td>"+
+                        "<td>" + list['cardCode'] + "</td>"+
+                        "<td>" + list['name'] + "</td>"+
+                        "<td>" + list['morTime'] + "</td>"+
+                        "<td>" + list['eveTime'] + "</td>"+
+                        "<td>" + list['note'] + "</td>"+
                         "<td class=\"td-manage\">"+
-                        "<button class=\"btn btn-info btn-sm left\" id="+ list['empId'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
+                        "<button class=\"btn btn-info btn-sm left\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
                         "编 辑"+
                         "</button>"+
-                        "<form id=\"form1\" action=\"/test/" + list['empId'] + " method=\"post\" >"+
+                        "<form id=\"form1\" action=\"/test/" + list['id'] + " method=\"post\" >"+
                         "<input type=\"hidden\" name=\"_method\" value=\"delete\" />"+
                         "<button  type=\"submit\"  class=\"btn btn-danger btn-sm right\">删 除</button>"+
                         "</form>"+
@@ -263,7 +211,7 @@
     }
 
     $(document).ready(function () {
-        loadData('', 1, 5);
+        loadData('', 1, 5,"1900/01/01 00:00","2099/01/01 00:00");
     })
 
 </script>

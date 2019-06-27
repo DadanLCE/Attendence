@@ -51,7 +51,7 @@ public interface CheckCardMapper {
     @Select("select *" +
             "from checkCard where cardCode like concat('%',#{cardCode},'%')" +
             " and morTime between #{preDate} and #{nextDate}")
-    List<Card> TestTest(@Param("cardCode")String cardCode, @Param("preDate") Date preDate, @Param("nextDate") Date nextDate);
+    List<Card> search(@Param("cardCode")String cardCode, @Param("preDate") Date preDate, @Param("nextDate") Date nextDate);
 
     //更新数据
     @Update("update checkCard set  eveTime=#{eveTime}, morTime=#{morTime}, note=#{note} " +
