@@ -36,6 +36,10 @@ public class RepairCardService {
         return "1";
     }
 
+    //删除单个补卡记录
+    public void deleteRepairCard(int id){
+        repairCardMapper.deleteCard(id);
+    }
 
 
 

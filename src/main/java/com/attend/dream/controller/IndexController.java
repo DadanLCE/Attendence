@@ -14,7 +14,6 @@ public class IndexController {
         return "employee_list";
     }
 
-
     @RequestMapping(value = "/showWel",method = RequestMethod.POST)
     public String showWel(){ return "welcome";}
 
@@ -32,6 +31,12 @@ public class IndexController {
     @RequestMapping(value = "/showPun",method = RequestMethod.POST)
     public String showPun(){ return "punchCard_list"; }
 
-    @RequestMapping(value = "/showCheck",method = RequestMethod.POST)
-    public String showCheck(){ return "checkReport_list"; }
+    @RequestMapping(value = "/showRep",method = RequestMethod.POST)
+    public String showRep(){ return "repairCard_list"; }
+
+    @RequestMapping(value = "/showPay",method = RequestMethod.POST)
+    public String showPay(){ return "paySalary"; }
+
+    @RequestMapping(value = "/showChec",method = RequestMethod.POST)
+    public String showChec(){ return "checkReport_list"; }
 }
