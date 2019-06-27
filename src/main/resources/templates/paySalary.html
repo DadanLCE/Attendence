@@ -51,7 +51,7 @@
         <div class="content">
             <div class="layui-row">
                 <div class="layui-inline">
-                    <input type="text" id="searchId" placeholder="请输入人员编码或名称" autocomplete="off" class="layui-input" >
+                    <input type="text" id="searchId" placeholder="请输入人员编码" autocomplete="off" class="layui-input" >
                 </div>
                 <button class="layui-btn" lay-submit="" lay-filter="sreach" onclick="loadData(document.getElementById('searchId').value, 0, 5)"><i class="layui-icon">&#xe615;</i></button>
 
@@ -232,267 +232,85 @@
 
         <!-- ***************************************************************** -->
 
-
-        <!--批量删除-->
-        <script type="text/javascript">
-            function empDelete(data) {
-                var clickId = data.id;
-                $(document).ready(function () {
-                    var subUrl = "/emp/delEmpById/";
-                    var now = subUrl + clickId;
+            <!--获取显示员工-->
+            <script th:inline="none">
+                var currentPage = 0;
+                function loadData(key,page, pageSize) {
                     $.ajax({
-                        type: "post",
-                        url: now,
-                        data:clickId,
-                        success: function (emp) {
-                            alert("删除成功");
-                            loadData('', 1, 5);
-                        },
-                        error: function () {
-                            alert("删除失败");
-                        }
-                    })
-                })
-            }
+                        type: 'POST',
+                        url: "/pay",
+                        dataType: "json",
+                        data: {empCode: key,
+                            pageSize:5,
+                            currentPage:page},
+                        success: function (data) {
 
-            function empsDelete() {
+                            $("#tbody").html("");
+                            // $("#ulList").html("");
+                            var tabledata = data['pays'];
+                            jQuery.each(tabledata, function (i, list) {
+                                var time = list['startDay'].toString();
+                                var atime = time.split("T");
+                                var yd = atime[0];
+                                var btime = atime[1].split(".");
+                                var ctime = btime[0].split(":");
+                                var hour = parseInt(ctime[0])+8;
+                                var min = ctime[1];
 
-                if (confirm("确定删除选中的用户？")) {
-                    var userList = new Array();
-                    $("input[name='empsDelete']:checked").each(function () {
-                        userList.push($(this).val());
-                    });
-                    $.ajax({
-                        type: "post",
-                        url: "/emp/delEmps",
-                        data: {userList: userList.toString()},
-                        success: function () {
-                            alert("删除成功！");
-                            loadData('', 1, 5);
+                                var etime = list['endDay'].toString();
+                                var eatime = etime.split("T");
+                                var eyd = eatime[0];
+                                var ebtime = eatime[1].split(".");
+                                var ectime = ebtime[0].split(":");
+                                var ehour = parseInt(ectime[0])+8;
+                                var emin = ectime[1];
+
+                                var tr="";
+                                tr+="<tr>"+
+                                    "<td><input name=\"empsDelete\" value=" + list['id'] + " type=\"checkbox\" /></td>"+
+                                    "<td>" + list['id'] + "</td>"+
+                                    "<td>" + list['empCode'] + "</td>"+
+                                    "<td>" + list['name'] + "</td>"+
+                                    "<td>" + list['salary'] + "</td>"+
+                                    "<td>" + yd+ "&nbsp;" + hour + ":"+ min + "</td>"+
+                                    "<td>" + eyd+ "&nbsp;" + ehour + ":"+ emin + "</td>"+
+                                    "<td class=\"td-manage\">"+
+                                    "<button  class=\"btn btn-info btn-sm left\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
+                                    "编辑用户"+
+                                    "</button>"+
+                                    "<button class='btn btn-danger btn-sm' onclick=\"empDelete(this)\" type=\"submit\" id="+ list['id'] +
+                                    " >删除</button>"+
+                                    "</td></tr>";
+
+                                $("#tbody").append(tr);
+                            });
+                            $("#ulList").html('');
+                            var li="<a class=\"num\" onclick='loadData(\"\","+(currentPage-1)+","+5+")'><<</a>";
+                            for (var i = 1; i <= data['pageNum']; i++) {
+                                if (i==currentPage){
+                                    li+="<a class=\"current\" class='active' onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
+                                }
+                                else {
+                                    li+="<a class=\"num\" onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
+                                }
+                            }
+                            li+="<a class=\"num\" onclick='loadData(\"\","+(currentPage+1)+","+5+")'>>></a>";
+                            $("#ulList").append(li);
+                            // console.log(tr);
                         },
-                        error: function () {
-                            alert("刪除失败！")
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(XMLHttpRequest.status);
+                            console.log(XMLHttpRequest.readyState);
+                            console.log(textStatus);
                         }
                     });
                 }
-            }
 
-        </script>
-
-        <!--编辑功能回显ajax-->
-        <script type="text/javascript">
-            var url = window.location.href;
-            var id  = url.substring(url.lastIndexOf("=")+1,url.length);
-            function clickEdit(data) {
-                var clickId = data.id;
                 $(document).ready(function () {
-                    var subUrl = "/emp/getEmpById/";
-                    var now = subUrl + clickId;
-                    $.ajax({
-                        type: "get",
-                        url: now,
-                        success: function (emp) {
-
-                            var inputCode = $("#updateempCode");
-                            var inputName = $("#updateempName");
-                            var inputAge = $("#updateempAge");
-                            var inputNation = $("#updateempNation");
-                            var inputIdCard = $("#updateempIdCard");
-                            var inputSalary = $("#updateempSalary");
-                            var inputTel = $("#updateempTel");
-                            var inputCTel = $("#updateempCTel");
-                            var inputStaCode = $("#updateempStaCode");
-                            var inputNote = $("#updateempNote");
-                            inputCode.val(emp.empCode);
-                            inputName.val(emp.empName);
-                            inputAge.attr('value', emp.empAge);
-                            inputNation.attr('value', emp.empNation);
-                            inputIdCard.attr('value', emp.empIdCard);
-                            inputSalary.attr('value', emp.empSalary);
-                            inputTel.attr('value', emp.empTel);
-                            inputCTel.attr('value',emp.empCTel);
-                            inputStaCode.attr('value', emp.empStaCode);
-                            inputNote.attr('value', emp.empNote);
-
-                        },
-                        error: function () {
-                            alert("ajax失败");
-                        }
-                    })
-
-
-                });
-            }
-        </script>
-
-        <!--编辑确认提交-->
-        <script type="text/javascript">
-            function updateConfirm() {
-                alert("进入updateConfirm");
-                var empCode = $("#updateempCode").val();
-                var empName = $("#updateempName").val();
-                var empAge = $("#updateempAge").val();
-                var empNation = $("#updateempNation").val();
-                var empSalary = $("#updateempSalary").val();
-                var empContact = $("#updateempContact").val();
-                var empCTel = $("#updateempCTel").val();
-                var empStaCode = $("#updateempStaCode").val();
-                var empNote = $("#updateempNote").val();
-
-                alert(empName);
-                alert(empAge);
-                alert(empSalary);
-                $.ajax({
-                    type : "post",
-                    url : "/emp/updateEmp",
-                    data : {
-
-                        empCode : empCode,
-                        empName	:  empName,
-                        empAge	:  empAge,
-                        empNation	:  empNation,
-                        empSalary	:  empSalary,
-                        empContact	:  empContact,
-                        empCTel	:  empCTel,
-                        empStaCode	:  empStaCode,
-                        empNote	:  empNote
-
-                    },
-                    success : function (fallBack) {
-                        alert("后端传值成功"+fallBack);
-                        if (fallBack === '1') {
-                            alert("编辑成功");
-                            $("#closeupdatemodel").click();
-                            loadData('', 1, 5);
-                        } else {
-                            alert("出现意外了^_^");
-                        }
-                    },
-                    error : function () {
-                        alert("编辑确认error");
-                    }
-                });
-            }
-        </script>
-
-        <!--获取显示员工-->
-        <script th:inline="none">
-            var currentPage = 0;
-
-            function loadData(key,page, pageSize) {
-                $.ajax({
-                    type: 'POST',
-                    url: "/emp",
-                    dataType: "json",
-                    data: {empName: key,
-                        pageSize:5,
-                        currentPage:page},
-                    success: function (data) {
-
-                        $("#tbody").html("");
-                        // $("#ulList").html("");
-                        var tabledata = data['emps'];
-                        jQuery.each(tabledata, function (i, list) {
-                            var tr="";
-                            tr+="<tr>"+
-                                "<td><input name=\"empsDelete\" value=" + list['empId'] + " type=\"checkbox\" /></td>"+
-                                "<td>" + list['empId'] + "</td>"+
-                                "<td>" + list['empCode'] + "</td>"+
-                                "<td>" + list['empName'] + "</td>"+
-                                "<td>" + list['empSex'] + "</td>"+
-                                "<td>" + list['empAge'] + "</td>"+
-                                "<td>" + list['empNation'] + "</td>"+
-                                "<td>" + list['empStaCode'] + "</td>"+
-                                "<td class=\"td-manage\">"+
-                                "<button  class=\"btn btn-info btn-sm left\" id="+ list['empId'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
-                                "编辑用户"+
-                                "</button>"+
-                                "<button class='btn btn-danger btn-sm' onclick=\"empDelete(this)\" type=\"submit\" id="+ list['empId'] +
-                                " >删除</button>"+
-                                "</td></tr>";
-
-                            $("#tbody").append(tr);
-                        });
-                        $("#ulList").html('');
-                        var li="<a class=\"num\" onclick='loadData(\"\","+(currentPage-1)+","+5+")'><<</a>";
-                        for (var i = 1; i <= data['pageNum']; i++) {
-                            if (i==currentPage){
-                                li+="<a class=\"current\" class='active' onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
-                            }
-                            else {
-                                li+="<a class=\"num\" onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
-                            }
-                        }
-                        li+="<a class=\"num\" onclick='loadData(\"\","+(currentPage+1)+","+5+")'>>></a>";
-                        $("#ulList").append(li);
-                        // console.log(tr);
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        console.log(XMLHttpRequest.status);
-                        console.log(XMLHttpRequest.readyState);
-                        console.log(textStatus);
-                    }
-                });
-            }
-
-            $(document).ready(function () {
-                loadData('', 1, 5);
-            })
-
-        </script>
-
-        <!--添加用户-->
-        <script type="text/javascript">
-            function addAjax() {
-                var empCode = document.getElementById('addEmpCode').value;
-                var empName = document.getElementById('addEmpName').value;
-                var empAge = document.getElementById('addEmpAge').value;
-                var empNation = document.getElementById('addEmpNation').value;
-                var empIdCard = document.getElementById('addEmpIdCard').value;
-                var empSalary = document.getElementById('addEmpSalary').value;
-                var empContact = document.getElementById('addEmpContact').value;
-                var empCTel = document.getElementById('addEmpCTel').value;
-                var empStaCode = document.getElementById('addEmpStaCode').value;
-                var empNote = document.getElementById('addEmpNote').value;
-
-                $.ajax({
-                    type : "post",
-                    url : "/emp/addEmployee",
-                    data : {
-
-                        empCode	:  empCode,
-                        empName	:  empName,
-                        empAge	:  empAge,
-                        empNation	:  empNation,
-                        empIdCard	:  empIdCard,
-                        empSalary	:  empSalary,
-                        empContact	:  empContact,
-                        empCTel	:  empCTel,
-                        empStaCode	:  empStaCode,
-                        empNote	:  empNote
-
-                    },
-                    success : function (fallBack) {
-
-                        if ( fallBack === '1' ) {
-                            $("#closemodel").click();
-                            loadData('', 1, 5);
-                        } else if ( fallBack === '2') {
-                            alert ("员工编码已存在，请重来，(?ω?)");
-                        } else if (fallBack === '3' ) {
-                            alert("暂时还没有这个岗位！！！(?ω?)");
-                        } else {
-                            alert('哎呀，出现意外了！')	;
-                        }
-
-                    },
-                    error : function () {
-                        alert("传值失败");
-                    }
+                    loadData('', 1, 5);
                 })
 
-            };
-        </script>
+            </script>
         </body>
 
         </html>

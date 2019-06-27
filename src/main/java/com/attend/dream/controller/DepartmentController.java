@@ -21,29 +21,6 @@ public class DepartmentController {
     @Autowired
     DepartmentService departmentService;
 
-//    //显示全部部门
-//    @RequestMapping("/department")
-//    public String list(Model model, @RequestParam(value = "currentPage") int currentPage,
-//    @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, @RequestParam(value = "depCode") String depCode){
-////        Collection<Department> departments= departmentService.getDepartments();
-//        List<Department> deps = departmentService.getDepartmentsByDepCode(currentPage, pageSize, depCode);
-//        PageInfo<Department> depsPage = departmentService.getDepartmentsByDepCodePage(currentPage, pageSize, depCode);
-//
-//        //传递depCode到department_list 的下一页和上一页
-//        model.addAttribute("depCode", depCode);
-//        model.addAttribute("deps", deps);
-//        model.addAttribute("depsPage", depsPage);
-//        return "department_list";
-//    }
-
-
-//    //根据编码查询单个部门
-//    @PostMapping("/dep/get")
-//    public String getDepartmentsByDepCode(@RequestParam(value = "depCode") String depCode, Model model){
-//        List<Department> departments = departmentService.getDepartmentsByDepCode(depCode);
-//        model.addAttribute("deps",departments);
-//        return "department_list";
-//    }
 
     //删除单个部门
     @PostMapping("/dep/delDepById/{id}")

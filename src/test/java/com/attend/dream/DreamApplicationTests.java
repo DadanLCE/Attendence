@@ -149,29 +149,106 @@ public class DreamApplicationTests {
 //        CardMor cardMor = cardMorMapper.getCardMorByCode("AA");
 
     }
+
+    public static int countTime(Date preDate, Date nextDate)
+    {
+        int days = (int) ((nextDate.getTime() - preDate.getTime()) / (1000*3600*24));
+        return days;
+    }
+
     @Autowired
     private  CheckCardMapper checkCardMapper;
     @Test
     public void rCard(){
                 Date date = null;
         Date date2 = null;
+
 //        注意format的格式要与日期String的格式相匹配
-        String dateStr = "2019-08-01 00:00:00";
-        String dateStr2 = "2019-08-20 00:00:00";
+        String dateStr = "2019-06-26 00:00:00";
+        String dateStr2 = "2019-06-26 00:00:00";
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             date = sdf.parse(dateStr);
             date2 = sdf.parse(dateStr2);
-            System.out.println(date2.toString());
-            System.out.println(date.toString());
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-        List<Card> list = checkCardMapper.getCardsByCodeTime("",date, date2);
+        List<Card> list = checkCardMapper.TestTest("W",date,date2);
         System.out.println(list);
     }
+    @Autowired
+    private PayMapper payMapper;
 
+    @Test
+    public void ss(){
+        Card card = checkCardMapper.getCardById(200);
+
+        Date date = null;
+//        注意format的格式要与日期String的格式相匹配
+        String dateStr = "2222-08-01 00:00:00";
+        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            date = sdf.parse(dateStr);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        card.setMorTime(date);
+        card.setNote("llllll");
+        System.out.println("date"+date);
+        System.out.println(card.getEveTime());
+        checkCardMapper.updateMorCard(card);
+    }
+
+    public void salaryAAAA(){
+//        int days = countTime(preDate, nextDate);
+        String empCode = "sad";
+        int[] k = new int[12];//旷工
+        int[] d = new int[12];//迟到
+        int[] z = new int[12];//准时
+        Pay pay = new Pay();
+        List<Card> cards = checkCardMapper.getCardByCode(empCode);
+
+        Date edate = cards.get(0).getMorTime(); //最早时间
+        Date ldate = cards.get(0).getEveTime(); //最晚时间
+        int flag = edate.getMonth();
+        for(Card a : cards){
+            if(edate.compareTo(a.getMorTime())!= -1){
+                edate = a.getMorTime();
+            }
+        }
+        System.out.println(edate);
+        for(Card a : cards){
+            if(ldate.compareTo(a.getMorTime())== -1){
+                ldate = a.getMorTime();
+            }
+        }
+        System.out.println(ldate);
+
+        //flag初始值为开始计算工资的月份，结束值为最后计算工资的月份
+        //从最早月份开始遍历
+        for(int i = edate.getMonth();i <= ldate.getMonth();i++){
+                z[i]=0;k[i]=0;d[i]=0;
+            for(Card c : cards){
+                if(c.getNote()!=null) {
+                    if (c.getMorTime().getMonth() == i) {
+                        if (c.getNote().equals("旷工")) {
+                            k[flag]++;
+                        } else if (c.getNote().equals("迟到")) {
+                            d[flag]++;
+                        } else {
+                            z[flag]++;
+                        }
+                    }
+                }
+            }
+
+        }
+
+        System.out.println(z[flag]+"---"+k[flag]+"---"+d[flag]);
+
+
+    }
 
 
 }
