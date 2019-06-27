@@ -18,13 +18,23 @@ public interface CheckCardMapper {
             "from checkCard where cardCode = #{cardCode}  ")
     List<Card> getCardByCode(String cardCode);
 
-
+    //插入早上打卡数据
+    @Insert("insert into checkCard (cardCode, name, morTime,note) " +
+            "values(#{cardCode},#{name},#{morTime}, #{note} ) ")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    int insertMorCard(Card card);
 
     //插入晚上打卡数据
-    @Insert("insert into checkCard (cardCode, name, morTime, eveTime,note) " +
-            "values(#{cardCode},#{name},#{morTime},#{eveTime} #{note} ) ")
+    @Insert("insert into checkCard (cardCode, name, eveTime,note) " +
+            "values(#{cardCode},#{name},#{eveTime} #{note} ) ")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int insertEveCard(Card card);
+
+    //插入数据
+    @Insert("insert into checkCard (cardCode, name, morTime, eveTime,note) " +
+            "values(#{cardCode},#{name},#{morTime},#{eveTime} ,#{note} ) ")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    int insertAllDayCard(Card card);
 
     //在打卡单  通过cardCode的 模糊查询
     @Select("select *" +
@@ -43,8 +53,22 @@ public interface CheckCardMapper {
             " and morTime between #{preDate} and #{nextDate}")
     List<Card> TestTest(@Param("cardCode")String cardCode, @Param("preDate") Date preDate, @Param("nextDate") Date nextDate);
 
+    //更新数据
+    @Update("update checkCard set  eveTime=#{eveTime}, morTime=#{morTime}, note=#{note} " +
+            "where cardCode = #{cardCode}")
+    Boolean updateCard(Card card);
+
+    //更新早上数据
     @Update("update checkCard set morTime=#{morTime}, note=#{note} " +
             "where cardCode = #{cardCode} and eveTime =#{eveTime}")
     Boolean updateMorCard(Card card);
 
+    //更新数据
+    @Update("update checkCard set eveTime=#{eveTime}, note=#{note} " +
+            "where cardCode = #{cardCode} and morTime=#{morTime} ")
+    Boolean updateEveCard(Card card);
+
+    //清空表
+    @Update("truncate table checkCard")
+    Boolean delete();
 }
