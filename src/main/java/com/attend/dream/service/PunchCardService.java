@@ -1,10 +1,5 @@
 package com.attend.dream.service;
-//
-//import com.attend.dream.domain.CardEve;
-//import com.attend.dream.domain.CardMor;
-//import com.attend.dream.mapper.CardEveMapper;
-//import com.attend.dream.mapper.CardMapper;
-//import com.attend.dream.mapper.CardMorMapper;
+
 import com.attend.dream.domain.Card;
 import com.attend.dream.mapper.PunchCardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +14,11 @@ public class PunchCardService {
     private PunchCardMapper punchCardMapper;
 
 
+
+    public List<Card> getGetAllCards() {
+        List<Card> cards = punchCardMapper.getCardsByCode("");
+        return cards;
+    }
     public List<Card> getCardAllByCode(String cardCode){
 
         List<Card> cards =punchCardMapper.getCardsByCode(cardCode);

@@ -50,6 +50,10 @@ public interface PunchCardMapper {
 //    @Delete("delete from cardMor where id=#{id}")
 //    Boolean deleteCard(int id);
 
+    //更新数据
+    @Update("update punchCard set  eveTime=#{eveTime}, morTime=#{morTime}, note=#{note} " +
+            "where cardCode = #{cardCode}")
+    Boolean updateCard1(Card card);
 
 
 
