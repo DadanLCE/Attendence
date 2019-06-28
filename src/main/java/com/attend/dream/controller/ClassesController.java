@@ -39,13 +39,13 @@ public class ClassesController {
 
     //批量删除
     @PostMapping("/cla/delClas")
-    public String empsDelete(String claList){
+    public String clasDelete(String claList){
 
         String[] strs = claList.split(",");
         for (int i = 0; i < strs.length; i++) {
             classesService.deleteCla(Integer.parseInt(strs[i]));
         }
-        return "redirect:/employee?currentPage=1";
+        return "";
 
     }
 
@@ -53,7 +53,7 @@ public class ClassesController {
     @PostMapping("/cla/delClaById/{id}")
     public String deleteClass(@PathVariable(value = "id") int claId){
         classesService.deleteCla(claId);
-        return "redirect:/employee?currentPage=1";
+        return "";
     }
 
     //添加
