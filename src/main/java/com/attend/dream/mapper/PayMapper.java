@@ -4,6 +4,7 @@ import com.attend.dream.domain.Pay;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+
 import java.util.List;
 
 public interface PayMapper {
@@ -18,5 +19,4 @@ public interface PayMapper {
 
     @Update("truncate table pay")
     Boolean delete();
-
 }

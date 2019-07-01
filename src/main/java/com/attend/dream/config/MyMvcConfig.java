@@ -20,9 +20,9 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
 //        registry.addViewController("/employee_list.html").setViewName("employee_list");
     }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        InterceptorRegistration res = registry.addInterceptor(new LoginHandlerInterceptor());
-        res.addPathPatterns("/**").excludePathPatterns("/login","/user/login","/");
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        InterceptorRegistration res = registry.addInterceptor(new LoginHandlerInterceptor());
+//        res.addPathPatterns("/**").excludePathPatterns("/login","/user/login","/");
+//    }
 }

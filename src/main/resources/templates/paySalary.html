@@ -272,8 +272,8 @@
                                     "<td>" + list['empCode'] + "</td>"+
                                     "<td>" + list['name'] + "</td>"+
                                     "<td>" + list['salary'] + "</td>"+
-                                    "<td>" + yd+ "&nbsp;" + hour + ":"+ min + "</td>"+
-                                    "<td>" + eyd+ "&nbsp;" + ehour + ":"+ emin + "</td>"+
+                                    "<td>" + yd+ "&nbsp;" + "</td>"+
+                                    "<td>" + eyd+ "&nbsp;" + "</td>"+
                                     "<td class=\"td-manage\">"+
                                     "<button  class=\"btn btn-info btn-sm left\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
                                     "编辑用户"+
@@ -299,6 +299,7 @@
                             // console.log(tr);
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert("请输入完整的职工编码！");
                             console.log(XMLHttpRequest.status);
                             console.log(XMLHttpRequest.readyState);
                             console.log(textStatus);
