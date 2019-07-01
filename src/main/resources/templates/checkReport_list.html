@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/css/weadmin.css" >
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="/js/moment.js" type="text/javascript" charset="utf-8" />
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../lib/layui/css/layui.css" th:href="@{/layui/css/layui.css.css}">
     <style type="text/css">
@@ -47,12 +48,12 @@
             <input type="text" id="searchId" placeholder="请输入员工名" autocomplete="off" class="layui-input" >
         </div>
         <div class="layui-inline">
-            <input class="layui-input" placeholder="开始日" name="start" id="start">
+            <input class="layui-input" placeholder="开始日" type="date" name="start" id="start">
         </div>
         <div class="layui-inline">
-            <input class="layui-input" placeholder="截止日" name="end" id="end">
+            <input class="layui-input" placeholder="截止日" type="date" name="end" id="end">
         </div>
-        <button class="layui-btn" lay-submit="" lay-filter="sreach" onclick="loadData(document.getElementById('searchId').value, 0, 5)"><i class="layui-icon">&#xe615;</i></button>
+        <button class="layui-btn" lay-submit="" lay-filter="sreach" onclick="loadData(document.getElementById('searchId').value, 0, 5,document.getElementById('start').value,document.getElementById('end').value)"><i class="layui-icon">&#xe615;</i></button>
         <!--				</form>-->
     </div>
     <!--显示考勤表-->
@@ -65,34 +66,14 @@
             </th>
             <th>ID</th>
             <th>员工编码</th>
-            <th>姓名</th>
-            <th>性别</th>
-            <th>年龄</th>
-            <th>民族</th>
-            <th>岗位</th>
-            <th>操作</th>
+            <th>员工姓名</th>
+            <th>早上上班时间</th>
+            <th>下午下班时间</th>
+            <th>出勤情况</th>
         </tr>
         </thead>
         <tbody id="tbody" >
-        <!--					<tr th:each="emp:${emps}">-->
-        <!--						<td><input name="empsDelete" th:value="${emp.empId}" type="checkbox" /></td>-->
-        <!--						<td th:text="${emp.empId}"></td>-->
-        <!--						<td th:text="${emp.empCode}"></td>-->
-        <!--						<td th:text="${emp.empName}"></td>-->
-        <!--						<td th:text="${emp.empSex}"></td>-->
-        <!--						<td th:text="${emp.empAge}"></td>-->
-        <!--						<td th:text="${emp.empNation}"></td>-->
-        <!--						<td th:text="${emp.empStaCode}"></td>-->
-        <!--						<td class="td-manage">-->
-        <!--							<button class="btn btn-primary btn-lg" th:id="${emp.empId}" onclick="clickEdit(this)" data-toggle="modal" data-target="#updateEmpPage">-->
-        <!--								编辑用户-->
-        <!--							</button>-->
-        <!--							<form th:action="@{/emp/}+${emp.empId}" method="post" >-->
-        <!--								<input type="hidden" name="_method" value="delete" />-->
-        <!--								<button  type="submit" >删除</button>-->
-        <!--							</form>-->
-        <!--						</td>-->
-        <!--					</tr>-->
+
         </tbody>
     </table>
 
@@ -145,64 +126,79 @@
 
 <script th:inline="none">
     var currentPage = 0;
-    alert("checkreport");
     function loadData(key,page, pageSize, preDate, nextDate) {
+        alert(document.getElementById('start').value);
+        alert(typeof document.getElementById('start').value);
+        alert(document.getElementById('searchId').value);
         $.ajax({
+
             type: 'POST',
             url: "/get/all",
             dataType: "json",
             data: {
+
                 cardCode: key,
                 pageSize:5,
                 currentPage:page,
                 preDate:preDate,
                 nextDate:nextDate
 
-            }
-
-                ,
+            },
             success: function (data) {
 
                 $("#tbody").html("");
                 // $("#ulList").html("");
                 var tabledata = data['cards'];
+
                 jQuery.each(tabledata, function (i, list) {
+                    var mortime = moment(list['morTime']).format("YYYY/MM/DD HH:mm");
+                    var evetime = moment(list['eveTime']).format("YYYY/MM/DD HH:mm");
                     var tr="";
                     tr+="<tr>"+
                         "<td><input name=\"cardsDelete\" value=" + list['id'] + " type=\"checkbox\" /></td>"+
                         "<td>" + list['id'] + "</td>"+
                         "<td>" + list['cardCode'] + "</td>"+
                         "<td>" + list['name'] + "</td>"+
-                        "<td>" + list['morTime'] + "</td>"+
-                        "<td>" + list['eveTime'] + "</td>"+
+                        "<td>" + mortime+ "</td>"+
+                        "<td>" + evetime + "</td>"+
                         "<td>" + list['note'] + "</td>"+
-                        "<td class=\"td-manage\">"+
-                        "<button class=\"btn btn-info btn-sm left\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
-                        "编 辑"+
-                        "</button>"+
-                        "<form id=\"form1\" action=\"/test/" + list['id'] + " method=\"post\" >"+
-                        "<input type=\"hidden\" name=\"_method\" value=\"delete\" />"+
-                        "<button  type=\"submit\"  class=\"btn btn-danger btn-sm right\">删 除</button>"+
-                        "</form>"+
-                        "</td></tr>";
+                        // "<td class=\"td-manage\">"+
+                        // "<button class=\"btn btn-info btn-sm left\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
+                        // "编 辑"+
+                        // "</button>"+
+                        // "<form id=\"form1\" action=\"/test/" + list['id'] + " method=\"post\" >"+
+                        // "<input type=\"hidden\" name=\"_method\" value=\"delete\" />"+
+                        // "<button  type=\"submit\"  class=\"btn btn-danger btn-sm right\">删 除</button>"+
+                        // "</form>"+
+                        "</tr>";
 
                     $("#tbody").append(tr);
                 });
+                if((document.getElementById("start").value != '') &&(document.getElementById("end").value != ''))
+                {
+                    var startPage = document.getElementById("start").value;
+                    var endPage = document.getElementById("end").value;
+                }else{
+                    var startPage ="1900/01/01 00:00";
+                    var endPage = "2099/01/01 00:00";
+                }
                 $("#ulList").html('');
-                var li="<a class=\"num\" onclick='loadData(\"\","+(currentPage-1)+","+5+")'><<</a>";
+
+                var li="<a class=\"num\" onclick='loadData(\"\","+(currentPage-1)+","+5+","+startPage +","+ endPage+")'><<</a>";
                 for (var i = 1; i <= data['pageNum']; i++) {
                     if (i==currentPage){
-                        li+="<a class=\"current\" class='active' onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
+                        li+="<a class=\"current\" class='active' onclick='loadData(\"\","+i+", "+5+",\""+startPage +"\",\""+ endPage+"\")'>"+i+"</a>";
                     }
                     else {
-                        li+="<a class=\"num\" onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
+                        li+="<a class=\"num\" onclick='loadData(\"\","+i+", "+5+",\""+startPage +"\",\""+ endPage+"\")'>"+i+"</a>";
                     }
                 }
-                li+="<a class=\"num\" onclick='loadData(\"\","+(currentPage+1)+","+5+")'>>></a>";
+                li+="<a class=\"num\" onclick='loadData(\"\","+(currentPage+1)+","+5+","+startPage +","+ endPage+")'>>></a>";
                 $("#ulList").append(li);
                 // console.log(tr);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("错误");
                 console.log(XMLHttpRequest.status);
                 console.log(XMLHttpRequest.readyState);
                 console.log(textStatus);
