@@ -13,6 +13,10 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * @description: 员工
+ * */
+
 @Service
 public class EmployeeService {
 
@@ -22,20 +26,20 @@ public class EmployeeService {
     @Autowired(required = false)
     StationMapper stationMapper;
 
-    //分页查询的页
+    //分页查询
     public PageInfo<Employee> getEmployeesPage(int currentPage,int pageSize){
         PageHelper.startPage(currentPage,pageSize);
         List<Employee> AllEmp = employeesMapper.getEmployees();
         PageInfo<Employee> pageInfo = new PageInfo<>(AllEmp);
         return pageInfo;
     }
+
     //分页查询的查询数据
     public List<Employee> getEmployeesByPage(int currentPage,int pageSize){
         PageHelper.startPage(currentPage,pageSize);
         List<Employee> AllEmp = employeesMapper.getEmployees();
         return AllEmp;
     }
-
 
     //查询所有
     public List<Employee> getEmployees(){
@@ -49,6 +53,7 @@ public class EmployeeService {
         List<Employee> AllEmp = employeesMapper.getEmployeesByName(empName);
         return AllEmp;
     }
+
     public PageInfo<Employee> getEmployeesPageMsgByName(int currentPage,int pageSize, String empName){
         PageHelper.startPage(currentPage,pageSize);
         List<Employee> AllEmp = employeesMapper.getEmployeesByName(empName);
@@ -84,8 +89,6 @@ public class EmployeeService {
 
 
     }
-
-    //
 
     public boolean deleteEmployee(int empId){
         employeesMapper.deleteEmployee(empId);

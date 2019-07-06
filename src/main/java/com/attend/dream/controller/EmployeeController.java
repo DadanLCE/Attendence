@@ -27,15 +27,6 @@ public class EmployeeController {
     EmployeeService employeeService;
     private int maxPage ;
 
-    //显示全部员工列表(保留，不要删除这个！)
-//    @GetMapping("/employee")
-//    public String list(Model model){
-//        Collection<Employee> employees=employeeService.getEmployees();
-//        model.addAttribute("emps",employees);
-//
-//        return "employee_list";
-//    }
-
     //查询，对应前端tbody
     @RequestMapping(value = "/emp", method = RequestMethod.POST)
     @ResponseBody
@@ -93,6 +84,7 @@ public class EmployeeController {
         return "redirect:/employee?currentPage=1";
     }
 
+    //
     @GetMapping("/emp/getEmpById/{id}")
     @ResponseBody
     public Employee getEmpById(@PathVariable(value = "id") int empId) {
@@ -111,7 +103,6 @@ public class EmployeeController {
         return "redirect:/employee?currentPage=1";
 
     }
-
 
     //添加员工
     @PostMapping("/emp/addEmployee")
@@ -145,6 +136,13 @@ public class EmployeeController {
     public String updateEmployee(Employee e) {
         String fallBack = employeeService.updateEmployee(e);
         return fallBack;
+    }
+
+    @GetMapping("/emp/forCombox")
+    @ResponseBody
+    public List<Employee> getAll() {
+        List<Employee> emps = employeeService.getEmployees();
+        return emps;
     }
 
 }

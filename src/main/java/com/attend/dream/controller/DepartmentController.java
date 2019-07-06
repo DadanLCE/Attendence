@@ -103,5 +103,12 @@ public class DepartmentController {
         return fallBack;
     }
 
+    @GetMapping("/dep/getDepartments")
+    @ResponseBody
+    public List<Department> getDepartments() {
+        List<Department> lists = departmentService.getDepartments();
+        return lists;
+    }
+
 
 }

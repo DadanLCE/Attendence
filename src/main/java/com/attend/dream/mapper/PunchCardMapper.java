@@ -37,18 +37,10 @@ public interface PunchCardMapper {
             " and morTime between #{preDate} and #{nextDate}")
     List<Card> getCardsByCodeTime(@Param("cardCode")String cardCode, @Param("preDate") Date preDate, @Param("nextDate") Date nextDate);
 
+
     @Update("update punchCard set eveTime=#{eveTime} " +
             "where id = #{id} ")
     Boolean updateCard(Card card);
-
-//    //更新数据
-//    @Update("update cardMor set cardCode=#{cardCode}, name=#{name}, date=#{date}, note=#{note} " +
-//            "where id = #{id}")
-//    Boolean updateCard(CardMor card);
-//
-//    //删除数据
-//    @Delete("delete from cardMor where id=#{id}")
-//    Boolean deleteCard(int id);
 
     //更新数据
     @Update("update punchCard set  eveTime=#{eveTime}, morTime=#{morTime}, note=#{note} " +

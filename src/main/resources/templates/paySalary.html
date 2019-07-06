@@ -42,7 +42,11 @@
                 .content{
                     float: left;
                     padding: 1.875em;
-                    width: 100%;}
+                    width: 100%;
+                }
+                .container{
+                    width: 100%;
+                }
             </style>
 
         </head>
@@ -234,6 +238,7 @@
 
             <!--获取显示员工-->
             <script th:inline="none">
+                alert("请输入人员编码进行查询，谢谢。");
                 var currentPage = 0;
                 function loadData(key,page, pageSize) {
                     $.ajax({

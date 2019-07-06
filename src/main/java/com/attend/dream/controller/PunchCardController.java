@@ -33,20 +33,10 @@ public class PunchCardController {
     @ResponseBody
     public Map<Object, Object> getEmployeesByName(@RequestParam(value = "currentPage") int currentPage,
                                                   @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, @RequestParam(value = "cardCode") String cardCode){
-       // PageInfo<Card> punsPage = punchCardService.employeeService.getEmployeesPageMsgByName(currentPage,pageSize,cardCode));
-        List<Card> puns = punchCardService.getCardAllByCode(cardCode);
 
-//        int prePage = punsPage.getPrePage();
-//        int nextPage = punsPage.getNextPage();
-//        int pageNum = punsPage.getPages();
-//        System.out.println(puns);
+        List<Card> puns = punchCardService.getCardAllByCode(cardCode);
         Map<Object, Object> punMap = new HashMap();
         punMap.put("puns", puns);
-
-
-//        punMap.put("nextPage", nextPage);
-//        punMap.put("prePage", prePage);
-//        punMap.put("pageNum", pageNum);
 
         return punMap;
     }

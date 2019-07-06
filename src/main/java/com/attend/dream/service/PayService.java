@@ -20,6 +20,7 @@ public class PayService {
 
     @Autowired(required = false)
     private CheckCardMapper checkCardMapper;
+
     //模糊查询
     //查询页面的信息 上一页 下一页
     public PageInfo<Pay> getPaysByEmpCodePage(int currentPage, int pageSize, String empCode){
@@ -130,6 +131,7 @@ public class PayService {
             }
         }
     }
+    
     public static int getMaxDay(int year,int month){
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR,year);

@@ -14,6 +14,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+/*
+ * @description: 考勤
+ * */
+
 @Service
 public class CheckReportService {
 
@@ -24,41 +28,17 @@ public class CheckReportService {
     @Autowired(required = false)
     CheckCardMapper checkCardMapper;
 
-    public List<Map> checkCardSum() {
-        List<Map> checkSum = repairCardMapper.checkCardSum();
-        return checkSum;
-    }
+
 
     public List<Card> getSpecialRecord(String cardCode, Date preDate,Date nextDate) {
         List<Card> specialRecord = punchCardMapper.getCardsByCodeTime(cardCode,preDate,nextDate);
         return specialRecord;
     }
 
-   // public Card getCardBycardCode(String cardCode) {
-      //  return punchCardMapper.getCardByCardCode(cardCode);
-   // }
-
-    public int insetMorTime(Card card) {
-        return punchCardMapper.insertMorCard(card);
-    }
-
-    public int insetEveTime(Card card) {
-        return punchCardMapper.insertEveCard(card);
-    }
-
     public int insetAllDayTime(Card card) {
         return checkCardMapper.insertAllDayCard(card);
     }
 
-    public boolean updatepunCard(Card card) {
-        punchCardMapper.updateCard(card);
-        return true;
-    }
-
-    public boolean updateCard(Card card) {
-        checkCardMapper.updateCard(card);
-        return true;
-    }
 
     public boolean updateMorCard(Card card) {
         checkCardMapper.updateMorCard(card);
@@ -84,11 +64,42 @@ public class CheckReportService {
         PageHelper.startPage(currentPage,pageSize);
         List<Card> cards = checkCardMapper.getCardsByCodeTime(cardCode, preDate, nextDate);
         return cards;
-}
+    }
+
     public PageInfo<Card> getCardsByCodeTimePage(int currentPage, int pageSize, String cardCode,Date preDate,Date nextDate){
         PageHelper.startPage(currentPage,pageSize);
         List<Card> cards = checkCardMapper.getCardsByCodeTime(cardCode, preDate, nextDate);
         PageInfo<Card> pageInfo = new PageInfo<>(cards);
         return pageInfo;
     }
+
+
+    /*
+    *   暂无使用
+    * */
+
+    public int insetMorTime(Card card) {
+        return punchCardMapper.insertMorCard(card);
+    }
+
+    public int insetEveTime(Card card) {
+        return punchCardMapper.insertEveCard(card);
+    }
+
+    public boolean updatepunCard(Card card) {
+        punchCardMapper.updateCard(card);
+        return true;
+    }
+
+    public boolean updateCard(Card card) {
+        checkCardMapper.updateCard(card);
+        return true;
+    }
+
+    public List<Map> checkCardSum() {
+        List<Map> checkSum = repairCardMapper.checkCardSum();
+        return checkSum;
+    }
+
+
 }

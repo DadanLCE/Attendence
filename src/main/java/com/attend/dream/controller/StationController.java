@@ -32,9 +32,7 @@ public class StationController {
         int prePage = stasPage.getPrePage();
         int nextPage = stasPage.getNextPage();
         int pageNum = stasPage.getPages();
-//        for (Station s: stas ) {
-//            System.out.println(s);
-//        }
+
         Map<Object, Object> empMap = new HashMap();
         empMap.put("stas", stas);
         empMap.put("nextPage", nextPage);
@@ -57,14 +55,6 @@ public class StationController {
         model.addAttribute("staCode",staCode);
         return "station_list";
     }
-
-//    //查询岗位
-//    @PostMapping("/sta/get")
-//    public String getStationsByName(@RequestParam(value = "staCode") String staCode, Model model){
-//        List<Station> station = stationService.getStationByName(staCode);
-//        model.addAttribute("stas",station);
-//        return "station_list";
-//    }
 
     @GetMapping("/sta/goToAddHtml")
     public String gotoAddEmployee() {
@@ -101,7 +91,6 @@ public class StationController {
         String fallBack = stationService.insertStation(sta);
         System.out.println(sta);
         if ( fallBack.equals("1")) {
-//            return "redirect:/station";
             return fallBack;
         } else if ( fallBack.equals("2")){
             map.put("msg","岗位已存在");
@@ -132,6 +121,13 @@ public class StationController {
     public String updateStation(Station s) {
         String fallBack = stationService.updateStation(s);
         return fallBack;
+    }
+
+    @GetMapping("/sta/getStations")
+    @ResponseBody
+    public List<Station> getStations() {
+        List<Station> stas = stationService.getStations();
+        return stas;
     }
 
 }

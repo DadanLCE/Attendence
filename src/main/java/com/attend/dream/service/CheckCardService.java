@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
+
 @Service
 public class CheckCardService {
 
@@ -17,8 +18,8 @@ public class CheckCardService {
     @Autowired(required = false)
     RepairCardMapper repairCardMapper;
 
-    public List<Map> getEveryDayCard() {
 
+    public List<Map> getEveryDayCard() {
         List<Map> cards = repairCardMapper.checkCardSum();
         return  cards;
     }

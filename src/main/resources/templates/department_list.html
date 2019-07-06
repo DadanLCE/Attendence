@@ -42,6 +42,9 @@
 				float: left;
 				padding: 1.875em;
 				width: 100%;}
+			.container{
+				width: 100%;
+			}
 		</style>
 	</head>
 
@@ -71,8 +74,8 @@
                             </th>
                             <th>部门编码</th>
                             <th>部门名称</th>
-                            <th>部门负责人</th>
                             <th>部门职责</th>
+                            <th>部门负责人</th>
                             <th>上级部门</th>
                             <th>操作</th>
                         </tr>
@@ -131,9 +134,11 @@
 											<span class="we-red">*</span>部门负责人
 										</label>
 										<div class="layui-input-inline">
-											<input type="text" id="updatedepBossCode" name="depBossCode" autocomplete="off" class="layui-input">
+											<!--<input type="text" id="addDepBossCode" name="depBossCode" lay-verify="required|salary" autocomplete="off" class="layui-input">-->
+											<select class="layui-input" name="depBossCode" id="updatedepBossCode">
+												<option selected disabled style="display: none">请选择部门负责人</option>
+											</select>
 										</div>
-
 									</div>
 									<div class="layui-form-item">
 										<label  class="layui-form-label">
@@ -191,9 +196,12 @@
 											<span class="we-red">*</span>部门负责人
 										</label>
 										<div class="layui-input-inline">
-											<input type="text" id="addDepBossCode" name="depBossCode" lay-verify="required|salary" autocomplete="off" class="layui-input">
-
+											<!--<input type="text" id="addDepBossCode" name="depBossCode" lay-verify="required|salary" autocomplete="off" class="layui-input">-->
+											<select class="layui-input" name="depBossCode" id="addDepBossCode">
+												<option selected disabled style="display: none">请选择部门负责人</option>
+											</select>
 										</div>
+
 									</div>
 
 
@@ -474,6 +482,38 @@
 			}
 		</script>
 
+		<!--下拉框设置-->
+		<script type="text/javascript">
+			$(document).ready(function () {
+				var addCombox = $("#addDepBossCode");
+				var editCombox = $("#updatedepBossCode");
+				$.ajax({
+					type : "get",
+					url : "/emp/forCombox",
+					success : function (data) {
+						$.each(data,function (i,val) {
+							addCombox.append("<option>"+val.empCode+"</option>");
+							editCombox.append("<option>"+val.empCode+"</option>");
+						})
+					},
+					error : function () {
+						alert("comBox错误");
+					}
+				});
+
+
+				$.ajax({
+					type : "get",
+					url : "",
+					success : function (data) {
+						$.each(data,function (i,val) {
+
+						})
+					}
+				})
+				
+			})
+		</script>
 	</body>
 
 </html>

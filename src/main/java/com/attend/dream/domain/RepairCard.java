@@ -4,6 +4,10 @@ import lombok.Data;
 
 import java.util.Date;
 
+/*
+ * @description: 补卡单实体类
+ * */
+
 @Data
 public class RepairCard {
 

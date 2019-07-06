@@ -17,7 +17,10 @@
 		<script src="/layui/layui.js" charset="utf-8" ></script>
 		<script src="/js/eleDel.js" type="text/javascript" charset="utf-8" ></script>
 		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-        <style type="text/css">
+		<style type="text/css">
+			.container{
+				width: 100%;
+			}
 			.close{
 				width: 100px;
 				height: 50px;
@@ -35,15 +38,12 @@
 			#form1{
 				float: left;
 			}
-            .close{
-                width: 100px;
-                height: 50px;
-            }
-			.content{
-				float: left;
-				padding: 1.875em;
-				width: 100%;}
-        </style>
+			.close{
+				width: 100px;
+				height: 50px;
+			}
+
+		</style>
 
 	</head>
 	<body>
@@ -179,13 +179,10 @@
 									<span class="we-red">*</span>岗位
 								</label>
 								<div class="layui-input-inline">
-									<input type="text" id="updateempStaCode" name="empStaCode" lay-verify="required|salary" autocomplete="off" class="layui-input">
-									<!--<select>-->
-									<!--<option value ="CEO">CEO-总经理</option>-->
-									<!--<option value ="KJ">KJ-会计</option>-->
-									<!--<option value="QT">QT-前台</option>-->
-									<!--<option value="HQ">HQ-后勤</option>-->
-									<!--</select>	-->
+									<!--<input type="text" id="" name="empStaCode" lay-verify="required|salary" autocomplete="off" class="layui-input">-->
+									<select class="layui-input" name="empStaCode" id="updateempStaCode">
+										<option selected disabled style="display: none">请选择岗位</option>
+									</select>
 								</div>
 							</div>
 							<div class="layui-form-item">
@@ -299,13 +296,10 @@
 												<span class="we-red">*</span>岗位
 											</label>
 											<div class="layui-input-inline">
-												<input type="text" id="addEmpStaCode" name="empStaCode" lay-verify="required|salary" autocomplete="off" class="layui-input">
-<!--												<select>-->
-<!--												<option value ="CEO">CEO-总经理</option>-->
-<!--												<option value ="KJ">KJ-会计</option>-->
-<!--												<option value="QT">QT-前台</option>-->
-<!--												<option value="HQ">HQ-后勤</option>-->
-<!--												</select>-->
+												<!--<input type="text" id="addEmpStaCode" name="empStaCode" lay-verify="required|salary" autocomplete="off" class="layui-input">-->
+												<select class="layui-input" name="empStaCode" id="addEmpStaCode">
+													<option selected disabled style="display: none">请选择岗位</option>
+												</select>
 											</div>
 										</div>
 										<div class="layui-form-item">
@@ -603,6 +597,27 @@
 				})
 
 			};
+		</script>
+
+		<!--下拉框设置-->
+		<script type="text/javascript">
+			$(document).ready(function () {
+				var addCombox = $("#addEmpStaCode");
+				var editCombox = $("#updateempStaCode");
+				$.ajax({
+					type : "get",
+					url : "/sta/getStations",
+					success : function (data) {
+						$.each(data,function (i,val) {
+							addCombox.append("<option>"+val.staCode+"</option>");
+							editCombox.append("<option>"+val.staCode+"</option>");
+						})
+					},
+					error : function () {
+						alert("comBox错误");
+					}
+				});
+			})
 		</script>
 	</body>
 
