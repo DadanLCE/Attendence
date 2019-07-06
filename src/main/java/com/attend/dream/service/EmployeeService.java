@@ -49,6 +49,7 @@ public class EmployeeService {
         List<Employee> AllEmp = employeesMapper.getEmployeesByName(empName);
         return AllEmp;
     }
+    //模糊查询 分页查询的页面数据
     public PageInfo<Employee> getEmployeesPageMsgByName(int currentPage,int pageSize, String empName){
         PageHelper.startPage(currentPage,pageSize);
         List<Employee> AllEmp = employeesMapper.getEmployeesByName(empName);
@@ -104,6 +105,7 @@ public class EmployeeService {
         return "1";
     }
 
+    //更新员工 返回2岗位不存在 返回1成功更新
     public String updateEmployee( Employee e) {
         String staCode = e.getEmpStaCode();
         Station station = stationMapper.getStationByStaCode(staCode);

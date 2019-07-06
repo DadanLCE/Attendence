@@ -79,7 +79,7 @@
 						<th>性别</th>
 						<th>年龄</th>
 						<th>民族</th>
-						<th>岗位</th>
+						<th>岗位编码</th>
 						<th>操作</th>
 					</tr>
 				</thead>
@@ -176,7 +176,7 @@
 							</div>
 							<div class="layui-form-item">
 								<label  class="layui-form-label">
-									<span class="we-red">*</span>岗位
+									<span class="we-red">*</span>岗位编码
 								</label>
 								<div class="layui-input-inline">
 									<input type="text" id="updateempStaCode" name="empStaCode" lay-verify="required|salary" autocomplete="off" class="layui-input">
@@ -220,7 +220,7 @@
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 							&times;
 						</button>
-						<h2 class="modal-title">
+						<h2 class=" modal-title">
 							新增用户
 						</h2>
 					</div>
@@ -296,7 +296,7 @@
 										</div>
 										<div class="layui-form-item">
 											<label  class="layui-form-label">
-												<span class="we-red">*</span>岗位
+												<span class="we-red">*</span>岗位编码
 											</label>
 											<div class="layui-input-inline">
 												<input type="text" id="addEmpStaCode" name="empStaCode" lay-verify="required|salary" autocomplete="off" class="layui-input">
@@ -470,7 +470,7 @@
 							$("#closeupdatemodel").click();
 							loadData('', 1, 5);
 						} else if ( fallBack === '2') {
-							alert ("没有这个岗位啊！(✪ω✪)");
+							alert ("没有这个岗位编码啊！(✪ω✪)");
 						} else {
 							alert('哎呀，出现意外了！')	;
 						}
@@ -591,7 +591,7 @@
 						} else if ( fallBack === '2') {
 							alert ("员工编码已存在，请重来，(✪ω✪)");
 						} else if (fallBack === '3' ) {
-							alert("暂时还没有这个岗位！！！(✪ω✪)");
+							alert("暂时还没有这个岗位编码！！！(✪ω✪)");
 						} else {
 							alert('哎呀，出现意外了！')	;
 						}

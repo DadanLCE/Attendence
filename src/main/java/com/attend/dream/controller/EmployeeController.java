@@ -86,7 +86,7 @@ public class EmployeeController {
         return "employee_list";
     }
 
-    //删除单行员工信息
+    //根据id删除单行员工信息
     @PostMapping("/emp/delEmpById/{id}")
     public String deleteEmployee(@PathVariable(value = "id") int empId){
         employeeService.deleteEmployee(empId);
@@ -101,7 +101,7 @@ public class EmployeeController {
 
     }
 
-    //批量删除员工
+    //传入字符串 将字符串分割 批量删除员工
     @PostMapping("/emp/delEmps")
     public String empsDelete(String userList){
         String[] strs = userList.split(",");
@@ -113,7 +113,7 @@ public class EmployeeController {
     }
 
 
-    //添加员工
+    //添加员工 1成功插入数据 2编码已经存在 3岗位不存在
     @PostMapping("/emp/addEmployee")
     @ResponseBody
     public String addEmployee(Employee emp, Map<String,Object> map) {
@@ -139,7 +139,7 @@ public class EmployeeController {
         }
 
     }
-
+    //更新员工 返回2岗位不存在 返回1成功更新
     @PostMapping("/emp/updateEmp")
     @ResponseBody
     public String updateEmployee(Employee e) {
