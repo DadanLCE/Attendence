@@ -9,7 +9,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	<link rel="stylesheet" href="/css/font.css">
 	<link rel="stylesheet" href="/css/weadmin.css">
-
+    <style>
+        .ad p{
+            font-size: 14px;
+            margin: 10px;
+        }
+    </style>
 
 </head>
 
@@ -21,14 +26,23 @@
 
 
 	<div class="layui-col-lg12 layui-collapse" style="border: none;">
-		<div class="layui-col-lg6 layui-col-md12">
+		<div class="layui-col-lg12 layui-col-md12">
 
 
 			<!--统计信息展示-->
-			<fieldset class="layui-elem-field" style="padding: 5px;">
+			<fieldset class="layui-elem-field" >
 				<!--WeAdmin公告-->
-				<div class="layui-card">
+				<div class="layui-card" style="width: 100%;">
+
 					<div class="layui-card-header layui-elem-quote">WeAdmin公告</div>
+                    <div class="ad">
+                        <p>一、	本小组由4个组员组成，通过spring、spring boot、mybatis框架和前端layui实现考勤系统。使用了远程服务器的mysql数据库。使用ajax异步更新页面的内容。
+                        </p>
+                        <p>二、	考勤系统由公司架构、考勤数据、考勤报表、考勤设置和财务管理五个模块组成。
+                        </p>
+                        <p>三、	项目后期我们对系统的各个功能进行测以及写出每个阶段的报告并且对完成项目介绍的ppt。
+                        </p>
+                    </div>
 					<div class="layui-card-body">
 
 					</div>
@@ -36,8 +50,11 @@
 			</fieldset>
 		</div>
 	</div>
-			<div id="main" style="width: 350px;height:200px;"></div>
-			<div id="employeeByCode" style="width: 350px;height:200px;"></div>
+    <div class="list11" style="float:left;width: 100%">
+        <div id="main" style="width: 50%;height:200px;float:left;padding-top: 40px;"></div>
+        <div id="employeeByCode" style="width: 30%;height:200px;float:left;"></div>
+    </div>
+
 </div>
 
 <!--ECharts-->
@@ -109,7 +126,7 @@
 
                 // 指定图表的配置项和数据
                 option = {
-                    backgroundColor: '#B2B2B2',
+                    // backgroundColor: '#fff',
                     title: {
                         text: '公司岗位人员'
                     },
