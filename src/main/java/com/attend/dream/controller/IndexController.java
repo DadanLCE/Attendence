@@ -17,7 +17,7 @@ public class IndexController {
     }
 
     //!!!修改
-    @RequestMapping(value = "/showWel",method = RequestMethod.GET)
+    @RequestMapping(value = "/showWel",method = RequestMethod.POST)
     public String showWel(){ return "welcome";}
 
     @RequestMapping(value= "/showDep",method = RequestMethod.POST)

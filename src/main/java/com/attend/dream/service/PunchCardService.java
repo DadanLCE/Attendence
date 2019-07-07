@@ -50,13 +50,13 @@ public class PunchCardService {
         return "0";
     }
     //Echar 获取用户的打卡数
-    public List<CardEchar> getNum(){
+    public List<CardEchar> getPunchCard(){
         List<CardEchar> cardNumList = new ArrayList<>();
-        List<Card> cardList = punchCardMapper.cardsEchar();
+        List<Card> cardList = punchCardMapper.cardsEchart();
         for(int i=0; i<cardList.size(); i++){
             CardEchar cardEchar = new CardEchar();
             Card card = cardList.get(i);
-            int num = punchCardMapper.cardsNumEchar(card.getName());
+            int num = punchCardMapper.cardsNumEchart(card.getName());
             cardEchar.setName(card.getName());
             cardEchar.setNum(num);
             cardNumList.add(cardEchar);

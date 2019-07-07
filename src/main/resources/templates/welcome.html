@@ -14,17 +14,10 @@
 </head>
 
 <body>
+
 <div class="content">
 	<blockquote class="layui-elem-quote">欢迎来到考勤系统</blockquote>
-	<div class="layui-fluid" style="overflow: hidden;">
-		<div class="layui-row layui-col-space15">
-			<div class="layui-col-md8">
-				<div class="layui-card">
-					<div class="layui-card-header">快捷方式</div>
-				</div>
-			</div>
-		</div>
-	</div>
+
 
 
 	<div class="layui-col-lg12 layui-collapse" style="border: none;">
@@ -37,142 +30,26 @@
 				<div class="layui-card">
 					<div class="layui-card-header layui-elem-quote">WeAdmin公告</div>
 					<div class="layui-card-body">
-						<div class="layui-carousel weadmin-notice" lay-filter="notice" lay-indicator="inside" lay-arrow="none" style="width: 100%; height: 280px;">
-							<div carousel-item="">
-								<div class="">
-									<a href="https://gitee.com/lovetime/WeAdmin" target="_blank" class="layui-bg-red">2018年3月28日 WeAdmin小版本更新</a>
-								</div>
-								<div class="">
-									<a href="http://www.layui.com/admin/" target="_blank" class="layui-bg-blue">首款 layui 官方后台模板系统正式发布</a>
-								</div>
-								<div class="">
-									<a href="http://fly.layui.com/jie/24231/" target="_blank" class="layui-bg-green">Layui 官方发布 layuiAdmin iframe 多标签页版本</a>
-								</div>
-
-							</div>
-							<div class="layui-carousel-ind">
-								<ul>
-									<li class="layui-this"></li>
-									<li></li>
-								</ul>
-							</div>
-							<!--<button class="layui-icon layui-carousel-arrow" lay-type="sub"></button>
-                            <button class="layui-icon layui-carousel-arrow" lay-type="add"></button>-->
-						</div>
 
 					</div>
-				</div>
-				<!--<legend>信息统计</legend>-->
-				<blockquote class="layui-elem-quote font16">信息统计</blockquote>
-				<div class="">
-					<table class="layui-table" lay-even>
-						<thead>
-						<tr>
-							<th>统计</th>
-							<th>资讯库</th>
-							<th>图片库</th>
-							<th>产品库</th>
-							<th>用户</th>
-							<th>管理员</th>
-						</tr>
-						</thead>
-						<tbody>
-						<tr>
-							<td>总数</td>
-							<td>92</td>
-							<td>9</td>
-							<td>0</td>
-							<td>8</td>
-							<td>20</td>
-						</tr>
-						<tr>
-							<td>今日</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-						</tr>
-						<tr>
-							<td>昨日</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-						</tr>
-						<tr>
-							<td>本周</td>
-							<td>2</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-						</tr>
-						<tr>
-							<td>本月</td>
-							<td>2</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-						</tr>
-						</tbody>
-					</table>
-					<table class="layui-table">
-						<thead>
-						<tr>
-							<th colspan="2" scope="col">服务器信息</th>
-						</tr>
-						</thead>
-						<tbody>
-						<tr>
-							<th width="30%">服务器计算机名</th>
-							<td><span id="lbServerName">http://127.0.0.1/</span></td>
-						</tr>
-						<tr>
-							<td>服务器IP地址</td>
-							<td>192.168.1.1</td>
-						</tr>
-						<tr>
-							<td>服务器域名</td>
-							<td>github.com</td>
-						</tr>
-						<tr>
-							<td>服务器端口 </td>
-							<td>80</td>
-						</tr>
-						<tr>
-							<td>本文件所在文件夹 </td>
-							<td>D:\Web\WeAdmin\</td>
-						</tr>
-						<tr>
-							<td>WeAdmin时间 </td>
-							<td id="firstTime">2018-01-01 13:14:00</td>
-						</tr>
-						<tr>
-							<td>上次更新时间 </td>
-							<td id="lastTime">7210分钟</td>
-						</tr>
-						</tbody>
-					</table>
 				</div>
 			</fieldset>
 		</div>
 	</div>
+			<div id="main" style="width: 350px;height:200px;"></div>
+			<div id="employeeByCode" style="width: 350px;height:200px;"></div>
 </div>
 
 <!--ECharts-->
 <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.2.1/echarts.min.js"></script>
 
-<div id="main" style="width: 600px;height:400px;">aaa </div>
 
 <script>
-    function get() {
+    function getPunchCard() {
         $.ajax({
             type:"post",
-            url:"/getEchar"
+            url:"/getPunchCard"
             ,
             success: function (data) {
                 var data = data;
@@ -188,7 +65,7 @@
                 // 指定图表的配置项和数据
                 var option = {
                     title: {
-                        text: 'ECharts 入门示例'
+                        text: '员工打卡量'
                     },
                     tooltip: {},
                     legend: {
@@ -215,9 +92,85 @@
     }
 
 </script>
+
+<script>
+    function getEmployeeByStation() {
+        $.ajax({
+            type:"post",
+            url:"/getEmployeeByStation"
+            ,
+            success: function (data) {
+                var num = data;
+               	var CEO = num[0];
+                var BOSS = num[1];
+                var CLERK = num[2];
+                var Accountant = num[3];
+                var myChart = echarts.init(document.getElementById('employeeByCode'));
+
+                // 指定图表的配置项和数据
+                option = {
+                    backgroundColor: '#B2B2B2',
+                    title: {
+                        text: '公司岗位人员'
+                    },
+                    visualMap: {
+                        show: false,
+                        min: 0.1,
+                        max: 10,
+                        inRange: {
+                            colorLightness: [0, 1]
+                        }
+                    },
+                    series : [
+                        {
+                            name: '访问来源',
+                            type: 'pie',
+                            radius: '55%',
+                            data:[
+                                {value:CEO, name:'CEO'},
+                                {value:BOSS, name:'BOSS'},
+                                {value:CLERK, name:'CLERK'},
+                                {value:Accountant, name:'Accountant'}
+                            ],
+                            roseType: 'angle',
+                            label: {
+                                normal: {
+                                    textStyle: {
+                                        color: 'rgba(0, 0, 0, 0.3)'
+                                    }
+                                }
+                            },
+                            labelLine: {
+                                normal: {
+                                    lineStyle: {
+                                        color: 'rgba(0, 0, 0, 0.3)'
+                                    }
+                                }
+                            },
+                            itemStyle: {
+                                normal: {
+                                    shadowBlur: 200,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+            },
+            error: function () {
+                alert("失败")
+            }
+        })
+    }
+</script>
+
 <script>
     $(document).ready(function () {
-        get();
+        getPunchCard();
+        getEmployeeByStation();
     })
 </script>
 

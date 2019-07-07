@@ -6,7 +6,6 @@ import com.attend.dream.mapper.EmployeesMapper;
 import com.attend.dream.mapper.StationMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -118,5 +117,14 @@ public class EmployeeService {
         }
     }
 
+    //根据部门名称 查询一个岗位有多少个人
+    public int[] getEmployeeByStation(){
+        int num[] = new int[10];
+        String station[] = {"CEO", "BOSS", "CLERK", "Accountant"};
+        for (int i=0; i<station.length; i++){
+            num[i] = employeesMapper.getEmployeeByStation(station[i]);
+        }
+        return num;
+    }
 
 }
