@@ -1,10 +1,12 @@
 package com.attend.dream.service;
 
 import com.attend.dream.domain.Card;
+import com.attend.dream.domain.CardEchar;
 import com.attend.dream.mapper.PunchCardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -47,7 +49,20 @@ public class PunchCardService {
         punchCardMapper.insertEveCard(card);
         return "0";
     }
-
+    //Echar 获取用户的打卡数
+    public List<CardEchar> getNum(){
+        List<CardEchar> cardNumList = new ArrayList<>();
+        List<Card> cardList = punchCardMapper.cardsEchar();
+        for(int i=0; i<cardList.size(); i++){
+            CardEchar cardEchar = new CardEchar();
+            Card card = cardList.get(i);
+            int num = punchCardMapper.cardsNumEchar(card.getName());
+            cardEchar.setName(card.getName());
+            cardEchar.setNum(num);
+            cardNumList.add(cardEchar);
+        }
+        return cardNumList;
+    }
 
 }
 

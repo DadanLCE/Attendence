@@ -25,6 +25,8 @@
 			</div>
 		</div>
 	</div>
+
+
 	<div class="layui-col-lg12 layui-collapse" style="border: none;">
 		<div class="layui-col-lg6 layui-col-md12">
 
@@ -159,6 +161,66 @@
 		</div>
 	</div>
 </div>
+
+<!--ECharts-->
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.2.1/echarts.min.js"></script>
+
+<div id="main" style="width: 600px;height:400px;">aaa </div>
+
+<script>
+    function get() {
+        $.ajax({
+            type:"post",
+            url:"/getEchar"
+            ,
+            success: function (data) {
+                var data = data;
+                var arrayName = new Array();
+                var arrayNum = new Array();
+                jQuery.each(data, function (i, list) {
+                    arrayName.push(list['name']);
+                    arrayNum.push(list['num']);
+                });
+
+                var myChart = echarts.init(document.getElementById('main'));
+
+                // 指定图表的配置项和数据
+                var option = {
+                    title: {
+                        text: 'ECharts 入门示例'
+                    },
+                    tooltip: {},
+                    legend: {
+                        data:['销量']
+                    },
+                    xAxis: {
+                        data: arrayName
+                    },
+                    yAxis: {},
+                    series: [{
+                        name: '数量',
+                        type: 'bar',
+                        data: arrayNum
+                    }]
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+            },
+            error: function () {
+                alert("失败")
+            }
+        })
+    }
+
+</script>
+<script>
+    $(document).ready(function () {
+        get();
+    })
+</script>
+
 </body>
 <script type="text/javascript" src="/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript">
@@ -199,5 +261,6 @@
 		};
 	});
 </script>
+
 
 </html>

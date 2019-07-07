@@ -15,7 +15,7 @@ import java.util.List;
 public class WelcomeController {
     @Autowired
     private PunchCardService punchCardService;
-
+    //Echar 获取用户的打卡数
     @RequestMapping(value = "/getEchar", method = RequestMethod.POST)
     @ResponseBody
     public List<CardEchar> getPerson(){

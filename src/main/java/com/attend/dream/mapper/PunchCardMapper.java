@@ -48,6 +48,12 @@ public interface PunchCardMapper {
     Boolean updateCard1(Card card);
 
 
+    @Select("SELECT COUNT(*) FROM punchCard where name = #{name}")
+    int cardsNumEchar(String uname);
+
+    @Select("select distinct name from punchCard")
+    List<Card> cardsEchar();
+
 
 
 }
