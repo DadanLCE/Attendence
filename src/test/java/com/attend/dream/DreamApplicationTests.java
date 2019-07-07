@@ -1,52 +1,37 @@
-//package com.attend.dream;
-//
-//import com.attend.dream.domain.*;
-//import com.attend.dream.mapper.*;
-//import com.attend.dream.service.ClassesService;
-//import com.attend.dream.service.DepartmentService;
-//import org.junit.Test;
-//import org.junit.runner.RunWith;
-//import org.mybatis.spring.annotation.MapperScan;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.context.SpringBootTest;
-//import org.springframework.test.context.junit4.SpringRunner;
-//
-//import java.text.DateFormat;
-//import java.text.SimpleDateFormat;
-//import java.util.Date;
-//import java.util.List;
-//
-//@RunWith(SpringRunner.class)
-//@SpringBootTest
-//@MapperScan(basePackages = {"com.attend.dream.mapper"})
-//public class DreamApplicationTests {
-////    @Autowired
-////    private EmployeesMapper employeesMapper;
-//
-//
-//    @Test
-//    public void contextLoads() {
-//
-////        Employee e = employeesMapper.getEmployeeByName("方少少");
-//
-////        PageHelper.startPage(2,2);
-////        List<Employee> allE = employeesMapper.getEmployees();
-////        PageInfo<Employee> pageInfo = new PageInfo<>(allE);
-////        System.out.println(allE);
-////        for ( Employee e: pageInfo
-////             ) {
-////            System.out.println(e);
-////
-////        }
-////        for (Employee e:
-////             allE) {
-////            System.out.println(e);
-////        }
-//
-////        System.out.println(pageInfo);
-////        PageInfo<Employee> pageInfo = new PageInfo<>(allE);
-//
-//    }
+package com.attend.dream;
+
+import com.attend.dream.domain.*;
+import com.attend.dream.mapper.*;
+import com.attend.dream.service.ClassesService;
+import com.attend.dream.service.DepartmentService;
+import com.attend.dream.service.PunchCardService;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@MapperScan(basePackages = {"com.attend.dream.mapper"})
+public class DreamApplicationTests {
+//    @Autowired
+//    private EmployeesMapper employeesMapper;
+    @Autowired
+    private PunchCardService p;
+
+    @Test
+    public void contextLoads() {
+        List<CardEchar> list = p.getNum();
+        System.out.println(list);
+
+    }
 //    @Autowired
 //    private DepartmentMapper departmentMapper;
 //    @Autowired
@@ -70,31 +55,31 @@
 //    private ClassesService classesService;
 //    @Test
 //    public void claTest(){
-////        List<Classes> list = classesService.getClassesByCode(1,3,"a");
-////        PageInfo<Classes> pageInfo = classesService.getClassesByCodePage(1,3,"a");
-////        Classes c = classesService.getClaById(3);
-////        c.setClaCode("POSADLAKSD");
-////        String a = classesService.insertCla(c);
-////        System.out.println(c);
-////        System.out.println(a);
-////        c.setId(10);
-////        String a = classesService.insertCla(c);
-////        System.out.println(a);
-////        System.out.println(pageInfo);
-////        for (Classes c:
-////             list) {
-////            System.out.println(c);
-////        }
-////        String dateStr = "2010/05/04 12:34:23";
-//        //注意format的格式要与日期String的格式相匹配
-////        DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-////        try {
-////            date = sdf.parse(dateStr);
-////            System.out.println(date.toString());
-////        } catch (Exception e) {
-////            e.printStackTrace();
-////        }
-////
+//        List<Classes> list = classesService.getClassesByCode(1,3,"a");
+//        PageInfo<Classes> pageInfo = classesService.getClassesByCodePage(1,3,"a");
+//        Classes c = classesService.getClaById(3);
+//        c.setClaCode("POSADLAKSD");
+//        String a = classesService.insertCla(c);
+//        System.out.println(c);
+//        System.out.println(a);
+//        c.setId(10);
+//        String a = classesService.insertCla(c);
+//        System.out.println(a);
+//        System.out.println(pageInfo);
+//        for (Classes c:
+//             list) {
+//            System.out.println(c);
+//        }
+//        String dateStr = "2010/05/04 12:34:23";
+        //注意format的格式要与日期String的格式相匹配
+//        DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+//        try {
+//            date = sdf.parse(dateStr);
+//            System.out.println(date.toString());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
 //        String dateStr = "2015-02-10 22:00:00";
 //        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //        Date d1;
@@ -105,49 +90,49 @@
 //            // TODO Auto-generated catch block
 //            e1.printStackTrace();
 //        }
-////
-////
-////        Card card = new Card();
-////        card.setDate(date);
-////        System.out.println(card.getDate());
 //
+//
+//        Card card = new Card();
+//        card.setDate(date);
+//        System.out.println(card.getDate());
+
 //    }
 //
 //
 //
 //    @Test
 //    public void cardT(){
-////        List<RepairCard> c = repairCardMapper.getCardsByCode("b");
+//        List<RepairCard> c = repairCardMapper.getCardsByCode("b");
+
+//        Date date = null;
+//        Date date2 = null;
+////        注意format的格式要与日期String的格式相匹配
+//        String dateStr = "2019-08-01 00:00:00";
+//        String dateStr2 = "2019-08-20 00:00:00";
+//        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        try {
+//            date = sdf.parse(dateStr);
+//            date2 = sdf.parse(dateStr2);
+//            System.out.println(date2.toString());
+//            System.out.println(date.toString());
 //
-////        Date date = null;
-////        Date date2 = null;
-//////        注意format的格式要与日期String的格式相匹配
-////        String dateStr = "2019-08-01 00:00:00";
-////        String dateStr2 = "2019-08-20 00:00:00";
-////        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-////        try {
-////            date = sdf.parse(dateStr);
-////            date2 = sdf.parse(dateStr2);
-////            System.out.println(date2.toString());
-////            System.out.println(date.toString());
-////
-////        } catch (Exception e) {
-////            e.printStackTrace();
-////        }
-////
-////        List<CardEve> list = cardEveMapper.getAll("",date,date2);
-////        System.out.println(list);
-////        for (int i =0; i < list.size();i++){
-////            System.out.println(list.get(i));
-////        }
-////        cardMorMapper.insertCardMor(card);
-////        System.out.println(list);
-////        CardMor card1 = cardMorMapper.getCardMorById(2);
-////        System.out.println(card1);
-////        card1.setName("哇啦啦");
-////        cardMorMapper.updateCard(card1);
-////        CardMor cardMor = cardMorMapper.getCardMorByCode("AA");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 //
+//        List<CardEve> list = cardEveMapper.getAll("",date,date2);
+//        System.out.println(list);
+//        for (int i =0; i < list.size();i++){
+//            System.out.println(list.get(i));
+//        }
+//        cardMorMapper.insertCardMor(card);
+//        System.out.println(list);
+//        CardMor card1 = cardMorMapper.getCardMorById(2);
+//        System.out.println(card1);
+//        card1.setName("哇啦啦");
+//        cardMorMapper.updateCard(card1);
+//        CardMor cardMor = cardMorMapper.getCardMorByCode("AA");
+
 //    }
 //
 //    public static int countTime(Date preDate, Date nextDate)
@@ -155,27 +140,27 @@
 //        int days = (int) ((nextDate.getTime() - preDate.getTime()) / (1000*3600*24));
 //        return days;
 //    }
+
+//    @Autowired
+//    private  CheckCardMapper checkCardMapper;
+//    @Test
+//    public void rCard(){
+//                Date date = null;
+//        Date date2 = null;
 //
-////    @Autowired
-////    private  CheckCardMapper checkCardMapper;
-////    @Test
-////    public void rCard(){
-////                Date date = null;
-////        Date date2 = null;
-////
-//////        注意format的格式要与日期String的格式相匹配
-////        String dateStr = "2019-06-26 00:00:00";
-////        String dateStr2 = "2019-06-26 00:00:00";
-////        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-////        try {
-////            date = sdf.parse(dateStr);
-////            date2 = sdf.parse(dateStr2);
-////        } catch (Exception e) {
-////            e.printStackTrace();
-////        }
-////        List<Card> list = checkCardMapper.TestTest("W",date,date2);
-////        System.out.println(list);
-////    }
+////        注意format的格式要与日期String的格式相匹配
+//        String dateStr = "2019-06-26 00:00:00";
+//        String dateStr2 = "2019-06-26 00:00:00";
+//        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        try {
+//            date = sdf.parse(dateStr);
+//            date2 = sdf.parse(dateStr2);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        List<Card> list = checkCardMapper.TestTest("W",date,date2);
+//        System.out.println(list);
+//    }
 //    @Autowired
 //    private PayMapper payMapper;
 //
@@ -184,7 +169,7 @@
 //        Card card = checkCardMapper.getCardById(200);
 //
 //        Date date = null;
-////        注意format的格式要与日期String的格式相匹配
+//        注意format的格式要与日期String的格式相匹配
 //        String dateStr = "2222-08-01 00:00:00";
 //        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //        try {
@@ -201,7 +186,7 @@
 //    }
 //
 //    public void salaryAAAA(){
-////        int days = countTime(preDate, nextDate);
+//        int days = countTime(preDate, nextDate);
 //        String empCode = "sad";
 //        int[] k = new int[12];//旷工
 //        int[] d = new int[12];//迟到
@@ -224,9 +209,9 @@
 //            }
 //        }
 //        System.out.println(ldate);
-//
-//        //flag初始值为开始计算工资的月份，结束值为最后计算工资的月份
-//        //从最早月份开始遍历
+
+        //flag初始值为开始计算工资的月份，结束值为最后计算工资的月份
+        //从最早月份开始遍历
 //        for(int i = edate.getMonth();i <= ldate.getMonth();i++){
 //                z[i]=0;k[i]=0;d[i]=0;
 //            for(Card c : cards){
@@ -249,6 +234,6 @@
 //
 //
 //    }
-//
-//
-//}
+
+
+}

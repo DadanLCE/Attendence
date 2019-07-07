@@ -42,5 +42,4 @@ public interface DepartmentMapper {
     @Delete("delete from department where id = #{id}")
     Boolean deleteDepartment(int id);
 
-
 }

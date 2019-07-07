@@ -1,6 +1,7 @@
 package com.attend.dream.controller;
 
 import com.attend.dream.domain.User;
+import com.attend.dream.mapper.UserMapper;
 import com.attend.dream.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,11 +9,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
+//登录
 @Controller
 public class LoginController {
-
 
     @Autowired
     UserService userService;
@@ -86,12 +88,12 @@ public class LoginController {
         }
 
     }
-//
-//    @RequestMapping(value = "logout",method = RequestMethod.GET)
-//    public String logout(HttpSession session){
-//        session.invalidate();
-//        return "logout";
-//    }
 
+    @GetMapping("/user/forComboBox")
+    @ResponseBody
+    public String[] forComboBox() {
+        String[] a = userService.getAllUsername();
+        return a;
+    }
 
 }

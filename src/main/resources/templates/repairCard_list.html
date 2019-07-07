@@ -44,7 +44,9 @@
                         padding: 1.875em;
                         width: 100%;
                     }
-
+                    .container{
+                        width: 100%;
+                    }
                 </style>
 
             </head>
@@ -342,7 +344,6 @@
                             note	:  note,
                         },
                         success : function (fallBack) {
-                            alert("后端传值成功:"+fallBack);
                             if ( fallBack === '1' ) {
                                 alert('恭喜你，添加成功！！！');
                                 $("#closemodel").click();

@@ -1,6 +1,11 @@
 package com.attend.dream.domain;
 
 import lombok.Data;
+
+/*
+ * @description: 部门类
+ * */
+
 @Data
 public class Department {
 

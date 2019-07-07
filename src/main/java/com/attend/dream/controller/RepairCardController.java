@@ -22,17 +22,10 @@ public class RepairCardController {
     @ResponseBody
     public Map<Object, Object> getRepairCardsByCode(@RequestParam(value = "currentPage") int currentPage,
                                                   @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, @RequestParam(value = "cardCode") String cardCode){
-//        PageInfo<RepairCard> empsPage = repairCardService.getCardsByCode(cardCode);
-        List<RepairCard> reps = repairCardService.getCardsByCode(cardCode);
-//        int prePage = empsPage.getPrePage();
-//        int nextPage = empsPage.getNextPage();
-//        int pageNum = empsPage.getPages();
 
+        List<RepairCard> reps = repairCardService.getCardsByCode(cardCode);
         Map<Object, Object> repMap = new HashMap();
         repMap.put("reps", reps);
-//        empMap.put("nextPage", nextPage);
-//        empMap.put("prePage", prePage);
-//        empMap.put("pageNum", pageNum);
 
         return repMap;
     }

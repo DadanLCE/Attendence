@@ -1,6 +1,9 @@
 package com.attend.dream.domain;
-
 import lombok.Data;
+
+/*
+ * @description: 用户类
+ * */
 
 @Data
 public class User {

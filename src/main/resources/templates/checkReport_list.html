@@ -14,11 +14,6 @@
     <script src="/js/moment.js" type="text/javascript" charset="utf-8" />
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../lib/layui/css/layui.css" th:href="@{/layui/css/layui.css.css}">
-    <style type="text/css">
-
-
-
-    </style>
 
 </head>
 <style>
@@ -26,7 +21,9 @@
         float: left;
         padding: 1.875em;
         width: 100%;
-
+    }
+    .container{
+        width: 100%;
     }
 </style>
 
@@ -127,9 +124,6 @@
 <script th:inline="none">
     var currentPage = 0;
     function loadData(key,page, pageSize, preDate, nextDate) {
-        alert(document.getElementById('start').value);
-        alert(typeof document.getElementById('start').value);
-        alert(document.getElementById('searchId').value);
         $.ajax({
 
             type: 'POST',
@@ -225,11 +219,6 @@
         var empCTel = document.getElementById('addEmpCTel').value;
         var empStaCode = document.getElementById('addEmpStaCode').value;
         var empNote = document.getElementById('addEmpNote').value;
-        alert("进入addAjax");
-        alert(empCodex);
-        alert(empName);
-        alert(empAge);
-
         $.ajax({
             type : "post",
             url : "/emp/addEmployee",
@@ -248,7 +237,6 @@
 
             },
             success : function (fallBack) {
-                alert("后端传值成功:"+fallBack);
                 if ( fallBack === 1 ) {
                     alert('恭喜你，添加成功！！！');
                     $("#closemodel").click();

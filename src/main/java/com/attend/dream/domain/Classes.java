@@ -2,6 +2,10 @@ package com.attend.dream.domain;
 
 import lombok.Data;
 
+/*
+ * @description: 班次实体类
+ * */
+
 @Data
 public class Classes {
     private int id;

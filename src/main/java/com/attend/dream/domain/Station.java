@@ -3,20 +3,24 @@ package com.attend.dream.domain;
 
 import lombok.Data;
 
+/*
+ * @description: 岗位实体类
+ * */
+
 @Data
 public class Station {
 
-    private int id;//序号
+    private int id;
 
-    private String staCode;//岗位编码
+    private String staCode;
 
-    private String staName;//岗位名称
+    private String staName;
 
-    private String staDep;//所在部门
+    private String staDep;
 
-    private String staBoss;//直接上级
+    private String staBoss;
 
-    private String staCate;//岗位类别
+    private String staCate;
 
-    private String staDes;//岗位职责描述
+    private String staDes;
 }

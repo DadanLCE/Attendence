@@ -10,19 +10,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class MyMvcConfig extends WebMvcConfigurerAdapter {
 
+    //注册添加拦截器
     @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-
-        //访问localhost:8080默认访问页面
-        //registry.addViewController("/").setViewName("index");
-        //进入主页后，用于防止刷新页面表单重复提交，设置重定向
-        //registry.addViewController("/index.html").setViewName("index");
-//        registry.addViewController("/employee_list.html").setViewName("employee_list");
+    public void addInterceptors(InterceptorRegistry registry) {
+        InterceptorRegistration res = registry.addInterceptor(new LoginHandlerInterceptor());
+        res.addPathPatterns("/**").excludePathPatterns("/login","/user/login","/");
     }
-
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        InterceptorRegistration res = registry.addInterceptor(new LoginHandlerInterceptor());
-//        res.addPathPatterns("/**").excludePathPatterns("/login","/user/login","/");
-//    }
 }

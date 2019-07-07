@@ -27,15 +27,6 @@ public class EmployeeController {
     EmployeeService employeeService;
     private int maxPage ;
 
-    //显示全部员工列表(保留，不要删除这个！)
-//    @GetMapping("/employee")
-//    public String list(Model model){
-//        Collection<Employee> employees=employeeService.getEmployees();
-//        model.addAttribute("emps",employees);
-//
-//        return "employee_list";
-//    }
-
     //查询，对应前端tbody
     @RequestMapping(value = "/emp", method = RequestMethod.POST)
     @ResponseBody
@@ -86,13 +77,14 @@ public class EmployeeController {
         return "employee_list";
     }
 
-    //根据id删除单行员工信息
+    //删除单行员工信息
     @PostMapping("/emp/delEmpById/{id}")
     public String deleteEmployee(@PathVariable(value = "id") int empId){
         employeeService.deleteEmployee(empId);
         return "redirect:/employee?currentPage=1";
     }
 
+    //
     @GetMapping("/emp/getEmpById/{id}")
     @ResponseBody
     public Employee getEmpById(@PathVariable(value = "id") int empId) {
@@ -101,7 +93,7 @@ public class EmployeeController {
 
     }
 
-    //传入字符串 将字符串分割 批量删除员工
+    //批量删除员工
     @PostMapping("/emp/delEmps")
     public String empsDelete(String userList){
         String[] strs = userList.split(",");
@@ -112,8 +104,7 @@ public class EmployeeController {
 
     }
 
-
-    //添加员工 1成功插入数据 2编码已经存在 3岗位不存在
+    //添加员工
     @PostMapping("/emp/addEmployee")
     @ResponseBody
     public String addEmployee(Employee emp, Map<String,Object> map) {
@@ -139,12 +130,19 @@ public class EmployeeController {
         }
 
     }
-    //更新员工 返回2岗位不存在 返回1成功更新
+
     @PostMapping("/emp/updateEmp")
     @ResponseBody
     public String updateEmployee(Employee e) {
         String fallBack = employeeService.updateEmployee(e);
         return fallBack;
+    }
+
+    @GetMapping("/emp/forCombox")
+    @ResponseBody
+    public List<Employee> getAll() {
+        List<Employee> emps = employeeService.getEmployees();
+        return emps;
     }
 
 }

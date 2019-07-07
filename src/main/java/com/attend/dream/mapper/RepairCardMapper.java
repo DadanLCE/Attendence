@@ -13,19 +13,16 @@ public interface RepairCardMapper {
             "from repairCard where id = #{id}  ")
     RepairCard getCardById(int id);
 
+    //模糊查询获取补卡单
     @Select("select id, cardCode, name, time , note  " +
             "from repairCard where cardCode like concat('%',#{cardCode},'%')")
     List<RepairCard> getCardsByCode(String cardCode);
 
-
-
-
+    //添加补卡单
     @Insert("insert into repairCard ( cardCode, name,time, note) " +
             "values(#{cardCode}, #{name}, #{time} , #{note} ) ")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     Boolean insertAll(RepairCard card);
-
-
 
     //删除数据
     @Delete("delete from repairCard where id=#{id}")
@@ -34,21 +31,6 @@ public interface RepairCardMapper {
     @Select("select cardCode, COUNT(*) sum from punchCard\n" +
             "group by cardCode;")
     List<Map> checkCardSum();
-//    //插入数据mor
-//    @Insert("insert into repairCard ( cardCode, name, morTime, note) " +
-//            "values(#{cardCode}, #{name}, #{morTime}, #{note} ) ")
-//    @Options(useGeneratedKeys = true, keyProperty = "id")
-//    Boolean insertMor(RepairCard card);
-//
-//    //插入数据eve
-//    @Insert("insert into repairCard ( cardCode, name, eveTime, note) " +
-//            "values(#{cardCode}, #{name}, #{eveTime}, #{note} ) ")
-//    @Options(useGeneratedKeys = true, keyProperty = "id")
-//    Boolean insertEve(RepairCard card);
 
-//    //更新数据
-//    @Update("update repairCard set cardCode=#{cardCode}, name=#{name}, date=#{date}, note=#{note} " +
-//            "where id = #{id}")
-//    Boolean updateCard(CardMor card);
 
 }

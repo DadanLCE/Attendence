@@ -258,7 +258,6 @@ public class CheckReportController {
         List<Map> cardSum = checkCardService.getEveryDayCard();
         List<Card> allCards = punchCardService.getGetAllCards();
         List<RepairCard> repairCards = repairCardService.getCardsByCode("");
-        //List<Card> adjust = new ArrayList<Card>();
         SimpleDateFormat sdf = new SimpleDateFormat("HH");
         SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat fds = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -274,8 +273,6 @@ public class CheckReportController {
             }
             //晚上缺卡
             if (eveTime == null) {
-//                String secondNote = card.getNote()+"旷工";
-//                card.setNote(secondNote);
                 card.setNote("旷工");
             }
 
@@ -284,23 +281,16 @@ public class CheckReportController {
                 String morHour = sdf.format(morTime);
                 String eveHour = sdf.format(eveTime);
                 int x = morHour.compareTo("09");
-                // System.out.println(x);
                 if (morHour.compareTo("09") == 1) {
                     card.setNote("不正常");
-                    //System.out.println(card.getNote());
-                    //System.out.println(card.getNote());
                 }
                 if(eveHour.compareTo("21") != 1) {
-                    //String n = card.getNote()+"早退";
                     card.setNote("不正常");
                 }
             }
-            // System.out.println("第一次");
-            // System.out.println(card);
+
             checkReportService.insetAllDayTime(card);
 
-            //checkReportService.updateCard(card);
-            //System.out.println(card);
         }
 
         //补卡单状态补全
@@ -331,31 +321,10 @@ public class CheckReportController {
                 String rs = sdf.format(rt);
                 String s = sdf2.format(rt);
                 nullc.setNote("正常");
-//                if (rs.compareTo("12") != 1) {
-//                    nullc.setMorTime(rt);
-//                    checkReportService.insetMorTime(nullc);
-//                }else {
-//                    nullc.setEveTime(rt);
-//                    checkReportService.insetEveTime(nullc);
-//                }
-
-
-                checkReportService.insetAllDayTime(nullc);
-
-                //checkReportService.insetAllDayTime();
-                //Card nullCard = checkReportService.getCardBycardCode(name);
-                //checkReportService.insetAllDayTime();
             } else {
 
                 Card x = card.get(0);
                 String nt = x.getNote();
-
-//                if (nt == null || nt.length()<=0) {
-//                    x.setNote("正常");
-//                    System.out.println(x);
-//                    checkReportService.updateCard(x);
-//                    continue;
-//                }
 
                 Date mTime = x.getMorTime();
                 Date eTime = x.getEveTime();

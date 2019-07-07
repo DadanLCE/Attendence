@@ -5,6 +5,10 @@ import lombok.Data;
 
 import java.util.Date;
 
+/*
+ * @description: 打卡实体类
+ * */
+
 @Data
 public class Card {
 

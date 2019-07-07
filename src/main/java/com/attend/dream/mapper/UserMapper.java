@@ -5,9 +5,12 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 @Mapper
-public interface UserMapper {
+public interface UserMapper  {
 
     @Select("select * from login where userName=#{userName}")
     User findUserByUsername(String userName);
+
+    @Select("select userName from login")
+    String[] getAlluserName();
 
 }

@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+
+//点击各个具体模块，模块内容填充到index页面
 @Controller
 public class IndexController {
 
@@ -14,7 +16,8 @@ public class IndexController {
         return "employee_list";
     }
 
-    @RequestMapping(value = "/showWel",method = RequestMethod.POST)
+    //!!!修改
+    @RequestMapping(value = "/showWel",method = RequestMethod.GET)
     public String showWel(){ return "welcome";}
 
     @RequestMapping(value= "/showDep",method = RequestMethod.POST)
@@ -39,4 +42,7 @@ public class IndexController {
 
     @RequestMapping(value = "/showChec",method = RequestMethod.POST)
     public String showChec(){ return "checkReport_list"; }
+
+
+
 }
