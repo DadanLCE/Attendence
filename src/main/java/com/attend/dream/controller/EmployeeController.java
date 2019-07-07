@@ -138,6 +138,7 @@ public class EmployeeController {
         return fallBack;
     }
 
+    //在部门添加负责人的时，从数据库获取，设置下拉框进行选择，避免错误操作
     @GetMapping("/emp/forCombox")
     @ResponseBody
     public List<Employee> getAll() {

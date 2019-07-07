@@ -54,6 +54,7 @@ public class EmployeeService {
         return AllEmp;
     }
 
+    //把查询到的内容进行分页
     public PageInfo<Employee> getEmployeesPageMsgByName(int currentPage,int pageSize, String empName){
         PageHelper.startPage(currentPage,pageSize);
         List<Employee> AllEmp = employeesMapper.getEmployeesByName(empName);

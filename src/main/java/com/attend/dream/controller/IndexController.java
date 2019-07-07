@@ -6,7 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 
-//点击各个具体模块，模块内容填充到index页面
+/*
+*
+* 点击各个具体模块，模块内容填充到index页面
+* */
 @Controller
 public class IndexController {
 

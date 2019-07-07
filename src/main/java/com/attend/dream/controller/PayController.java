@@ -18,6 +18,7 @@ import java.util.Map;
 
 @Controller
 public class PayController {
+
     @Autowired
     private PayService payService;
 
@@ -36,7 +37,6 @@ public class PayController {
         payMap.put("nextPage", nextPage);
         payMap.put("prePage", prePage);
         payMap.put("pageNum", pageNum);
-
         return payMap;
     }
 

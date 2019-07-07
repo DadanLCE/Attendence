@@ -71,7 +71,7 @@
 					<tr>
 
 						<th>
-							<input type="checkbox" />
+
 						</th>
 						<th>ID</th>
 						<th>员工编码</th>
@@ -244,81 +244,92 @@
 							</div>
 							<div class="layui-form-item">
 								<label  class="layui-form-label">
+									<span class="we-red">*</span>性别
+								</label>
+								<div class="layui-input-inline">
+									<div id="addEmpSex">
+										<input type="radio" id="addEmpSexB" name="empSex" value="男">男
+										<input type="radio" id="addEmpSexG" name="empSex" value="女" checked>女
+									</div>
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label  class="layui-form-label">
 									<span class="we-red">*</span>年龄
 								</label>
 								<div class="layui-input-inline">
 									<input type="text" id="addEmpAge" name="empAge" autocomplete="off" class="layui-input">
 								</div>
 
-										</div>
-										<div class="layui-form-item">
-											<label  class="layui-form-label">
-												<span class="we-red">*</span>民族
-											</label>
-											<div class="layui-input-inline">
-												<input type="text" id="addEmpNation" name="empNation" lay-verify="required|nation" autocomplete="off" class="layui-input">
-											</div>
-										</div>
-										<div class="layui-form-item">
-											<label  class="layui-form-label">
-												<span class="we-red">*</span>身份证
-											</label>
-											<div class="layui-input-inline">
-												<input type="text" id="addEmpIdCard" name="empIdCard" lay-verify="required|identifycard" autocomplete="off" class="layui-input">
-											</div>
-										</div>
-										<div class="layui-form-item">
-											<label  class="layui-form-label">
-												<span class="we-red">*</span>薪水
-											</label>
-											<div class="layui-input-inline">
-												<input type="text" id="addEmpSalary" name="empSalary" lay-verify="required|salary" autocomplete="off" class="layui-input">
-											</div>
-										</div>
-										<div class="layui-form-item">
-											<label  class="layui-form-label">
-												<span class="we-red">*</span>联系电话
-											</label>
-											<div class="layui-input-inline">
-												<input type="text" id="addEmpContact" name="empContact" lay-verify="required|salary" autocomplete="off" class="layui-input">
-											</div>
-										</div>
-										<div class="layui-form-item">
-											<label  class="layui-form-label">
-												<span class="we-red">*</span>紧急联系人电话
-											</label>
-											<div class="layui-input-inline">
-												<input type="text" id="addEmpCTel" name="empCTel" lay-verify="required|salary" autocomplete="off" class="layui-input">
-											</div>
-										</div>
-										<div class="layui-form-item">
-											<label  class="layui-form-label">
-												<span class="we-red">*</span>岗位
-											</label>
-											<div class="layui-input-inline">
-												<!--<input type="text" id="addEmpStaCode" name="empStaCode" lay-verify="required|salary" autocomplete="off" class="layui-input">-->
-												<select class="layui-input" name="empStaCode" id="addEmpStaCode">
-													<option selected disabled style="display: none">请选择岗位</option>
-												</select>
-											</div>
-										</div>
-										<div class="layui-form-item">
-											<label  class="layui-form-label">
-												<span class="we-red">*</span>简介
-											</label>
-											<div class="layui-input-inline">
-												<input type="textarea" id="addEmpNote" name="empNote" lay-verify="required|salary" autocomplete="off" class="layui-input">
-											</div>
-										</div>
-										<div class="layui-form-item">
-											<label  class="layui-form-label">
-											</label>
-											<button class="layui-btn" onclick="addAjax()" id="confirmAdd" lay-filter="add" lay-submit="">确定</button>
+							</div>
+							<div class="layui-form-item">
+								<label  class="layui-form-label">
+									<span class="we-red">*</span>民族
+								</label>
+								<div class="layui-input-inline">
+									<input type="text" id="addEmpNation" name="empNation" lay-verify="required|nation" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label  class="layui-form-label">
+									<span class="we-red">*</span>身份证
+								</label>
+								<div class="layui-input-inline">
+									<input type="text" id="addEmpIdCard" name="empIdCard" lay-verify="required|identifycard" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label  class="layui-form-label">
+									<span class="we-red">*</span>薪水
+								</label>
+								<div class="layui-input-inline">
+									<input type="text" id="addEmpSalary" name="empSalary" lay-verify="required|salary" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label  class="layui-form-label">
+									<span class="we-red">*</span>联系电话
+								</label>
+								<div class="layui-input-inline">
+									<input type="text" id="addEmpContact" name="empContact" lay-verify="required|salary" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label  class="layui-form-label">
+									<span class="we-red">*</span>紧急联系人电话
+								</label>
+								<div class="layui-input-inline">
+									<input type="text" id="addEmpCTel" name="empCTel" lay-verify="required|salary" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label  class="layui-form-label">
+									<span class="we-red">*</span>岗位
+								</label>
+								<div class="layui-input-inline">
+									<!--<input type="text" id="addEmpStaCode" name="empStaCode" lay-verify="required|salary" autocomplete="off" class="layui-input">-->
+									<select class="layui-input" name="empStaCode" id="addEmpStaCode">
+										<option selected disabled style="display: none">请选择岗位</option>
+									</select>
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label  class="layui-form-label">
+									<span class="we-red">*</span>简介
+								</label>
+								<div class="layui-input-inline">
+									<input type="textarea" id="addEmpNote" name="empNote" lay-verify="required|salary" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label  class="layui-form-label">
+								</label>
+								<button class="layui-btn" onclick="addAjax()" id="confirmAdd" lay-filter="add" lay-submit="">确定</button>
 
-                                            <!--隐藏button-->
-											<button type="button" class="btn btn-default" style="display:none" data-dismiss="modal" id="closemodel">关闭</button>
+								<!--隐藏button-->
+								<button type="button" class="btn btn-default" style="display:none" data-dismiss="modal" id="closemodel">关闭</button>
 
-										</div>
+							</div>
 									<!--</form>-->
 								</div>
 							</div><!-- /.modal-content -->
@@ -559,6 +570,9 @@
 				var empStaCode = document.getElementById('addEmpStaCode').value;
 				var empNote = document.getElementById('addEmpNote').value;
 
+				var empSex = $('input[name="empSex"]:checked').val();
+				alert(empSex);
+
 				$.ajax({
 					type : "post",
 					url : "/emp/addEmployee",
@@ -569,6 +583,7 @@
 						empAge	:  empAge,
 						empNation	:  empNation,
 						empIdCard	:  empIdCard,
+						empSex : empSex,
 						empSalary	:  empSalary,
 						empContact	:  empContact,
 						empCTel	:  empCTel,
@@ -614,7 +629,7 @@
 						})
 					},
 					error : function () {
-						alert("comBox错误");
+						alert("拉取岗位失败");
 					}
 				});
 			})

@@ -81,6 +81,7 @@ public class StationService {
         return stationMapper.findStationById(depId);
     }
 
+    //更新岗位，1,要求员工负责人存在 2,要求更新的部门信息不冲突
     public String updateStation( Station s) {
 
        String inWhichDep = s.getStaDep();

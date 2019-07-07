@@ -29,32 +29,35 @@ public class CheckReportService {
     CheckCardMapper checkCardMapper;
 
 
-
+    //获取特定员工日期的打卡单
     public List<Card> getSpecialRecord(String cardCode, Date preDate,Date nextDate) {
         List<Card> specialRecord = punchCardMapper.getCardsByCodeTime(cardCode,preDate,nextDate);
         return specialRecord;
     }
 
+    //插入打卡单到考勤表
     public int insetAllDayTime(Card card) {
         return checkCardMapper.insertAllDayCard(card);
     }
 
-
+    //更新早上打卡时间
     public boolean updateMorCard(Card card) {
         checkCardMapper.updateMorCard(card);
         return true;
     }
 
+    //更新下午打卡时间
     public boolean updateEveCard(Card card) {
         checkCardMapper.updateEveCard(card);
         return true;
     }
-    //清空表
+
+    //清空考勤表
     public void delete(){
         checkCardMapper.delete();
     }
 
-    //查询
+    //查询所有
     public List<Card> getAll(String cardCode,Date preDate,Date nextDate){
             return checkCardMapper.search(cardCode,preDate,nextDate);
     }
@@ -66,6 +69,7 @@ public class CheckReportService {
         return cards;
     }
 
+    //分页显示
     public PageInfo<Card> getCardsByCodeTimePage(int currentPage, int pageSize, String cardCode,Date preDate,Date nextDate){
         PageHelper.startPage(currentPage,pageSize);
         List<Card> cards = checkCardMapper.getCardsByCodeTime(cardCode, preDate, nextDate);

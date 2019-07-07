@@ -17,7 +17,7 @@ public class ClassesController {
     @Autowired
     ClassesService classesService;
 
-    //查询
+    //查询班次
     @RequestMapping(value = "/cla", method = RequestMethod.POST)
     @ResponseBody
     public Map<Object, Object> getClassesByCode(@RequestParam(value = "currentPage") int currentPage,
@@ -56,7 +56,7 @@ public class ClassesController {
         return "redirect:/employee?currentPage=1";
     }
 
-    //添加
+    //添加班次
     @PostMapping("/cla/addClass")
     @ResponseBody
     public String addClass(Classes cla, Map<String,Object> map) {
@@ -66,7 +66,7 @@ public class ClassesController {
        return fallBack; //1是成功，2是班次已存在
     }
 
-    //编辑回显
+    //编辑时，回显信息
     @GetMapping("/cla/getClaById/{id}")
     @ResponseBody
     public Classes getClaById(@PathVariable(value = "id") int empId) {

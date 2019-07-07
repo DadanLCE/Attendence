@@ -22,7 +22,7 @@ public class StationController {
     StationService stationService;
 
 
-
+    //查询功能
     @RequestMapping(value = "/sta", method = RequestMethod.POST)
     @ResponseBody
     public Map<Object, Object> getEmployeesByName(@RequestParam(value = "currentPage") int currentPage,
@@ -32,13 +32,11 @@ public class StationController {
         int prePage = stasPage.getPrePage();
         int nextPage = stasPage.getNextPage();
         int pageNum = stasPage.getPages();
-
         Map<Object, Object> empMap = new HashMap();
         empMap.put("stas", stas);
         empMap.put("nextPage", nextPage);
         empMap.put("prePage", prePage);
         empMap.put("pageNum", pageNum);
-
         return empMap;
     }
 
@@ -48,7 +46,6 @@ public class StationController {
                        @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, @RequestParam(value = "staCode") String staCode){
         PageInfo<Station> stasPage = stationService.getStationBystaCodePage(currentPage, pageSize, staCode);
         List<Station> stas = stationService.getStationBystaCode(currentPage, pageSize, staCode);
-
         model.addAttribute("stas",stas);
         model.addAttribute("stasPage",stasPage);
         //传递staCode到station_list 的下一页和上一页
@@ -56,10 +53,11 @@ public class StationController {
         return "station_list";
     }
 
-    @GetMapping("/sta/goToAddHtml")
-    public String gotoAddEmployee() {
-        return "add_station";
-    }
+    //跳转添加页面，后来采用模态框
+//    @GetMapping("/sta/goToAddHtml")
+//    public String gotoAddEmployee() {
+//        return "add_station";
+//    }
 
     //删除单行员工信息
     @PostMapping("/sta/staDel")
@@ -105,17 +103,16 @@ public class StationController {
 
     }
 
-
+    //获取前端ID值，查询信息并返回
     @GetMapping("/sta/getStaById/{id}")
     @ResponseBody
     public Station getStaById(@PathVariable(value = "id") int staId) {
-        //Employee emp = employeeService.getEmpById(empId);
-        System.out.println(staId);
         Station sta = stationService.getStaById(staId);
         return sta;
 
     }
 
+    //更新信息
     @PostMapping("/sta/updateSta")
     @ResponseBody
     public String updateStation(Station s) {
@@ -123,6 +120,7 @@ public class StationController {
         return fallBack;
     }
 
+    //在添加员工中，获取显示已有的岗位进行下拉框选择,避免错误.
     @GetMapping("/sta/getStations")
     @ResponseBody
     public List<Station> getStations() {

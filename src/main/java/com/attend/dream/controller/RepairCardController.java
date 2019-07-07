@@ -17,7 +17,7 @@ public class RepairCardController {
     @Autowired
     RepairCardService repairCardService;
 
-    //查询，对应前端tbody
+    //查询功能
     @RequestMapping(value = "/rep", method = RequestMethod.POST)
     @ResponseBody
     public Map<Object, Object> getRepairCardsByCode(@RequestParam(value = "currentPage") int currentPage,

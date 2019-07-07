@@ -85,6 +85,7 @@ public class DepartmentService {
             return departmentMapper.findDepById(depId);
     }
 
+    //更新部门
     public String updateDepartment(Department d) {
             String topID = d.getDepTopId();
             Department topDep = departmentMapper.getDepartmentByDepCode(topID);

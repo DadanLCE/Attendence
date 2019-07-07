@@ -28,7 +28,8 @@ public class PunchCardController {
 
     @Autowired
     private UserService userService;
-    //查询，对应前端tbody
+
+    //查询功能
     @RequestMapping(value = "/pun", method = RequestMethod.POST)
     @ResponseBody
     public Map<Object, Object> getEmployeesByName(@RequestParam(value = "currentPage") int currentPage,
@@ -41,6 +42,7 @@ public class PunchCardController {
         return punMap;
     }
 
+    //打卡功能：获取当前登录用户并返回用户信息
     @RequestMapping("/getInfo")
     @ResponseBody
     public Current getInfo(){
@@ -52,20 +54,18 @@ public class PunchCardController {
         return info;
     }
 
+    //添加早上打卡信息
     @RequestMapping("/pun/addPunchCardMor")
     @ResponseBody
     public void addPunchCardMor(Card card){
-
         punchCardService.insertCardMor(card);
     }
 
+    //添加下午打卡信息
     @RequestMapping("/pun/addPunchCardEve")
     @ResponseBody
     public void addPunchCardEve(Card card){
-//        System.out.println(card.getMorTime());
        String fallback = punchCardService.insertCardEve(card);
-       //0是没有对应的,1是有对应的
-//       return fallback;
     }
 
 

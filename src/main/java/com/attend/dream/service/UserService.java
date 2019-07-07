@@ -19,8 +19,4 @@ public class UserService {
         return user;
     }
 
-    public String[] getAllUsername() {
-        String[] all = userMapper.getAlluserName();
-        return all;
-    }
 }

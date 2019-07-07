@@ -87,6 +87,7 @@ public class DepartmentController {
 
     }
 
+    //单个删除
     @GetMapping("/dep/getDepById/{id}")
     @ResponseBody
     public Department getDepById(@PathVariable(value = "id") int depId) {
@@ -96,6 +97,7 @@ public class DepartmentController {
 
     }
 
+    //更新部门信息
     @PostMapping("/dep/updateDep")
     @ResponseBody
     public String updateDepartment(Department d) {
@@ -103,6 +105,7 @@ public class DepartmentController {
         return fallBack;
     }
 
+    //获取所有部门信息
     @GetMapping("/dep/getDepartments")
     @ResponseBody
     public List<Department> getDepartments() {
