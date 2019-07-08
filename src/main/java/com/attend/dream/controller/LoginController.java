@@ -30,6 +30,7 @@ public class LoginController {
     public String getCurrentUser() {
         return currentUser;
     }
+
     //用户名赋值方法
     public void setCurrentUser(String currentUser) {
         this.currentUser = currentUser;
@@ -55,7 +56,7 @@ public class LoginController {
                                      ) {
         User user = userService.findUserByUsername(username);
         if (user == null) {
-
+            map.put("msg","没有这个用户存在");
             return "login";
         }
         String pwd = user.getPassword();
@@ -65,7 +66,7 @@ public class LoginController {
             map.put("user",username);
             return "index";
         } else {
-
+            map.put("msg","对不起，用户名或者密码错误");
             return "login";
         }
 

@@ -51,4 +51,7 @@ public interface EmployeesMapper {
     @Delete("delete from employees where empId=#{empId}")
     Boolean deleteEmployee(int empId);
 
+    //  根据empStaCode查询这个岗位有多少员工 Echart
+    @Select("SELECT COUNT(*) FROM employees where empStaCode = #{empStaCode}")
+    int getEmployeeByStation(String empStaCode);
 }

@@ -18,15 +18,34 @@ import java.util.Map;
 
 @Controller
 public class PayController {
-
     @Autowired
     private PayService payService;
+//
+//
+//    //查询，对应前端tbody
+//    @RequestMapping(value = "/pay", method = RequestMethod.POST)
+//    @ResponseBody
+//    public Map<Object, Object> getPaysByempCode(@RequestParam(value = "currentPage") int currentPage,
+//                                                    @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, @RequestParam(value = "empCode") String empCode){
+//        PageInfo<Pay> paysPage = payService.getPaysByEmpCodePage(currentPage,pageSize,empCode);
+//        List<Pay> pays = payService.getPaysByEmpCode(currentPage,pageSize,empCode);
+//        int prePage = paysPage.getPrePage();
+//        int nextPage = paysPage.getNextPage();
+//        int pageNum = paysPage.getPages();
+//
+//        Map<Object, Object> payMap = new HashMap();
+//        payMap.put("pays", pays);
+//        payMap.put("nextPage", nextPage);
+//        payMap.put("prePage", prePage);
+//        payMap.put("pageNum", pageNum);
+//        return payMap;
+//    }
 
     //查询员工通过名字 模糊查询 分页
     @RequestMapping(value = "/pay", method = RequestMethod.POST)
     @ResponseBody
     public Map<Object, Object> getPaysByCode(Model model, @RequestParam(value = "currentPage") int currentPage,
-                                     @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, @RequestParam(value = "empCode") String empCode) {
+                                             @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, @RequestParam(value = "empCode") String empCode) {
         PageInfo<Pay> paysPage = payService.getPaysByEmpCodePage(currentPage, pageSize, empCode);
         List<Pay> pays = payService.getPaysByEmpCode(currentPage, pageSize, empCode);
         int prePage = paysPage.getPrePage();
@@ -37,6 +56,7 @@ public class PayController {
         payMap.put("nextPage", nextPage);
         payMap.put("prePage", prePage);
         payMap.put("pageNum", pageNum);
+        System.out.println(pays);
         return payMap;
     }
 

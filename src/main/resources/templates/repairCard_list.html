@@ -12,6 +12,7 @@
                 <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
                 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
                 <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+                <script src="/js/moment.js" type="text/javascript" charset="utf-8" />
                 <link rel="stylesheet" href="../lib/layui/css/layui.css" th:href="@{/layui/css/layui.css.css}">
                 <style type="text/css">
                     .layui-form-label{
@@ -277,28 +278,21 @@
                             $("#tbody").html("");
                             // $("#ulList").html("");
                             var tabledata = data['reps'];
+                            var id=1;
                             jQuery.each(tabledata, function (i, list) {
-
-                                    var time = list['time'].toString();
-                                    var atime = time.split("T");
-                                    var yd = atime[0];
-                                    var btime = atime[1].split(".");
-                                    var ctime = btime[0].split(":");
-                                    var hour = parseInt(ctime[0])+8;
-                                    var min = ctime[1];
-                                    var mh = ":";
+                                var time = moment(list['time']).format("YYYY/MM/DD HH:mm");
 
                                 var tr="";
                                 tr+="<tr>"+
                                     "<td><input name=\"repsIds\" value=" + list['id'] + " type=\"checkbox\" /></td>"+
-                                    "<td>" + list['id'] + "</td>"+
+                                    "<td>" + id + "</td>"+
                                     "<td>" + list['cardCode'] + "</td>"+
                                     "<td>" + list['name'] + "</td>"+
-                                    "<td>" + yd+ "&nbsp;" + hour + ":"+ min + "</td>"+
+                                    "<td>" + time + "</td>"+
                                     "<td class=\"td-manage\">"+
                                     "<button  type=\"submit\" id=" + list['id'] + " onclick=\"repDelete(this)\" class=\"btn btn-danger btn-sm right\" >删 除</button>"+
                                     "</td></tr>";
-
+                                id+=1;
                                 $("#tbody").append(tr);
                             });
                             // $("#ulList").html('');

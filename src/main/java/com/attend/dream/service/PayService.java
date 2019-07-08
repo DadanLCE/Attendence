@@ -20,7 +20,6 @@ public class PayService {
 
     @Autowired(required = false)
     private CheckCardMapper checkCardMapper;
-
     //模糊查询
     //查询页面的信息 上一页 下一页
     public PageInfo<Pay> getPaysByEmpCodePage(int currentPage, int pageSize, String empCode){
@@ -38,10 +37,10 @@ public class PayService {
             PageHelper.startPage(currentPage, pageSize);
             pays = payMapper.getPaysByCode(empCode);
         }else{
-          pays = null;
+            getAll();
+            PageHelper.startPage(currentPage, pageSize);
+            pays = payMapper.getPaysByCode(empCode);
         }
-
-
         return pays;
     }
 
@@ -57,19 +56,23 @@ public class PayService {
         int[] z = new int[13];//准时
         Pay pay = new Pay();
         List<Card> cards = checkCardMapper.getCardByCode(empCode);
-        if(cards.get(0)!=null) {
+        if(cards.get(0)!=null ) {
             Date edate = cards.get(0).getMorTime(); //最早时间
             Date ldate = cards.get(0).getEveTime(); //最晚时间
             int aflag = edate.getMonth();
             int flag = edate.getMonth();
             for (Card a : cards) {
-                if (edate.compareTo(a.getMorTime()) != -1) {
-                    edate = a.getMorTime();
+                if(a.getMorTime()!=null){
+                    if (edate.compareTo(a.getMorTime()) != -1) {
+                        edate = a.getMorTime();
+                    }
                 }
             }
             for (Card a : cards) {
-                if (ldate.compareTo(a.getMorTime()) == -1) {
-                    ldate = a.getMorTime();
+                if(a.getMorTime()!=null){
+                    if (ldate.compareTo(a.getMorTime()) == -1) {
+                        ldate = a.getMorTime();
+                    }
                 }
             }
             //aflag值为开始计算工资的月份，flag为最后计算工资的月份
@@ -78,13 +81,25 @@ public class PayService {
 
                 for (Card c : cards) {
                     if (c.getNote() != null) {
-                        if (c.getMorTime().getMonth() == i) {
-                            if (c.getNote().equals("旷工")) {
-                                k[flag]++;
-                            } else if (c.getNote().equals("不正常")) {
-                                d[flag]++;
-                            } else {
-                                z[flag]++;
+                        if (c.getMorTime() != null ){
+                            if (c.getMorTime().getMonth() == i) {
+                                if (c.getNote().equals("旷工")) {
+                                    k[flag]++;
+                                } else if (c.getNote().equals("不正常")) {
+                                    d[flag]++;
+                                } else {
+                                    z[flag]++;
+                                }
+                            }
+                        }else if(c.getEveTime()!=null){
+                            if (c.getEveTime().getMonth() == i) {
+                                if (c.getNote().equals("旷工")) {
+                                    k[flag]++;
+                                } else if (c.getNote().equals("不正常")) {
+                                    d[flag]++;
+                                } else {
+                                    z[flag]++;
+                                }
                             }
                         }
                     }
@@ -131,7 +146,31 @@ public class PayService {
             }
         }
     }
-    
+
+    public void getAll(){
+        int flag = 1;
+        List<String> codes = new ArrayList<>();
+        List<Card> cards = new ArrayList<>();
+        cards = checkCardMapper.getCardsByCode("");
+        //判断编码是否已经在cards序列里
+        for(Card card : cards){ //遍历出勤记录
+            String empc = card.getCardCode();
+            for(String code : codes){//判断序列中是否有该编码
+                if(code.equals(empc)){
+                    flag=0;
+                }
+            }
+            if(flag == 1){
+                codes.add(card.getCardCode());
+            }
+            flag = 1;
+        }
+        System.out.println(codes);
+        for(String code : codes){
+            salary(code);
+        }
+    }
+
     public static int getMaxDay(int year,int month){
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR,year);

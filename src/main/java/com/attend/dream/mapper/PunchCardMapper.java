@@ -47,6 +47,13 @@ public interface PunchCardMapper {
             "where cardCode = #{cardCode}")
     Boolean updateCard1(Card card);
 
+    //  根据用户的姓名查询打卡的次数
+    @Select("SELECT COUNT(*) FROM punchCard where name = #{name}")
+    int cardsNumEchart(String uname);
+
+    //查询打卡单有多少员工
+    @Select("select distinct name from punchCard")
+    List<Card> cardsEchart();
 
 
 

@@ -28,21 +28,29 @@ public class PunchCardController {
 
     @Autowired
     private UserService userService;
-
-    //查询功能
+    //查询，对应前端tbody
     @RequestMapping(value = "/pun", method = RequestMethod.POST)
     @ResponseBody
     public Map<Object, Object> getEmployeesByName(@RequestParam(value = "currentPage") int currentPage,
                                                   @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, @RequestParam(value = "cardCode") String cardCode){
-
+        // PageInfo<Card> punsPage = punchCardService.employeeService.getEmployeesPageMsgByName(currentPage,pageSize,cardCode));
         List<Card> puns = punchCardService.getCardAllByCode(cardCode);
+
+//        int prePage = punsPage.getPrePage();
+//        int nextPage = punsPage.getNextPage();
+//        int pageNum = punsPage.getPages();
+//        System.out.println(puns);
         Map<Object, Object> punMap = new HashMap();
         punMap.put("puns", puns);
+
+        System.out.println(puns);
+//        punMap.put("nextPage", nextPage);
+//        punMap.put("prePage", prePage);
+//        punMap.put("pageNum", pageNum);
 
         return punMap;
     }
 
-    //打卡功能：获取当前登录用户并返回用户信息
     @RequestMapping("/getInfo")
     @ResponseBody
     public Current getInfo(){
@@ -54,18 +62,21 @@ public class PunchCardController {
         return info;
     }
 
-    //添加早上打卡信息
     @RequestMapping("/pun/addPunchCardMor")
     @ResponseBody
     public void addPunchCardMor(Card card){
+
         punchCardService.insertCardMor(card);
     }
 
-    //添加下午打卡信息
     @RequestMapping("/pun/addPunchCardEve")
     @ResponseBody
     public void addPunchCardEve(Card card){
-       String fallback = punchCardService.insertCardEve(card);
+//        System.out.println(card.getMorTime());
+        System.out.println(card);
+        //0是没有对应的,1是有对应的
+//       return fallback;
+        punchCardService.insertCardEve(card);
     }
 
 

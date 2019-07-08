@@ -1,285 +1,285 @@
-        <!DOCTYPE html>
-        <html>
-        <html  xmlns:th="http://www.thymeleaf.org">
-        <head>
-            <meta charset="UTF-8">
-            <title>打卡单-考勤系统</title>
-            <!--<meta name="renderer" content="webkit">-->
-            <!--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">-->
-            <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">-->
-            <link rel="stylesheet" href="/css/font.css" >
-            <link rel="stylesheet" href="/css/weadmin.css" >
-            <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-            <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-            <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-            <link rel="stylesheet" href="/layui/css/layui.css" >
-            <style type="text/css">
-                .layui-form-label{
-                    width: 120px;
-                }
-                .layui-form-item{
-                    margin-bottom: 7px;
-                }
-                .layui-input{
-                    border-color: #3F3F3F;
-                }
-                .close{
-                    width: 100px;
-                    height: 50px;
-                }
-                /*.td-manage{*/
-                /*display: inline-block;*/
-                /*!*float: left;*!*/
-                /*}*/
-                .btn-primary{
-                    width: 113px;
-                    height: 38px;
-                    border-radius: 0;
-                    font-size: 14px;
-                }
-                .btn-info{
-                    float: left;
-                    /*display: inline-block;*/
-                    margin-right: 15px;
-                }
-                .content{
-                    float: left;
-                    padding: 1.875em;
-                    width: 100%;
-                }
-                .container{
-                    width: 100%;
-                }
-            </style>
+<!DOCTYPE html>
+<html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>打卡单-考勤系统</title>
+    <!--<meta name="renderer" content="webkit">-->
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">-->
+    <link rel="stylesheet" href="/css/font.css" >
+    <link rel="stylesheet" href="/css/weadmin.css" >
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/layui/css/layui.css" >
+    <style type="text/css">
+        .layui-form-label{
+            width: 120px;
+        }
+        .layui-form-item{
+            margin-bottom: 7px;
+        }
+        .layui-input{
+            border-color: #3F3F3F;
+        }
+        .close{
+            width: 100px;
+            height: 50px;
+        }
+        /*.td-manage{*/
+        /*display: inline-block;*/
+        /*!*float: left;*!*/
+        /*}*/
+        .btn-primary{
+            width: 113px;
+            height: 38px;
+            border-radius: 0;
+            font-size: 14px;
+        }
+        .btn-info{
+            float: left;
+            /*display: inline-block;*/
+            margin-right: 15px;
+        }
+        .content{
+            float: left;
+            padding: 1.875em;
+            width: 100%;
+        }
+        .container{
+            width: 100%;
+        }
 
-        </head>
+    </style>
 
-        <body>
+</head>
 
-        <div class="content">
-            <div class="layui-row">
+<body>
 
-                <div class="layui-inline">
-                    <input type="text" id="searchId" placeholder="请输入人员编码或名称" autocomplete="off" class="layui-input" >
-                </div>
-                <button class="layui-btn" lay-submit="" lay-filter="sreach" onclick="loadData(document.getElementById('searchId').value, 0, 5)"><i class="layui-icon">&#xe615;</i></button>
-                <!--				</form>-->
-            </div>
-            <div class="weadmin-block">
+<div class="content">
+    <div class="layui-row">
 
-                <button class="btn btn-primary btn-lg" id="punchCardBtn"  onclick="punchCard()">
-                    添加打卡
-                </button>
-
-
-                <!--</form>-->
-                <span class="fr" style="line-height:40px"></span>
-            </div>
-            <!--显示打卡单-->
-            <table class="layui-table" id="memberList" >
-                <thead>
-                <tr>
-
-                    <th>
-
-                    </th>
-                    <th>ID</th>
-                    <th>打卡人编码</th>
-                    <th>打卡人姓名</th>
-                    <th>打卡日期</th>
-<!--                    <th>操作</th>-->
-                </tr>
-                </thead>
-                <tbody id="tbody" >
-
-                </tbody>
-            </table>
-
+        <div class="layui-inline">
+            <input type="text" id="searchId" placeholder="请输入人员编码或名称" autocomplete="off" class="layui-input" >
         </div>
+        <button class="layui-btn" lay-submit="" lay-filter="sreach" onclick="loadData(document.getElementById('searchId').value, 0, 5)"><i class="layui-icon">&#xe615;</i></button>
+        <!--				</form>-->
+    </div>
+    <div class="weadmin-block">
+
+        <button class="btn btn-primary btn-lg" id="punchCardBtn"  onclick="punchCard()">
+            添加打卡
+        </button>
 
 
-        <div id='ulList' class="page">
+        <!--</form>-->
+        <span class="fr" style="line-height:40px"></span>
+    </div>
+    <!--显示打卡单-->
+    <table class="layui-table" id="memberList" >
+        <thead>
+        <tr>
 
-        </div>
+            <th>
+                <input type="checkbox" />
+            </th>
+            <th>ID</th>
+            <th>打卡人编码</th>
+            <th>打卡人姓名</th>
+            <th>打卡日期</th>
+            <!--                    <th>操作</th>-->
+        </tr>
+        </thead>
+        <tbody id="tbody" >
+
+        </tbody>
+    </table>
+
+</div>
 
 
-        <!-- ***************************************************************** -->
+<div id='ulList' class="page">
 
-        <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-        <script src="/layui/layui.js" charset="utf-8" ></script>
-        <script src="/js/eleDel.js" type="text/javascript" charset="utf-8" ></script>
-        <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+</div>
 
-        <!-- 打卡按钮 -->
-        <script>
 
-            function punchCard() {
-                //获取登录用户的用户名和编码
-                var code=1;
-                var name=2;
-                $(document).ready(function () {
-                    $.ajax({
-                        type: "get",
-                        url: "/getInfo",
-                        success: function (info) {
-                            code = info.cardCode;
-                            name = info.name;
-                            send(name,code);
+<!-- ***************************************************************** -->
 
-                        },
-                        error: function () {
-                            alert("查询用户失败");
-                        }
-                    })
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="/layui/layui.js" charset="utf-8" ></script>
+<script src="/js/eleDel.js" type="text/javascript" charset="utf-8" ></script>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 
-                })
-            }
+<!-- 打卡按钮 -->
+<script>
 
-            function  send(name,code) {
-                var d = new Date();
-                var year = d.getFullYear();
-                var month = d.getMonth() + 1;
-                var date = d.getDate();
-                var hour = d.getHours()+8;
-                var min = d.getMinutes();
-                //   yyyy/mm/dd hh:mm
-
-                //早上打卡插入
-                if(hour <= 12 ) {
-                    $.ajax({
-                        type: 'post',
-                        url: "/pun/addPunchCardMor",
-                        data: {
-                            cardCode: code,
-                            name: name,
-                            morTime: year + "/" + month + "/" + date + " " + hour + ":" + min
-                        },
-                        success: function () {
-                            alert("早上打卡成功");
-                            loadData('', 1, 5);
-                        },
-                        error: function () {
-                            alert("打卡失败");
-                        }
-
-                    })
-                }else{
-                    $.ajax({
-                        type: 'post',
-                        url: "/pun/addPunchCardEve",
-                        data: {
-                            cardCode: code,
-                            name: name,
-                            eveTime: year + "/" + month + "/" + date + " " + hour + ":" + min
-                        },
-                        success: function () {
-                            alert("下午打卡成功");
-                            loadData('', 1, 5);
-                        },
-                        error: function () {
-                            alert("打卡失败");
-                        }
-
-                    })
+    function punchCard() {
+        //获取登录用户的用户名和编码
+        var code=1;
+        var name=2;
+        $(document).ready(function () {
+            $.ajax({
+                type: "get",
+                url: "/getInfo",
+                success: function (info) {
+                    code = info.cardCode;
+                    name = info.name;
+                    send(name,code);
+                },
+                error: function () {
+                    alert("查询用户失败");
                 }
-            }
-        </script>
-
-            <!--  查询  -->
-        <script th:inline="none">
-            var currentPage = 0;
-            function loadData(key,page, pageSize) {
-                $.ajax({
-                    type: 'POST',
-                    url: "/pun",
-                    dataType: "json",
-                    data: {cardCode: key,
-                        pageSize:5,
-                        currentPage:page},
-                    success: function (data) {
-
-                        $("#tbody").html("");
-                        // $("#ulList").html("");
-                        var tabledata = data['puns'];
-                        jQuery.each(tabledata, function (i, list) {
-                            var tr="";
-                            var tre="";
-                            if(list['morTime'] !=null ) {
-                                var time = list['morTime'].toString();
-                                var atime = time.split("T");
-                                var yd = atime[0];
-                                var btime = atime[1].split(".");
-                                var ctime = btime[0].split(":");
-                                var hour = parseInt(ctime[0])+8;
-                                var min = ctime[1];
-                                tr+="<tr>"+
-                                    "<td><input name=\"\" value=" + list['id'] + " type=\"checkbox\" /></td>"+
-                                    "<td>" + list['id'] + "</td>"+
-                                    "<td>" + list['cardCode'] + "</td>"+
-                                    "<td>" + list['name'] + "</td>"+
-                                    "<td>" + yd+ "&nbsp;" + hour + ":"+ min + "</td>"+
-                                    "<td class=\"td-manage\">"+
-                                    // "<button class=\"btn btn-info btn-sm left\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
-                                    // "编 辑"+
-                                    // "</button>"+
-                                    // "<button  type=\"submit\"  class=\"btn btn-danger btn-sm right\">删 除</button>"+
-                                    "</tr>";
-                                $("#tbody").append(tr);
-                            }
-                            if(list['eveTime'] != null) {
-                                var etime = list['eveTime'].toString();
-                                var eatime = etime.split("T");
-                                var eyd = eatime[0];
-                                var ebtime = eatime[1].split(".");
-                                var ectime = ebtime[0].split(":");
-                                var ehour = parseInt(ectime[0])+8;
-                                var emin = ectime[1];
-                                tre+="<tr>"+
-                                    "<td><input name=\"\" value=" + list['id'] + " type=\"checkbox\" /></td>"+
-                                    "<td>" + list['id'] + "</td>"+
-                                    "<td>" + list['cardCode'] + "</td>"+
-                                    "<td>" + list['name'] + "</td>"+
-                                    "<td>" + eyd+ "&nbsp;" + ehour + ":"+ emin + "</td>"+
-                                    // "<td class=\"td-manage\">"+
-                                    // "<button class=\"btn btn-info btn-sm left\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
-                                    // "编 辑"+
-                                    // "</button>"+
-                                    // "<button  type=\"submit\"  class=\"btn btn-danger btn-sm right\">删 除</button>"+
-                                    "</tr>";
-                                $("#tbody").append(tre);
-                            }
-
-
-
-                        });
-                        // $("#ulList").html('');
-                        // var li="<a class=\"num\" onclick='loadData(\"\","+(currentPage-1)+","+5+")'><<</a>";
-                        // for (var i = 1; i <= data['pageNum']; i++) {
-                        //     if (i==currentPage){
-                        //         li+="<a class=\"current\" class='active' onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
-                        //     }
-                        //     else {
-                        //         li+="<a class=\"num\" onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
-                        //     }
-                        // }
-                        // li+="<a class=\"num\" onclick='loadData(\"\","+(currentPage+1)+","+5+")'>>></a>";
-                        // $("#ulList").append(li);
-                        // console.log(tr);
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        console.log(XMLHttpRequest.status);
-                        console.log(XMLHttpRequest.readyState);
-                        console.log(textStatus);
-                    }
-                });
-            }
-
-            $(document).ready(function () {
-                loadData('', 1, 5);
             })
 
-        </script>
+        })
+    }
 
-        </body>
+    function  send(name,code) {
+        var d = new Date();
+        var year = d.getFullYear();
+        var month = d.getMonth() + 1;
+        var date = d.getDate();
+        var hour = d.getHours();
+        var min = d.getMinutes();
+        //   yyyy/mm/dd hh:mm
+        //早上打卡插入
+        if(hour <= 12 ) {
+            $.ajax({
+                type: 'post',
+                url: "/pun/addPunchCardMor",
+                data: {
+                    cardCode: code,
+                    name: name,
+                    morTime: year + "/" + month + "/" + date + " " + hour + ":" + min
+                },
+                success: function () {
+                    alert("打卡成功");
+                    loadData('', 1, 5);
+                },
+                error: function () {
+                    alert("打卡失败");
+                }
 
-        </html>
+            })
+        }else{
+            $.ajax({
+                type: 'post',
+                url: "/pun/addPunchCardEve",
+                data: {
+                    cardCode: code,
+                    name: name,
+                    eveTime: year + "/" + month + "/" + date + " " + hour + ":" + min
+                },
+                success: function () {
+                    alert("打卡成功");
+                    loadData('', 1, 5);
+                },
+                error: function () {
+                    alert("打卡失败");
+                }
+
+            })
+        }
+    }
+</script>
+
+<!--  查询  -->
+<script th:inline="none">
+    var currentPage = 0;
+    function loadData(key,page, pageSize) {
+        $.ajax({
+            type: 'POST',
+            url: "/pun",
+            dataType: "json",
+            data: {cardCode: key,
+                pageSize:5,
+                currentPage:page},
+            success: function (data) {
+
+                $("#tbody").html("");
+                // $("#ulList").html("");
+                var tabledata = data['puns'];
+                var id=1;
+                jQuery.each(tabledata, function (i, list) {
+
+                    var tr="";
+                    var tre="";
+                    if(list['morTime'] !=null ) {
+                        var time = list['morTime'].toString();
+                        // var atime = time.split("T");
+                        // var yd = atime[0];
+                        // var btime = atime[1].split(".");
+                        // var ctime = btime[0].split(":");
+                        // var hour = parseInt(ctime[0]);
+                        // var min = ctime[1];
+                        // alert(yd+"=="+hour+"=="+min);
+                        tr+="<tr>"+
+                            "<td><input name=\"\" value=" + list['id'] + " type=\"checkbox\" /></td>"+
+                            "<td>" + id + "</td>"+
+                            "<td>" + list['cardCode'] + "</td>"+
+                            "<td>" + list['name'] + "</td>"+
+                            "<td>" + list['morTime']+ "</td>"+
+                            "<td class=\"td-manage\">"+
+                            "</tr>";
+                        $("#tbody").append(tr);
+                        id+=1;
+                    }
+                    if(list['eveTime'] != null) {
+                        var etime = list['eveTime'].toString();
+                        // var eatime = etime.split("T");
+                        // var eyd = eatime[0];
+                        // var ebtime = eatime[1].split(".");
+                        // var ectime = ebtime[0].split(":");
+                        // var ehour = parseInt(ectime[0]);
+                        // var emin = ectime[1];
+                        tre+="<tr>"+
+                            "<td><input name=\"\" value=" + list['id'] + " type=\"checkbox\" /></td>"+
+                            "<td>" + id + "</td>"+
+                            "<td>" + list['cardCode'] + "</td>"+
+                            "<td>" + list['name'] + "</td>"+
+                            "<td>" + list['eveTime'] + "</td>"+
+                            // "<td class=\"td-manage\">"+
+                            // "<button class=\"btn btn-info btn-sm left\" id="+ list['id'] + " onclick=\"clickEdit(this)\" data-toggle=\"modal\" data-target=\"#updateEmpPage\">"+
+                            // "编 辑"+
+                            // "</button>"+
+                            // "<button  type=\"submit\"  class=\"btn btn-danger btn-sm right\">删 除</button>"+
+                            "</tr>";
+                        id+=1;
+                        $("#tbody").append(tre);
+                    }
+
+
+
+                });
+                // $("#ulList").html('');
+                // var li="<a class=\"num\" onclick='loadData(\"\","+(currentPage-1)+","+5+")'><<</a>";
+                // for (var i = 1; i <= data['pageNum']; i++) {
+                //     if (i==currentPage){
+                //         li+="<a class=\"current\" class='active' onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
+                //     }
+                //     else {
+                //         li+="<a class=\"num\" onclick='loadData(\"\","+i+", "+5+")'>"+i+"</a>";
+                //     }
+                // }
+                // li+="<a class=\"num\" onclick='loadData(\"\","+(currentPage+1)+","+5+")'>>></a>";
+                // $("#ulList").append(li);
+                // console.log(tr);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log(XMLHttpRequest.status);
+                console.log(XMLHttpRequest.readyState);
+                console.log(textStatus);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        loadData('', 1, 5);
+    })
+
+</script>
+
+</body>
+
+</html>
